@@ -1,15 +1,18 @@
 
+import { Outlet } from 'react-router-dom'
 import './App.css'
+import Footer from './components/component/Footer'
+import Navbar from './components/component/Navbar'
+
 
 function App() {
  
 
   return (
     <>
-     <h1 className="text-3xl font-bold underline bg-emerald-500">
-      Hello world!
-    </h1>
-      
+    <Navbar />
+    <Outlet />
+    <Footer />
     </>
   )
 }
