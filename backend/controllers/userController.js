@@ -1,0 +1,190 @@
+const { userModel } = require("../modules/userschema");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+
+
+exports.signup = async (req, res) => {
+    try {
+        const { fullname, email, phoneNumber, password, role } = req.body;
+
+        // Validate fields are present
+        if (!fullname || !email || !phoneNumber || !password || !role) {
+            return res.status(400).json({
+                message: "Please fill in all required fields."
+            });
+        }
+
+        // Check if email already exists
+        const isExist = await userModel.findOne({ email });
+        if (isExist) {
+            return res.status(400).json({ message: "Email is already taken." });
+        }
+
+        // Hash the password before saving
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create the user
+        const createUser = await userModel.create({
+            fullname,
+            email,
+            phoneNumber,
+            password: hashedPassword,
+            role
+        });
+
+        // Respond with success
+        return res.status(201).json({
+            message: "User created successfully!",
+            user: { id: createUser._id, fullname: createUser.fullname, email: createUser.email }
+        });
+
+    } catch (error) {
+        console.log(error);
+
+        // Handle validation errors
+        if (error.name === "ValidationError") {
+            const errorMessages = Object.values(error.errors).map(err => ` ${err.message}`);
+            return res.status(400).json({ message: errorMessages});
+        }
+
+        // Handle general errors
+        return res.status(500).json({ message: "Internal server error!" });
+    }
+};
+
+
+exports.login = async (req, res) => {
+    try {
+
+        const { email, password, role } = req.body;
+        if (!email || !password || !role) {
+            return res.status(400).json({
+                message: "Please Fill Full From!!"
+
+            });
+        };
+
+        const userisExist = await userModel.findOne({ email });
+
+        if (!userisExist) {
+            return res.status(400).json({ message: "user Is Not Exist !!" })
+        }
+
+        const isPasswordmatching = await bcrypt.compare(password, userisExist.password);
+
+        if (!isPasswordmatching) {
+
+            return res.status(400).json({ message: "Password or Email Incorrect !!" })
+        }
+        if (role !== userisExist.role) {
+            return res.status(400).json({ message: "user is not Exist with this Role !!" })
+        }
+
+        const token = jwt.sign(
+            {
+                fullname: userisExist.fullname,
+                id: userisExist._id,
+                email: userisExist.email
+            },
+            process.env.JWT_SCRETE_KEY,
+            { expiresIn: '1d' }
+        );
+
+        user = {
+            Name: userisExist.fullname,
+            Id: userisExist._id,
+            Email: userisExist.email,
+            Role: userisExist.role,
+            profile: userisExist.role,
+            phoneNumber: userisExist.phoneNumber,
+
+        }
+
+        return res.status(200).json({
+            message: "User Log in SuccessFully !!",
+            Token: token,
+            userDetail: user
+        })
+
+
+
+    } catch (error) {
+        if (error.name ===  'ValidationError') {
+            const messageErrors = Object.values(error.errors)
+                .map(e => e.message);
+            return res.status(500).json({ message: messageErrors });
+
+
+        }
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error !!" })
+    }
+
+}
+
+exports.updateProfile = async(req, res) => {
+    try {
+        const {fullname, email, phoneNumber, bio, skills}=req.body;
+        const userisExist = await userModel.findOne({ email });
+
+        if (!userisExist) {
+            return res.status(400).json({ message: "user Is Not Exist !!" })
+        }
+        const user=req.user;
+        
+        const userId = user._id;
+
+        let updatedata = {
+            profile: {}
+        };
+        
+
+        if(fullname)updatedata.fullname=fullname
+        if(email)updatedata.email=email
+        if(phoneNumber)updatedata.phoneNumber=phoneNumber
+        if(bio)updatedata.profile.bio=bio
+    
+
+
+        let skillsArray;
+        if(skills){
+            skillsArray = skills.split(",");
+            // console.log(skillsArray);
+            updatedata.profile.skills=skillsArray
+        }
+
+        // console.log(updatedata)
+
+
+        const updateProfile = await userModel.updateOne(
+            { _id: userId },
+            {
+                $set: updatedata
+            }
+        );
+
+        const updatedUser = await userModel.findById(userId);
+
+         return res.status(400).json(
+        { 
+            message: "user Profile Updated successFully !!",
+            user: updatedUser
+         }
+
+    )
+
+
+    } catch (error) {
+        if (error.name === 'ValidationError') {
+            const messageErrors = Object.values(error.errors)
+                .map(e => e.message);
+            return res.status(500).json({ message: messageErrors });
+
+
+        }
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error !!" })
+
+    }
+
+}
