@@ -4,13 +4,16 @@ import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from 'react-hook-form';
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const SingUp = () => {
-
+  const navigate=useNavigate()
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  const onSubmit =(data, e) => {
-    console.log(data.file[0])
+  const onSubmit =async(data, e) => {
+    // console.log(data.file[0])
     e.preventDefault();
     const formData = new FormData();
     formData.append('email',data.email)
@@ -23,6 +26,37 @@ const SingUp = () => {
       formData.append('file',data.file[0])
     }
    
+    try {
+      const response=await fetch(`http://localhost:5000/user/v2/api/signup`,{
+        method:'POST',
+        body:formData
+      });
+       if(response.ok){
+        const res=await response.json();
+      toast.success(res.message)
+      setTimeout(() => {
+        navigate('/login');
+      }, 2000);
+       
+       }
+      else{
+        const errormessage = await response.json();
+        const mess = errormessage.message
+        const isAarry= await Array.isArray(mess);
+          if(isAarry){
+            for(let i=0;i<mess.length;i++){
+              toast.error(mess[i]);
+            }
+          }
+          else{
+            toast.error(mess)
+          }
+      }
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(error)
+    }
  
 
 

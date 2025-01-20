@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import SingUp from './pages/SingUp';
 import Jobs from './pages/Jobs';
 import Browse from './pages/Browse';
+import { AuthProvider } from './Context-Api/AuthContext';
 
 
 
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+   <AuthProvider>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </AuthProvider>
 )
