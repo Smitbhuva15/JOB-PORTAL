@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from 'lucide-react';
+import  Home  from './pages/Home';
 import Login from './pages/Login';
 import SingUp from './pages/SingUp';
 import Jobs from './pages/Jobs';
