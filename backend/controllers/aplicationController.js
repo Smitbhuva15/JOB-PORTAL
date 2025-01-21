@@ -16,7 +16,7 @@ exports.applyJob = async (req, res) => {
             });
         }
 
-        const jobexist = await Job.findById({ job: jobId });
+        const jobexist = await jobModel.findById({ job: jobId });
         if (!jobexist) {
             return res.status(404).json({
                 message: "Job not found"
