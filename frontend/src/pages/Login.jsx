@@ -7,10 +7,13 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { setuser } from '../store/userSlice';
 
 const Login = () => {
 
   const navigate=useNavigate()
+  const dispatch = useDispatch()
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit =async(data, e) => {
@@ -27,7 +30,8 @@ const Login = () => {
 
              if(response.ok){
               const res=await response.json();
-              console.log(res)
+              dispatch(setuser(res.userDetail))
+              console.log(res.userDetail  )
               localStorage.setItem('token-jobportal',res.Token)
 
             toast.success(res.message)

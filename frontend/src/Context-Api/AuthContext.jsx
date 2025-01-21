@@ -15,12 +15,16 @@ export const AuthProvider = ({ children }) => {
       try {
         setLoading(true)
         const response=await fetch('http://localhost:5000/user/v2/api/get/userdata',{
-            method:"GET",
+          method: "GET",
+          headers: {
+              "Authorization": `Bearer ${token}`
+          }
         })
         console.log(response)
         if(response.ok){
             const res=await response.json();
-            console.log(res.userdata);
+            // console.log(res.userdata);
+            setUserData(res.userdata)
             setLoading(false);
         }
         else{

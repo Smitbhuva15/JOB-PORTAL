@@ -1,4 +1,4 @@
-import { Button } from '../../ui/button'
+import { Button } from '../../components/ui/button'
 import React from 'react'
 import { Search } from 'lucide-react'
 

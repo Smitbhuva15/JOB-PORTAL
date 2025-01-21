@@ -2,10 +2,10 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from '../../ui/avatar'; // Ensure this import path is correct
-import { Button } from '../../ui/button';
+} from '../../components/ui/avatar';
+import { Button } from '../../components/ui/button';
 import { Bookmark } from 'lucide-react';
-import { Badge } from '../../ui/badge'
+import { Badge } from '../../components/ui/badge'
 import React from 'react';
 
 const Job = () => {
@@ -30,14 +30,14 @@ const Job = () => {
           <Avatar>
             <AvatarImage
               src="https://github.com/shadcn.png"
-              alt="@shadcn" // Alt text for the image (useful for accessibility)
+              alt="@shadcn" 
             />
-            <AvatarFallback>SC</AvatarFallback> {/* Fallback text in case the image fails */}
+            <AvatarFallback>SC</AvatarFallback> 
           </Avatar>
         </Button>
         <div>
-          <h1 className="font-medium text-lg">Company Name</h1> {/* Placeholder for company name */}
-          <p className="text-sm text-gray-500">India</p> {/* Placeholder for company location */}
+          <h1 className="font-medium text-lg">Company Name</h1> 
+          <p className="text-sm text-gray-500">India</p>
         </div>
       </div>
 

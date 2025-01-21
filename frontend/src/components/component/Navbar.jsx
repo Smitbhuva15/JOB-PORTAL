@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link} from 'react-router-dom'
 import { Button } from "../ui/button"
 import { LogOut, User2 } from 'lucide-react'
 
@@ -13,11 +13,19 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../ui/avatar"
+import { useSelector } from 'react-redux'
+import { AuthContext } from '@/Context-Api/AuthContext'
 
 
 const Navbar = () => {
 
-  const user = false;
+  const userData=useSelector(store=>store.user.userinfo)
+  // console.log(user)
+
+  // const user = false;
+
+  // const {userData} = useContext(AuthContext);
+  // console.log(userData)
 
   return (
     <>
@@ -38,7 +46,7 @@ const Navbar = () => {
 
             </ul>
             {
-              user ?
+              userData ?
                 (<Popover>
                   <PopoverTrigger asChild>
                     <Avatar>
@@ -61,7 +69,7 @@ const Navbar = () => {
                       <div className='flex flex-col my-2 text-gray-600'>
                         <div className='flex w-fit items-center gap-2 cursor-pointer'>
                           <User2 />
-                          <Button variant="link"> View Profile</Button>
+                          <Button variant="link"> <Link to='/profile'>View Profile</Link></Button>
                         </div>
                         <div className='flex w-fit items-center gap-2 cursor-pointer'>
                           <LogOut />

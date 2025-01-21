@@ -1,9 +1,9 @@
-import FilterItem from '../components/component/jobs/FilterItem'
-import Job from '../components/component/jobs/Job'
+import FilterItem from './jobs/FilterItem'
+import Job from './jobs/Job'
 import React from 'react'
 
 const Jobs = () => {
-  const randomitem = [1,2,3,4,5,5,4,2,4]
+  const randomitem = [1,2,3,4,5,6,7,8]
   return (
     <>
       <div className='max-w-7xl mx-auto mt-5'>
@@ -13,13 +13,13 @@ const Jobs = () => {
           </div>
 
           {
-            randomitem.length <= 0 ? <span className='mb-96'>Job not found</span> : (
+            randomitem.length <= 0 ? <span className='mb-96 text-[#020ef8] text-5xl font-mono '>Job Not Found</span> : (
               <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                 <div className='grid grid-cols-3 gap-4'>
                   {
-                    randomitem.map(() => (
+                    randomitem.map((index) => (
 
-                      <Job />
+                      <Job  key={index}/>
 
                     ))
                   }

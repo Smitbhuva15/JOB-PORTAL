@@ -9,6 +9,9 @@ import SingUp from './pages/SingUp';
 import Jobs from './pages/Jobs';
 import Browse from './pages/Browse';
 import { AuthProvider } from './Context-Api/AuthContext';
+import store from './store/store';
+import { Provider } from 'react-redux';
+import Profile from './pages/profile/profile';
 
 
 
@@ -45,6 +48,10 @@ const router = createBrowserRouter([
             path: '/browse',
             element: <Browse />,
           },
+          {
+            path: '/profile',
+            element: <Profile />,
+          },
          
       ],
   },
@@ -52,6 +59,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
    <AuthProvider>
+    <Provider store={store}>
     <RouterProvider router={router} />
+    </Provider>
   </AuthProvider>
 )

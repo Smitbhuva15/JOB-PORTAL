@@ -1,6 +1,6 @@
-import LatestJobs from '../components/component/home/LatestJobs'
-import Category from '../components/component/home/Category'
-import HeroSection from '../components/component/home/HeroSection'
+import LatestJobs from './Home/LatestJobs'
+import Category from './Home/Category'
+import HeroSection from './Home/HeroSection'
 import React from 'react'
 
 const Home = () => {
