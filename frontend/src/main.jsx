@@ -12,6 +12,7 @@ import { AuthProvider } from './Context-Api/AuthContext';
 import store from './store/store';
 import { Provider } from 'react-redux';
 import Profile from './pages/profile/profile';
+import JobDetail from './pages/jobs/JobDetail';
 
 
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: '/profile',
             element: <Profile />,
+          },
+          {
+            path: '/jobs/Detail/:id',
+            element: <JobDetail />,
           },
          
       ],

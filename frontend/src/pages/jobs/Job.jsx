@@ -7,8 +7,11 @@ import { Button } from '../../components/ui/button';
 import { Bookmark } from 'lucide-react';
 import { Badge } from '../../components/ui/badge'
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Job = () => {
+  const jobid='dgfdgdfgdf312'
+  const navigate=useNavigate();
   return (
     <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
       {/* Job Posting Metadata */}
@@ -36,7 +39,7 @@ const Job = () => {
           </Avatar>
         </Button>
         <div>
-          <h1 className="font-medium text-lg">Company Name</h1> 
+          <h1 className="font-medium text-lg " >Company Name</h1> 
           <p className="text-sm text-gray-500">India</p>
         </div>
       </div>
@@ -51,7 +54,8 @@ const Job = () => {
                 <Badge className={'text-[#a909b7] font-bold'} variant="ghost">job?.salar</Badge>
             </div>
             <div className='flex items-center gap-4 mt-4'>
-                <Button variant="outline">Details</Button>
+              <div onClick={()=>navigate(`/jobs/Detail/${jobid}`)}> <Button variant="outline "  >Details</Button></div>
+               
                 <Button className="bg-[#020ef8]">Save For Later</Button>
             </div>
     </div>
