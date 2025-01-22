@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 
 export const AuthContext = createContext();
@@ -40,12 +41,18 @@ export const AuthProvider = ({ children }) => {
 
   }
 
+  const handelLogout=()=>{
+    setToken("");
+    localStorage.removeItem('token-jobportal');
+    toast.success("user Logout succesfully!!")
+}
+
   useEffect(() => {
     getuserData()
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, isVerify, userData,setToken }}>
+    <AuthContext.Provider value={{ token, isVerify, userData,setToken ,handelLogout}}>
       {children}
     </AuthContext.Provider>
   );

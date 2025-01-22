@@ -22,10 +22,12 @@ const Navbar = () => {
   // const userData=useSelector(store=>store.user.userinfo)
   
 
-  const {userData} = useContext(AuthContext);
-  // console.log(userData)
+  const {userData,setToken,handelLogout,isVerify} = useContext(AuthContext);
+  console.log(userData)
+   
 
   const hasValidUserData = userData && Object.keys(userData).length > 0;
+  
 
   return (
     <>
@@ -46,11 +48,11 @@ const Navbar = () => {
 
             </ul>
             {
-              hasValidUserData ?
+               isVerify?
                 (<Popover>
                   <PopoverTrigger asChild>
                     <Avatar>
-                      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                      <AvatarImage src={userData?.profile?.profilePhoto} alt="@shadcn" />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
                   </PopoverTrigger>
@@ -58,12 +60,12 @@ const Navbar = () => {
                     <div>
                       <div className='flex gap-2 space-y-2'>
                         <Avatar>
-                          <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+                          <AvatarImage src={userData?.profile?.profilePhoto} alt="@shadcn" />
                           <AvatarFallback>CN</AvatarFallback>
                         </Avatar>
                         <div>
-                          <h4 className='font-medium'>full name</h4>
-                          <p className='text-sm text-muted-foreground'>bio...</p>
+                          <h4 className='font-medium'>{userData?.fullname}</h4>
+                          <p className='text-sm text-muted-foreground'>{userData?.profile?.bio}</p>
                         </div>
                       </div>
                       <div className='flex flex-col my-2 text-gray-600'>
@@ -71,9 +73,9 @@ const Navbar = () => {
                           <User2 />
                           <Button variant="link"> <Link to='/profile'>View Profile</Link></Button>
                         </div>
-                        <div className='flex w-fit items-center gap-2 cursor-pointer'>
+                        <div className='flex w-fit items-center gap-2 cursor-pointer' >
                           <LogOut />
-                          <Button variant="link">Logout</Button>
+                          <Button variant="link" onClick={()=>{handelLogout()}}>Logout</Button>
                         </div>
                       </div>
                     </div>
