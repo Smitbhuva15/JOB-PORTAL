@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Avatar, AvatarImage } from '../../components/ui/avatar'
 import { Button } from '../../components/ui/button'
 import { Badge } from '../../components/ui/badge'
 import { Label } from '../../components/ui/label'
 import { Contact, Mail, Pen } from 'lucide-react'
 import AppliedJobTable from './AppliedJobTable'
+import UpdateProfile from './UpdateProfile'
 
 
 
 const Profile = () => {
     const randome=[1,2,3,4]
     const isResume=true
+    const [open,setOpen]=useState(false);
     return (
         <div>
             <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8'>
@@ -24,10 +26,10 @@ const Profile = () => {
                             <p>user?.profile?.bio</p>
                         </div>
                     </div>
-                    <Button className="text-right" variant="outline"><Pen /></Button>
+                    <Button className="text-right" variant="outline" onClick={() => setOpen(true)} ><Pen /></Button>
 
                 </div>
-                <div className='my-5'>
+                <div className='my-5' >
                     <div className='flex items-center gap-3 my-2'>
                         <Mail />
                         <span>user?.email</span>
@@ -60,7 +62,9 @@ const Profile = () => {
                 
                 <AppliedJobTable />
             </div>
-
+             <div>
+                <UpdateProfile open={open} setOpen={setOpen}/>
+             </div>
 
         </div>
     )

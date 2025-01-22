@@ -19,13 +19,13 @@ import { AuthContext } from '@/Context-Api/AuthContext'
 
 const Navbar = () => {
 
-  const userData=useSelector(store=>store.user.userinfo)
-  // console.log(user)
+  // const userData=useSelector(store=>store.user.userinfo)
+  
 
-  // const user = false;
-
-  // const {userData} = useContext(AuthContext);
+  const {userData} = useContext(AuthContext);
   // console.log(userData)
+
+  const hasValidUserData = userData && Object.keys(userData).length > 0;
 
   return (
     <>
@@ -46,7 +46,7 @@ const Navbar = () => {
 
             </ul>
             {
-              userData ?
+              hasValidUserData ?
                 (<Popover>
                   <PopoverTrigger asChild>
                     <Avatar>

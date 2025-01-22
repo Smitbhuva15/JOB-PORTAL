@@ -3,17 +3,19 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from 'react-hook-form';
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { setuser } from '../store/userSlice';
+import { AuthContext } from '@/Context-Api/AuthContext';
 
 const Login = () => {
 
   const navigate=useNavigate()
   const dispatch = useDispatch()
+  const {setToken} = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit =async(data, e) => {
@@ -31,7 +33,8 @@ const Login = () => {
              if(response.ok){
               const res=await response.json();
               dispatch(setuser(res.userDetail))
-              console.log(res.userDetail  )
+              // console.log(res.userDetail  )
+              setToken(res.Token)
               localStorage.setItem('token-jobportal',res.Token)
 
             toast.success(res.message)
