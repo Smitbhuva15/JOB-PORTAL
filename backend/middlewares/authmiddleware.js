@@ -28,8 +28,8 @@ exports.authMiddleware = async (req, res, next) => {
 
        
         
-
         req.user = user_data
+        console.log(req.user);
 
         next();
 

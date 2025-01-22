@@ -2,37 +2,52 @@ const { userModel } = require("../modules/userschema");
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+const { cloudinary } = require("../utils/cloudinary");
+const { getDataUri } = require("../utils/datauri");
+
 
 exports.signup = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
 
-        // Validate fields are present
+        
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
                 message: "Please fill in all required fields."
             });
         }
 
-        // Check if email already exists
+        const file=req.file;
+        if(!file){
+            return res.status(400).json({message:"please upload your profile photo !!"})
+        }
+
+        const fileuri=getDataUri(file)
+
+        const cloudResponse=await cloudinary.uploader.upload(fileuri.content);
+       console.log(cloudResponse)
+      
         const isExist = await userModel.findOne({ email });
         if (isExist) {
             return res.status(400).json({ message: "Email is already taken." });
         }
 
-        // Hash the password before saving
+       
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create the user
+       
         const createUser = await userModel.create({
             fullname,
             email,
             phoneNumber,
             password: hashedPassword,
-            role
+            role,
+            profile:{
+                profilePhoto:cloudResponse.secure_url,
+            }
         });
 
-        // Respond with success
+       
         return res.status(201).json({
             message: "User created successfully!",
             user: { id: createUser._id, fullname: createUser.fullname, email: createUser.email }
@@ -122,69 +137,53 @@ exports.login = async (req, res) => {
 
 }
 
-exports.updateProfile = async(req, res) => {
+exports.updateProfile = async (req, res) => {
     try {
-        const {fullname, email, phoneNumber, bio, skills}=req.body;
-        const userisExist = await userModel.findOne({ email });
+        const { fullname, email, phoneNumber, bio, skills } = req.body;
 
-        if (!userisExist) {
-            return res.status(400).json({ message: "user Is Not Exist !!" })
-        }
-        const user=req.user;
-        
+        // Check if user exists
+        const user = req.user;
         const userId = user._id;
+        const userExist = await userModel.findById(userId);
 
-        let updatedata = {
-            profile: {}
-        };
-        
-
-        if(fullname)updatedata.fullname=fullname
-        if(email)updatedata.email=email
-        if(phoneNumber)updatedata.phoneNumber=phoneNumber
-        if(bio)updatedata.profile.bio=bio
-    
-
-
-        let skillsArray;
-        if(skills){
-            skillsArray = skills.split(",");
-            // console.log(skillsArray);
-            updatedata.profile.skills=skillsArray
+        if (!userExist) {
+            return res.status(400).json({ message: "User does not exist!" });
         }
 
-        // console.log(updatedata)
+        // Prepare the update object
+        let updateData = {};
 
+        
+        if (fullname) updateData.fullname = fullname;
+        if (email) updateData.email = email;
+        if (phoneNumber) updateData.phoneNumber = phoneNumber;
+        if (bio) updateData.profile = { ...userExist.profile, bio }; 
+        if (skills) updateData.profile = { ...userExist.profile, skills: skills.split(",") }; 
 
-        const updateProfile = await userModel.updateOne(
-            { _id: userId },
-            {
-                $set: updatedata
-            }
-        );
+        // If you're handling file uploads, uncomment the code below
+        // const file = req.file;
+        // if (file) {
+        //     const fileuri = getDataUri(file);
+        //     const cloudResponse = await cloudinary.uploader.upload(fileuri.content);
+        //     updateData.profile.resume = cloudResponse.secure_url;
+        //     updateData.profile.resumeOriginalName = file.originalname;
+        // }
 
-        const updatedUser = await userModel.findById(userId);
+        // Update the user profile
+        const updatedUser = await userModel.findByIdAndUpdate(userId, updateData, { new: true });
 
-         return res.status(400).json(
-        { 
-            message: "user Profile Updated successFully !!",
+        return res.status(200).json({
+            message: "User profile updated successfully!",
             user: updatedUser
-         }
-
-    )
-
+        });
 
     } catch (error) {
         if (error.name === 'ValidationError') {
             const messageErrors = Object.values(error.errors)
                 .map(e => e.message);
             return res.status(500).json({ message: messageErrors });
-
-
         }
-        console.log(error);
-        return res.status(500).json({ message: "Internal server error !!" })
-
+        console.error(error);
+        return res.status(500).json({ message: "Internal server error!" });
     }
-
-}
+};

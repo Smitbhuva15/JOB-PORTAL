@@ -10,8 +10,8 @@ const userroutes=express.Router();
 
 userroutes.post('/signup',singleUpload,signup)
 userroutes.post('/login',login)
-userroutes.patch('/update/profile',authMiddleware,updateProfile)
-userroutes.get('/get/userdata',userdata)
+userroutes.patch('/update/profile',singleUpload,authMiddleware,updateProfile)
+userroutes.get('/get/userdata',authMiddleware,userdata)
 
 
 
