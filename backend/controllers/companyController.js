@@ -1,4 +1,6 @@
 const { companyModel } = require("../modules/companyschema");
+const { cloudinary } = require("../utils/cloudinary");
+const { getDataUri } = require("../utils/datauri");
 
 
 exports.registercompany = async (req, res) => {
@@ -97,7 +99,6 @@ exports.updatecompany=async(req,res)=>{
     try {
 
         const { name, description, website, location } = req.body;
-
         const updatedata={};
 
         if(name)updatedata.name=name
@@ -105,6 +106,22 @@ exports.updatecompany=async(req,res)=>{
         if(website)updatedata.website=website
         if(location)updatedata.location=location
        
+        const file=req.file;
+        // console.log( name, description, website, location,file)
+
+        if(!file){
+            return res.status(400).json({message:"please upload the company logo !!"})
+        }
+    
+
+       const fileuri=getDataUri(file)
+
+        const cloudResponse=await cloudinary.uploader.upload(fileuri.content);
+    //   console.log(cloudResponse)
+      if(cloudResponse){
+        updatedata.logo=cloudResponse.secure_url
+      }
+
         const updateonecompany=await companyModel.updateOne(
             {_id:req.params.id},
             {

@@ -25,7 +25,7 @@ exports.signup = async (req, res) => {
         const fileuri=getDataUri(file)
 
         const cloudResponse=await cloudinary.uploader.upload(fileuri.content);
-       console.log(cloudResponse)
+    //    console.log(cloudResponse)
       
         const isExist = await userModel.findOne({ email });
         if (isExist) {
