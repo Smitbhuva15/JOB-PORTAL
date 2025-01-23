@@ -33,13 +33,19 @@ const Login = () => {
              if(response.ok){
               const res=await response.json();
               dispatch(setuser(res.userDetail))
-              // console.log(res.userDetail  )
               setToken(res.Token)
               localStorage.setItem('token-jobportal',res.Token)
 
             toast.success(res.message)
             setTimeout(() => {
-              navigate('/');
+              console.log(res.userDetail.Role)
+              if(res.userDetail.Role==="student"){
+                navigate('/home');
+              }
+              else if(res.userDetail.Role==="recruiter"){
+                navigate('/admin/compnies')
+              }
+             
             }, 2000);
              
              }

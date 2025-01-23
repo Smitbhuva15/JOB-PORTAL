@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Button } from "../ui/button"
 import { LogOut, User2 } from 'lucide-react'
 
@@ -20,35 +20,71 @@ import { AuthContext } from '@/Context-Api/AuthContext'
 const Navbar = () => {
 
   // const userData=useSelector(store=>store.user.userinfo)
-  
 
-  const {userData,setToken,handelLogout,isVerify} = useContext(AuthContext);
-  console.log(userData)
-   
+
+  const { userData, setToken, handelLogout, isVerify } = useContext(AuthContext);
+  // console.log(userData)
+
 
   const hasValidUserData = userData && Object.keys(userData).length > 0;
-  
+
 
   return (
     <>
       <div className='bg-white '>
         <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
-        <Link to='/'>
-          <div className='flex '>
-            <img src='/logo.png' alt='logo' className='w-20 sm:mt-12 sm:block hidden ' />
-            <h1 className='text-2xl font-bold sm:mt-16'>Job<span className='text-[#020ef8]'>Linker</span></h1>
-          </div>
-          </Link>
+          {
+            userData && userData.role === "recruiter"
+              ?
+              (
+                
+                  <Link to='/admin/compnies'>
+                    <div className='flex '>
+                      <img src='/logo.png' alt='logo' className='w-20 sm:mt-12 sm:block hidden  ' />
+                      <h1 className='text-2xl font-bold sm:mt-16 '>Job<span className='text-[#020ef8]'>Linker</span></h1>
+                    </div>
+                  </Link>
+                
+              )
+              :
+              (
+                
+                  <Link to='/home'>
+                    <div className='flex '>
+                      <img src='/logo.png' alt='logo' className='w-20 sm:mt-12 sm:block hidden   ' />
+                      <h1 className='text-2xl font-bold sm:mt-16'>Job<span className='text-[#020ef8]'>Linker</span></h1>
+                    </div>
+                  </Link>
+                
+              )
+          }
 
           <div className='flex items-center gap-12'>
             <ul className='flex font-medium items-center sm:gap-5 gap-1'>
-              <Link to='/home'><li>Home</li></Link>
-              <Link to='jobs'><li>Jobs</li></Link>
-              <Link to='browse'><li>Browse</li></Link>
+              {
+                userData && userData.role === 'recruiter'
+                  ?
+                  (<>
+                    <Link to='/admin/compnies'><li>Companies</li></Link>
+                    <Link to='/admin/jobs'><li>Jobs</li></Link>
+                  </>
+                  )
+                  :
+                  (
+                    <>
+                      <Link to='/'><li>Home</li></Link>
+                      <Link to='jobs'><li>Jobs</li></Link>
+                      <Link to='browse'><li>Browse</li></Link>
+
+                    </>
+
+                  )
+              }
+
 
             </ul>
             {
-               isVerify?
+              isVerify ?
                 (<Popover>
                   <PopoverTrigger asChild>
                     <Avatar>
@@ -75,7 +111,7 @@ const Navbar = () => {
                         </div>
                         <div className='flex w-fit items-center gap-2 cursor-pointer' >
                           <LogOut />
-                          <Button variant="link" onClick={()=>{handelLogout()}}>Logout</Button>
+                        <Link to='/home'><Button variant="link" onClick={() => { handelLogout() }}>Logout</Button></Link>  
                         </div>
                       </div>
                     </div>

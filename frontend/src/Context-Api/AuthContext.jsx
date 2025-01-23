@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 
@@ -10,8 +11,8 @@ export const AuthProvider = ({ children }) => {
   // console.log(token)
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
-  const [allJobs, setAllJobs] = useState();
 
+  
   const isVerify = !!token;
 
   const getuserData = async () => {
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) => {
         }
 
       })
-      
+
       if (response.ok) {
         const res = await response.json();
         setUserData(res.userDetail)
@@ -42,21 +43,23 @@ export const AuthProvider = ({ children }) => {
 
   }
 
-  
 
-  const handelLogout=()=>{
+
+  const handelLogout = () => {
     setToken("");
     localStorage.removeItem('token-jobportal');
     toast.success("user Logout succesfully!!")
-}
+    navigate('/home');
+
+  }
 
   useEffect(() => {
     getuserData()
-   
+
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, isVerify, userData,setToken ,handelLogout}}>
+    <AuthContext.Provider value={{ token, isVerify, userData, setToken, handelLogout }}>
       {children}
     </AuthContext.Provider>
   );

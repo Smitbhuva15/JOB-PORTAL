@@ -13,7 +13,7 @@ const SingUp = () => {
   const navigate=useNavigate()
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const onSubmit =async(data, e) => {
-    // console.log(data.file[0])
+    console.log(data)
     e.preventDefault();
     const formData = new FormData();
     formData.append('email',data.email)
@@ -148,7 +148,7 @@ const SingUp = () => {
                 type="file"
                 id="fileUpload"
                 name="file"
-                className="cursor-pointer mt-1"
+                className="cursor-pointer "
                 {...register('file', { required: 'File is required' })}
               />
             </div>

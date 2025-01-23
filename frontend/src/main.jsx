@@ -13,6 +13,9 @@ import store from './store/store';
 import { Provider } from 'react-redux';
 import Profile from './pages/profile/profile';
 import JobDetail from './pages/jobs/JobDetail';
+import Compnies from './pages/admin/Compnies';
+import CompaniesCreate from './pages/admin/CompaniesCreate';
+import CompaniesManage from './pages/admin/CompaniesManage';
 
 
 
@@ -57,6 +60,22 @@ const router = createBrowserRouter([
             path: '/jobs/Detail/:id',
             element: <JobDetail />,
           },
+          {
+            path: '/admin/compnies',
+            element: <Compnies />,
+
+          },
+          {
+            path: '/admin/add/company',
+            element: <CompaniesCreate />,
+
+          },
+          {
+            path: '/admin/setup/company/:id',
+            element: <CompaniesManage />,
+
+          }
+          
          
       ],
   },

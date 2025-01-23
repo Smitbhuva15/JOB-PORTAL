@@ -1,21 +1,46 @@
 
 
+import { AuthContext } from "@/Context-Api/AuthContext";
+import { useContext } from "react";
 import { FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaMapMarked, FaMapMarkedAlt, FaPhoneAlt, FaTwitter } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+
+    const { userData } = useContext(AuthContext);
+
+
     return (
         <>
             <div className="py-12 bg-gary-100 px-8 min-h-52">
                 <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 sm:grid-cols-2 gap-8">
                     <div className="space-y-6 mr-14">
                         <div className="flex items-center space-x-2">
-                            <Link to='/'>
-                                <div className='flex '>
-                                    <img src='/logo.png' alt='logo' className='w-20    ' />
-                                    <h1 className='text-2xl font-bold pt-8'>Job<span className='text-[#020ef8]'>Linker</span></h1>
-                                </div>
-                            </Link>
+                            {
+                                userData && userData.role === "recruiter"
+                                    ?
+                                    (
+                                        <>
+                                            <Link to='/admin/compnies'>
+                                                <div className='flex '>
+                                                    <img src='/logo.png' alt='logo' className='w-20    ' />
+                                                    <h1 className='text-2xl font-bold pt-8'>Job<span className='text-[#020ef8]'>Linker</span></h1>
+                                                </div>
+                                            </Link>
+                                        </>
+                                    )
+                                    :
+                                    (
+                                        <>
+                                            <Link to='/home'>
+                                                <div className='flex '>
+                                                    <img src='/logo.png' alt='logo' className='w-20    ' />
+                                                    <h1 className='text-2xl font-bold pt-8'>Job<span className='text-[#020ef8]'>Linker</span></h1>
+                                                </div>
+                                            </Link>
+                                        </>
+                                    )
+                            }
                         </div>
                         <p className="text-para mt-2">Connect with us for updates, support, and services. Your journey starts here. Stay informed and engaged with our team!</p>
                         <div className="flex space-x-4 mt-4">
@@ -33,14 +58,34 @@ const Footer = () => {
                     <div className="space-y-2">
                         <h3 className="text-xl font-semibold mb-4">Quick Links </h3>
                         <ul className="space-y-3">
-                            <li><Link to="home" spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700">Home</Link></li>
+
+                            {
+                                userData && userData.role === "recruiter"
+                                    ?
+                                    (
+                                        <>
+                                            <li><Link to="/admin/compnies" spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700">Companies</Link></li>
 
 
-                            <li><Link to="jobs" spy={true} smooth={true} offset={-10} duration={500} className="hover:underline text-gray-700">Jobs</Link></li>
+                                            <li><Link to="/admin/jobs" spy={true} smooth={true} offset={-10} duration={500} className="hover:underline text-gray-700">Jobs</Link></li>
 
 
-                            <li><Link to="browse" spy={true} smooth={true} offset={-10} duration={500} className="hover:underline text-gray-700">Browse</Link></li>
+                                
+                                        </>
+                                    )
+                                    :
+                                    (
+                                        <>
+                                            <li><Link to="home" spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700">Home</Link></li>
 
+
+                                            <li><Link to="jobs" spy={true} smooth={true} offset={-10} duration={500} className="hover:underline text-gray-700">Jobs</Link></li>
+
+
+                                            <li><Link to="browse" spy={true} smooth={true} offset={-10} duration={500} className="hover:underline text-gray-700">Browse</Link></li>
+                                        </>
+                                    )
+                            }
 
                         </ul>
 
