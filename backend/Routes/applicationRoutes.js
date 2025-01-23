@@ -1,9 +1,10 @@
 const express=require('express');
 const { applyJob, getApplication, updatestatus } = require('../controllers/aplicationController');
+const { authMiddleware } = require('../middlewares/authmiddleware');
 
 const applicationRoutes=express.Router();
 
-applicationRoutes.post('/apply/job/:id',applyJob)
+applicationRoutes.post('/apply/job/:id',authMiddleware,applyJob)
 applicationRoutes.get('/get/application/me',getApplication)
 applicationRoutes.patch('/update/status/:id',updatestatus)
 

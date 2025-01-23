@@ -52,6 +52,7 @@ const jobSchema=new mongooes.Schema({
                 ref: 'Application',
             }
         ]
+        
 },{timestamps:true})
 
 exports.jobModel=mongooes.model("Job",jobSchema)

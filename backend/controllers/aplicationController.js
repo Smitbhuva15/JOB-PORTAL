@@ -5,18 +5,21 @@ const { jobModel } = require("../modules/jobschema");
 exports.applyJob = async (req, res) => {
     try {
         const userData = req.user;
+      
         const userId = userData._id;
         const jobId = req.params.id;
+       
 
-        const isAlreadyApply = await applicationModel.find({ job: jobId, applicant: userId });
+        const isAlreadyApply = await applicationModel.findOne({ job: jobId, applicant: userId });;
+        // console.log(isAlreadyApply)
 
         if (isAlreadyApply) {
             return res.status(400).json({
-                message: "You have already applied for this jobs"
+                message: "You have already applied for this job !!"
             });
         }
 
-        const jobexist = await jobModel.findById({ job: jobId });
+        const jobexist = await jobModel.findById(jobId);
         if (!jobexist) {
             return res.status(404).json({
                 message: "Job not found"
@@ -28,18 +31,14 @@ exports.applyJob = async (req, res) => {
             applicant: userId,
         })
 
-        jobModel.applications.push(createApplication._id)
-        await jobModel.save();
+        jobexist.applications.push(createApplication._id)
+        await jobexist.save();
         return res.status(201).json({
             message: "Job applied successfully.",
         })
 
     } catch (error) {
-        // Handle validation errors
-        if (error.name === "ValidationError") {
-            const errorMessages = Object.values(error.errors).map(err => ` ${err.message}`);
-            return res.status(400).json({ message: errorMessages });
-        }
+      
 
         console.log(error);
         return res.status(500).json({ message: "Internal server error!" });

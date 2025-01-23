@@ -141,7 +141,7 @@ exports.updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
 
-        // Check if user exists
+      
         const user = req.user;
         const userId = user._id;
         const userExist = await userModel.findById(userId);
@@ -150,17 +150,16 @@ exports.updateProfile = async (req, res) => {
             return res.status(400).json({ message: "User does not exist!" });
         }
 
-        // Prepare the update object
+       
         let updateData = {};
 
-        
+      
         if (fullname) updateData.fullname = fullname;
         if (email) updateData.email = email;
         if (phoneNumber) updateData.phoneNumber = phoneNumber;
-        if (bio) updateData.profile = { ...userExist.profile, bio }; 
-        if (skills) updateData.profile = { ...userExist.profile, skills: skills.split(",") }; 
-
-        // If you're handling file uploads, uncomment the code below
+        if (bio) updateData["profile.bio"] = bio;  
+        if (skills) updateData["profile.skills"] = skills.split(","); 
+       
         // const file = req.file;
         // if (file) {
         //     const fileuri = getDataUri(file);
@@ -169,12 +168,20 @@ exports.updateProfile = async (req, res) => {
         //     updateData.profile.resumeOriginalName = file.originalname;
         // }
 
-        // Update the user profile
-        const updatedUser = await userModel.findByIdAndUpdate(userId, updateData, { new: true });
+        
+        const updatedUser = await userModel.updateOne(
+            { _id: userId },
+            { $set: updateData }  // Only update the provided fields
+        );
+
+        
+
+        // Fetch the updated user to return the latest profile
+        const updatedUserData = await userModel.findById(userId);
 
         return res.status(200).json({
             message: "User profile updated successfully!",
-            user: updatedUser
+            user: updatedUserData
         });
 
     } catch (error) {
