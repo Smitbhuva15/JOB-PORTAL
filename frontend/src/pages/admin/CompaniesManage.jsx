@@ -3,22 +3,24 @@ import { Button } from '../../components/ui/button';
 
 import { ArrowLeft } from 'lucide-react';
 
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Label } from '../../components/ui/label';
 import GetsingleCompny from '../../FechingData/GetsingleCompny';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from '@/Context-Api/AuthContext';
+import { getstateinfo } from '../../store/companyslice';
 
 const CompaniesManage = () => {
     const params = useParams()
     const companyId = params.id;
     const navigate = useNavigate()
     GetsingleCompny(companyId)
-
+    // const [isUpdate,setIsUpdate]=useState(false);
+    const dispath=useDispatch()
     const { token } = useContext(AuthContext)
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -30,7 +32,7 @@ const CompaniesManage = () => {
         formData.append('name', data.name)
         formData.append('description', data.description)
         formData.append('website', data.website)
-        formData.append('Location', data.Location)
+        formData.append('location', data.location)
 
 
         if (data.file[0]) {
@@ -47,7 +49,9 @@ const CompaniesManage = () => {
             });
             if (response.ok) {
                 const res = await response.json();
-                console.log(res);
+                // console.log(res);
+        
+                dispath(getstateinfo())
                 toast.success(res.message)
                 setTimeout(() => {
                    navigate('/admin/compnies')
