@@ -27,7 +27,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     const user_bio=userData?.profile?.bio||"";
     const user_skill=userData?.profile?.skills?.map((item)=>item)||"";
     
-    const { token } = useContext(AuthContext);
+    const { token ,setToken} = useContext(AuthContext);
     
     const onSubmit = async (data, e) => {
         e.preventDefault();
@@ -55,7 +55,9 @@ const UpdateProfile = ({ open, setOpen }) => {
             if (response.ok) {
                 const res = await response.json();
                 
-                
+                setTimeout(() => {
+                    window.location.reload(true)
+                }, 2000);
                 toast.success(res.message);
                 // console.log(res);
             } else {

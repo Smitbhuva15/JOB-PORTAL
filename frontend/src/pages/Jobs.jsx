@@ -1,9 +1,16 @@
+import { useSelector } from 'react-redux'
 import FilterItem from './jobs/FilterItem'
 import Job from './jobs/Job'
 import React from 'react'
+import GetAllJobs from '../FechingData/GetAllJobs'
 
 const Jobs = () => {
-  const randomitem = [1,2,3,4,5,6,7,8]
+
+  GetAllJobs()
+
+   const alljobs = useSelector(store => store.job.Alljobs)
+
+
   return (
     <>
       <div className='max-w-7xl mx-auto mt-5'>
@@ -13,15 +20,11 @@ const Jobs = () => {
           </div>
 
           {
-            randomitem.length <= 0 ? <span className='mb-96 text-[#020ef8] text-5xl font-mono '>Job Not Found</span> : (
+            alljobs.length <= 0 ? <span className='mb-96 text-[#ef303d] text-4xl font-mono '>No Jobs Available, please Login in First!!</span> : (
               <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                 <div className='grid grid-cols-3 gap-4'>
                   {
-                    randomitem.map((index) => (
-
-                      <Job  key={index}/>
-
-                    ))
+                  (alljobs.map((job)=>(<Job key={job._id} job={job}/>)))
                   }
                 </div>
               </div>
@@ -34,3 +37,4 @@ const Jobs = () => {
 }
 
 export default Jobs
+

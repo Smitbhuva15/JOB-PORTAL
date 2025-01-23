@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   // console.log(token)
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [allJobs, setAllJobs] = useState();
 
   const isVerify = !!token;
 
@@ -41,6 +42,8 @@ export const AuthProvider = ({ children }) => {
 
   }
 
+  
+
   const handelLogout=()=>{
     setToken("");
     localStorage.removeItem('token-jobportal');
@@ -49,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     getuserData()
+   
   }, [token]);
 
   return (
