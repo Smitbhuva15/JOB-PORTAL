@@ -3,7 +3,7 @@ import { Button } from '../../components/ui/button';
 
 import { ArrowLeft } from 'lucide-react';
 
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Label } from '../../components/ui/label';
 import GetsingleCompny from '../../FechingData/GetsingleCompny';
@@ -20,10 +20,37 @@ const CompaniesManage = () => {
     const navigate = useNavigate()
     GetsingleCompny(companyId)
     // const [isUpdate,setIsUpdate]=useState(false);
-    const dispath=useDispatch()
+    const dispath = useDispatch()
     const { token } = useContext(AuthContext)
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
+    const singlecompanydata = useSelector(store => store.company.Singlecompany)
+
+
+
+    const [formData, setFormData] = useState({
+        name: '',
+        description: '',
+        website: '',
+        location: '',
+
+
+    });
+
+
+    useEffect(() => {
+        if (singlecompanydata) {
+            setFormData({
+                name: singlecompanydata?.name || '',
+                description: singlecompanydata?.description || '',
+                website: singlecompanydata?.website || '',
+                location: singlecompanydata?.location || '',
+         
+            });
+        }
+    }, [singlecompanydata]);
+
+
     const onSubmit = async (data, e) => {
 
         // console.log(data)
@@ -49,12 +76,12 @@ const CompaniesManage = () => {
             });
             if (response.ok) {
                 const res = await response.json();
-                // console.log(res);
-        
+          
+
                 dispath(getstateinfo())
                 toast.success(res.message)
                 setTimeout(() => {
-                   navigate('/admin/compnies')
+                    navigate('/admin/compnies')
                 }, 2000);
 
             }
@@ -82,7 +109,6 @@ const CompaniesManage = () => {
     }
 
 
-    const singlecompanydata = useSelector(store => store.company.Singlecompany)
 
 
     return (
@@ -102,7 +128,7 @@ const CompaniesManage = () => {
                         <Input
                             type="text"
                             name="name"
-                            defaultValue={singlecompanydata?.name}
+                            defaultValue={formData?.name}
                             {...register("name")}
                         />
                     </div>
@@ -111,7 +137,7 @@ const CompaniesManage = () => {
                         <Input
                             type="text"
                             name="description"
-                            defaultValue={singlecompanydata?.description}
+                            defaultValue={formData?.description}
                             {...register("description")}
 
 
@@ -122,7 +148,7 @@ const CompaniesManage = () => {
                         <Input
                             type="text"
                             name="website"
-                            defaultValue={singlecompanydata?.website}
+                            defaultValue={formData?.website}
 
                             {...register("website")}
 
@@ -133,7 +159,7 @@ const CompaniesManage = () => {
                         <Input
                             type="text"
                             name="location"
-                            defaultValue={singlecompanydata?.location}
+                            defaultValue={formData?.location}
                             {...register("location")}
 
 

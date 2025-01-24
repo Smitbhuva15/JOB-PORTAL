@@ -19,6 +19,7 @@ import CompaniesManage from './pages/admin/CompaniesManage';
 import { Adminjob } from './pages/admin/Adminjob';
 import AdminCreatJob from './pages/admin/AdminCreatJob';
 import AdminApplicaton from './pages/admin/AdminApplicaton';
+import Updatejob from './pages/admin/Updatejob';
 
 
 
@@ -93,8 +94,13 @@ const router = createBrowserRouter([
             element: <AdminApplicaton />,
 
           },
+          {
+            path: '/admin/update/:id',
+            element: <Updatejob />,
+
+          },
           
-         
+          
       ],
   },
 ]);

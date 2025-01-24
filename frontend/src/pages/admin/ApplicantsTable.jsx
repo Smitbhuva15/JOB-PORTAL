@@ -1,16 +1,51 @@
 import GetApplicant from '../../FechingData/GetApplicant';
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import { MoreHorizontal } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { AuthContext } from '../../Context-Api/AuthContext';
+import { toast } from 'react-toastify';
 
 
 const ApplicantsTable = () => {
     const selectedstatus=["Accepted", "Rejected"];
+    const {token}=useContext(AuthContext)
   
     const applicants = useSelector(store => store.application.applicantJobs)
+
+    const setstatus=async(status,applicantid)=>{
+        try {
+
+            console.log(applicantid)
+            const lowerstatus=status.toLowerCase()
+            console.log(lowerstatus)
+            const sendstatus={
+                "status":lowerstatus
+            }
+         const response=await fetch(`http://localhost:5000/user/v2/api//update/status/${applicantid}`,{
+            method:"PATCH",
+            headers:{
+                "Authorization":`Bearer ${token}`,
+                 "Content-Type": "application/json"
+            },
+            body:JSON.stringify(sendstatus)
+         })
+            if(response.ok){
+                const res=await response.json()
+                // console.log( res);
+                toast.success(res.message)
+            }
+            else{
+                const errormessage=await response.json()
+                toast.error(errormessage.message)
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div>
@@ -48,7 +83,7 @@ const ApplicantsTable = () => {
                                         <PopoverContent className="w-32">
                                             {
                                                 selectedstatus.map((status,i)=>(
-                                                    <div key={i} className='flex w-fit items-center my-2 cursor-pointer'>
+                                                    <div key={i} onClick={()=>setstatus(status ,item._id)} className='flex w-fit items-center my-2 cursor-pointer'>
                                                         {status}
                                                     </div>
                                                 ))

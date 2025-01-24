@@ -2,7 +2,7 @@ import { getallcompany } from '@/store/companyslice';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
-const GetAllCompany = () => {
+const  GetAllCompany= () => {
     const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
     const dispatch=useDispatch();
    
