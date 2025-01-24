@@ -12,23 +12,27 @@ const CompaniesTable = () => {
 
     GetAllCompany();
  const navigate=useNavigate()
-    const {AllCompany,searchtext} = useSelector(store => store.company);
+    const AllCompany = useSelector(store => store.company.AllCompany);
    const [filterCompany, setFilterCompany] = useState(AllCompany);
+   const searchcompanytext = useSelector(store => store.company.searchtext);
+
    
-//    useEffect(() => {
-//     // Make sure searchtext is always a string before calling .toLowerCase()
-//     const normalizedSearchText = searchtext ? String(searchtext).toLowerCase() : '';
+    
+    
+    useEffect(() => {
+        if(AllCompany && AllCompany.length>0){
+            setFilterCompany(AllCompany)
+        }
+        if(searchcompanytext &&searchcompanytext.length>0){
+            const filtered=AllCompany.filter((company)=>{
+              return company?.name && company?.name.toLowerCase().includes(searchcompanytext.toLowerCase()) 
+            })
+            setFilterCompany(filtered)
+          }
+       
+    }, [AllCompany,searchcompanytext]);
 
-//     const filtered = AllCompany.filter((company) => {
-//         // Ensure company.name is a string before calling .toLowerCase()
-//         const companyName = company?.name ? String(company.name).toLowerCase() : '';
-//         return companyName.includes(normalizedSearchText);
-//     });
-
-//     setFilterCompany(filtered);  // Update the state with filtered companies
-// }, [AllCompany, searchtext]);  // Dependency array to rerun the effect when AllCompany or searchtext changes
-
-
+ 
 
     return (
         <div>

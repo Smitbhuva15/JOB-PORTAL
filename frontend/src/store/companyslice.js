@@ -19,7 +19,7 @@ export const companySlice = createSlice({
     state.isupdate=!state.isupdate
    },
    setserachtext:(state,action)=>{
-    state.searchtext=!state.searchtext
+    state.searchtext=action.payload
    },
   }
 })
