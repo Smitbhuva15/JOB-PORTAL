@@ -16,6 +16,8 @@ import JobDetail from './pages/jobs/JobDetail';
 import Compnies from './pages/admin/Compnies';
 import CompaniesCreate from './pages/admin/CompaniesCreate';
 import CompaniesManage from './pages/admin/CompaniesManage';
+import { Adminjob } from './pages/admin/Adminjob';
+import AdminCreatJob from './pages/admin/AdminCreatJob';
 
 
 
@@ -74,7 +76,17 @@ const router = createBrowserRouter([
             path: '/admin/setup/company/:id',
             element: <CompaniesManage />,
 
-          }
+          },
+          {
+            path: '/admin/jobs',
+            element: <Adminjob />,
+
+          },
+          {
+            path: '/admin/add/job',
+            element: <AdminCreatJob />,
+
+          },
           
          
       ],

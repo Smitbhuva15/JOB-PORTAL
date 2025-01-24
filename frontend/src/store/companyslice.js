@@ -5,7 +5,8 @@ export const companySlice = createSlice({
   initialState: {
     Singlecompany:null,
     AllCompany:[],
-    isupdate:false
+    isupdate:false,
+    searchtext:""
   },
   reducers: {
    getsinglecompany:(state, action)=>{
@@ -16,12 +17,14 @@ export const companySlice = createSlice({
    },
    getstateinfo:(state,action)=>{
     state.isupdate=!state.isupdate
-   }
-
+   },
+   setserachtext:(state,action)=>{
+    state.searchtext=!state.searchtext
+   },
   }
 })
 
 
-export const { getsinglecompany,getallcompany,getstateinfo } = companySlice.actions
+export const { getsinglecompany,getallcompany,getstateinfo,setserachtext } = companySlice.actions
 
 export default companySlice.reducer

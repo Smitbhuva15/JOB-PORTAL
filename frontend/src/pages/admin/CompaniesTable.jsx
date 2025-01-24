@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Avatar, AvatarImage } from '../../components/ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover'
@@ -12,8 +12,23 @@ const CompaniesTable = () => {
 
     GetAllCompany();
  const navigate=useNavigate()
-    const allCompany = useSelector(store => store.company.AllCompany);
-    // console.log(allCompany);
+    const {AllCompany,searchtext} = useSelector(store => store.company);
+   const [filterCompany, setFilterCompany] = useState(AllCompany);
+   
+//    useEffect(() => {
+//     // Make sure searchtext is always a string before calling .toLowerCase()
+//     const normalizedSearchText = searchtext ? String(searchtext).toLowerCase() : '';
+
+//     const filtered = AllCompany.filter((company) => {
+//         // Ensure company.name is a string before calling .toLowerCase()
+//         const companyName = company?.name ? String(company.name).toLowerCase() : '';
+//         return companyName.includes(normalizedSearchText);
+//     });
+
+//     setFilterCompany(filtered);  // Update the state with filtered companies
+// }, [AllCompany, searchtext]);  // Dependency array to rerun the effect when AllCompany or searchtext changes
+
+
 
     return (
         <div>
@@ -29,11 +44,11 @@ const CompaniesTable = () => {
                 </TableHeader>
                 <TableBody>
                     {
-                        allCompany.length <= 0
+                        filterCompany.length <= 0
                             ?
                             (<span className='text-red-700 text-2xl font-extrabold'>You Have't Registered Any Company Yet!!</span>)
                             :
-                            (allCompany.map((company) => (
+                            (filterCompany.map((company) => (
                                
                                     < tr key={company._id}>
                                         <TableCell>
