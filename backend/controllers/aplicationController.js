@@ -5,10 +5,10 @@ const { jobModel } = require("../modules/jobschema");
 exports.applyJob = async (req, res) => {
     try {
         const userData = req.user;
-      
+
         const userId = userData._id;
         const jobId = req.params.id;
-       
+
 
         const isAlreadyApply = await applicationModel.findOne({ job: jobId, applicant: userId });;
         // console.log(isAlreadyApply)
@@ -38,7 +38,7 @@ exports.applyJob = async (req, res) => {
         })
 
     } catch (error) {
-      
+
 
         console.log(error);
         return res.status(500).json({ message: "Internal server error!" });
@@ -86,6 +86,7 @@ exports.getAppliedJobs = async (req, res) => {
 exports.updatestatus = async (req, res) => {
     try {
         const { status } = req.body;
+
         const applicationId = req.params.id;
 
         if (!status) {
@@ -97,6 +98,8 @@ exports.updatestatus = async (req, res) => {
 
         const isexistapplication = await applicationModel.findById({ _id: applicationId })
 
+        // console.log(isexistapplication)
+
         if (!isexistapplication) {
             return res.status(404).json({
                 message: "Application not found."
@@ -105,12 +108,15 @@ exports.updatestatus = async (req, res) => {
         const updatedata = {};
         if (status) updatedata.status = status
 
+        console.log(updatedata)
+
         const updatebyrecruiter = await applicationModel.updateOne(
-            { applicant: applicationId },
+            { _id: applicationId },
             {
                 $set: updatedata
             }
         )
+
         return res.status(200).json({
             message: "Status updated successfully."
         });
@@ -123,30 +129,32 @@ exports.updatestatus = async (req, res) => {
     }
 }
 
-exports.getApplication=async(req,res)=>{
-    const jobId=req.params.id;
-   
+exports.getApplication = async (req, res) => {
+    const jobId = req.params.id;
+
 
     try {
-        const job= await jobModel.findById(jobId).populate({
-            path:'applications',
-            options:{sort:{createdAt:-1}},
-            populate:{
-                path:'applicant'
+        const job = await jobModel.findById(jobId).populate({
+            path: 'applications',
+            options: { sort: { createdAt: -1 } },
+            populate: {
+                path: 'applicant'
             }
         });
 
         // console.log(job)
-     
-        if(!job){
-            return res.status(400).json({message:"Job not found"})
+
+        if (!job) {
+            return res.status(400).json({ message: "Job not found" })
         }
 
-        return res.status(200).json({job})
-        
+        return res.status(200).json({ job })
+
     } catch (error) {
         console.log(error);
-        return res.status(5500).json({message:"Internal server Error!!"})
+        return res.status(5500).json({ message: "Internal server Error!!" })
     }
 
 }
+
+
