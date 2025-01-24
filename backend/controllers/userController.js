@@ -190,6 +190,11 @@ exports.updateProfile = async (req, res) => {
                 .map(e => e.message);
             return res.status(500).json({ message: messageErrors });
         }
+
+        if (error.code === 11000) {
+          
+            return res.status(400).json({ message: 'All this Datas are already exists!! ' });
+        }
         console.error(error);
         return res.status(500).json({ message: "Internal server error!" });
     }

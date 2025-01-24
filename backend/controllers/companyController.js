@@ -100,6 +100,7 @@ exports.updatecompany=async(req,res)=>{
 
         const { name, description, website, location } = req.body;
         const updatedata={};
+        console.log(location,name)
 
         if(name)updatedata.name=name
         if(description)updatedata.description=description
@@ -147,6 +148,10 @@ exports.updatecompany=async(req,res)=>{
         if (error.name === "ValidationError") {
             const errorMessages = Object.values(error.errors).map(err => ` ${err.message}`);
             return res.status(400).json({ message: errorMessages });
+        }
+        if (error.code === 11000) {
+          
+            return res.status(400).json({ message: 'All this Datas are already exists ' });
         }
 
         console.log(error);

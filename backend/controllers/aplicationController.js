@@ -49,7 +49,7 @@ exports.applyJob = async (req, res) => {
 }
 
 
-exports.getApplication = async (req, res) => {
+exports.getAppliedJobs = async (req, res) => {
     try {
         const userData = req.user;
         const userId = userData._id;
@@ -121,4 +121,32 @@ exports.updatestatus = async (req, res) => {
         console.log(error);
         return res.status(500).json({ message: "Internal server error!" });
     }
+}
+
+exports.getApplication=async(req,res)=>{
+    const jobId=req.params.id;
+   
+
+    try {
+        const job= await jobModel.findById(jobId).populate({
+            path:'applications',
+            options:{sort:{createdAt:-1}},
+            populate:{
+                path:'applicant'
+            }
+        });
+
+        // console.log(job)
+     
+        if(!job){
+            return res.status(400).json({message:"Job not found"})
+        }
+
+        return res.status(200).json({job})
+        
+    } catch (error) {
+        console.log(error);
+        return res.status(5500).json({message:"Internal server Error!!"})
+    }
+
 }
