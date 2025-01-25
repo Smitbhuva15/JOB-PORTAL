@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AuthContext } from '@/Context-Api/AuthContext'
 import { toast } from 'react-toastify'
+import { Loader2 } from 'lucide-react'
 
 const JobDetail = () => {
     const params = useParams();
@@ -11,54 +12,60 @@ const JobDetail = () => {
 
     const { token } = useContext(AuthContext);
     const [singleJobData, setSingleJobData] = useState({});
-    const {userData}=useContext(AuthContext)
+    const { userData } = useContext(AuthContext)
 
-    const isApplied = singleJobData?.applications?.some(application=>application.applicant===userData?._id) ||false;
-    const value=1
+    const isApplied = singleJobData?.applications?.some(application => application.applicant === userData?._id) || false;
+    const value = 1
+    const [loading, setLoading] = useState(false);
 
-    const applyJob=async()=>{
+
+    const applyJob = async () => {
+        setLoading(true)
         try {
-            const response =await fetch(`http://localhost:5000/user/v2/api/apply/job/${jobId}`, {
+            const response = await fetch(`http://localhost:5000/user/v2/api/apply/job/${jobId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             })
-           
+
 
             if (response.ok) {
                 const data = await response.json();
-              
+
                 setSingleJobData(prevState => ({
                     ...prevState,
-                    applications: [...prevState.applications, userData._id] 
+                    applications: [...prevState.applications, userData._id]
                 }));
                 toast.success(data.message)
 
             } else {
                 const errorMessage = await response.json();
-            
+
 
                 toast.info(errorMessage.message)
-               
+
             }
 
         } catch (error) {
             console.log(error)
         }
-          
+        finally {
+            setLoading(false)
+        }
+
     }
 
 
     const fechingsingleJobData = async () => {
         try {
-            const response =await fetch(`http://localhost:5000/user/v2/api/get/jobbyid/${jobId}`, {
+            const response = await fetch(`http://localhost:5000/user/v2/api/get/jobbyid/${jobId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
                 }
             })
-           
+
 
             if (response.ok) {
                 const data = await response.json();
@@ -77,8 +84,8 @@ const JobDetail = () => {
 
     useEffect(() => {
         fechingsingleJobData();
-       
-  }, [ jobId]); 
+
+    }, [jobId]);
 
 
     return (
@@ -92,14 +99,25 @@ const JobDetail = () => {
                         <Badge className={'text-[#a909b7] font-bold'} variant="ghost">{singleJobData?.salary} LPA</Badge>
                     </div>
                 </div >
-                <Button
-                onClick={()=>{
-                    applyJob()
-                }}
-                    disabled={isApplied}
-                    className={`rounded-lg ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#181b5c]'}`}>
-                    {isApplied ? 'Already Applied' : 'Apply Now'}
-                </Button>
+                {
+                    loading ?
+                        (
+                            <Button className="rounded-lg"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>
+                        )
+
+                        :
+                        (
+                            <Button
+                                onClick={() => {
+                                    applyJob()
+                                }}
+                                disabled={isApplied}
+                                className={`rounded-lg ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#181b5c]'}`}>
+                                {isApplied ? 'Already Applied' : 'Apply Now'}
+                            </Button>
+                        )
+                }
+
             </div>
 
             <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>

@@ -5,14 +5,14 @@ import { useSelector } from 'react-redux';
 
 const LatestJobCrad = ({job}) => {
   const alljobs = useSelector(store => store.job.Alljobs)
-  console.log(alljobs)
+//   console.log(alljobs)
 
     return (
         <div className='p-5 rounded-md shadow-xl bg-white border border-gray-100 cursor-pointer'>
 
             <div>
                 <h1 className='font-medium text-lg'>{job?.company?.name}</h1>
-                <p className='text-sm text-gray-500'>India</p>
+                <p className='text-sm text-gray-500'>{job?.location}</p>
             </div>
             <div>
                 <h1 className='font-bold text-lg my-2'>{job?.title }</h1>

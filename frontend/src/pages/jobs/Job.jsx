@@ -8,7 +8,7 @@ import { Bookmark } from 'lucide-react';
 import { Badge } from '../../components/ui/badge'
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { motion } from 'framer-motion';
 const Job = ({ job }) => {
 
   const daysAgoFunction = (mongodbTime) => {
@@ -19,8 +19,17 @@ const Job = ({ job }) => {
   }
 
   const navigate = useNavigate();
+  const boxVariants = {
+    hidden: { opacity: 0, scale: 0.5 },
+    visible: { opacity: 1, scale: 1 },
+  };
   return (
-    <div className="p-5 rounded-md shadow-xl bg-white border border-gray-100">
+    <motion.div className="p-5 rounded-md shadow-xl bg-white border border-gray-100"
+      initial="hidden"
+      animate="visible"
+      variants={boxVariants}
+      transition={{ duration: 1 }}
+    >
 
       <div className="flex items-center justify-between">
         <p className='text-sm text-gray-500'>{daysAgoFunction(job?.createdAt) === 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago`}</p>
@@ -47,7 +56,7 @@ const Job = ({ job }) => {
         </Button>
         <div>
           <h1 className="font-medium text-lg " >{job?.company?.name}</h1>
-          <p className="text-sm text-gray-500">India</p>
+          <p className="text-sm text-gray-500">{job?.location}</p>
         </div>
       </div>
 
@@ -65,7 +74,7 @@ const Job = ({ job }) => {
 
         <Button className="bg-[#020ef8]">Save For Later</Button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
