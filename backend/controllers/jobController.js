@@ -54,6 +54,7 @@ exports.getAllJobs = async (req, res) => {
 
     try {
         const keyword = req.query.keyword || "";
+        // console.log(keyword)
 
         const query = {
             $or: [
@@ -72,6 +73,8 @@ exports.getAllJobs = async (req, res) => {
 
             })
         };
+
+        console.log(allJobs)
         return res.status(200).json({
             allJobs
 
