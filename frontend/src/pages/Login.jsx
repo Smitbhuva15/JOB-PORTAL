@@ -3,7 +3,7 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from 'react-hook-form';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,12 +13,26 @@ import { AuthContext } from '@/Context-Api/AuthContext';
 import { Loader2 } from 'lucide-react';
 
 const Login = () => {
-
+  const {userData}=useContext(AuthContext)
   const navigate=useNavigate()
   const dispatch = useDispatch()
   const {setToken} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
   
+    // console.log(userData)
+  // protect the routes.....?
+
+  const [token1, setToken1] = useState(localStorage.getItem('token-jobportal'));
+  
+  
+    useEffect(() => {
+      if (token1) {
+        navigate('/')
+      }
+      
+  
+    }, []);
+
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit =async(data, e) => {
@@ -102,7 +116,7 @@ const Login = () => {
             <div className='my-2'>
               <Label>Password</Label>
               <Input
-                type="text"
+                type="password"
                 name="password"
                 placeholder="Enter Password"
                 {...register("password")}

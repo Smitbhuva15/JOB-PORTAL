@@ -1,18 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux'
 import GetAllJobs from '../FechingData/GetAllJobs'
 import Job from './jobs/Job'
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { setsearchjob } from '@/store/jobSlice'
+import { AuthContext } from '@/Context-Api/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const Browse = () => {
-
+  const navigate=useNavigate();
   const dispatch=useDispatch();
   GetAllJobs()
   const Alljobs = useSelector(store => store.job.Alljobs)
-  // console.log(Alljobs)
+
+ 
   useEffect(() => {
+   
     dispatch(setsearchjob(""))
+   
   }, []);
+ 
+  // protect the routes
+   const [token1, setToken1] = useState(localStorage.getItem('token-jobportal'));
+    
+      useEffect(() => {
+        if (!token1) {
+          navigate('/login')
+        }
+ 
+      }, []);
+ 
+  
 
 
   return (

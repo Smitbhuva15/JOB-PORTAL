@@ -3,16 +3,30 @@ import FilterItem from './jobs/FilterItem'
 import Job from './jobs/Job'
 import React, { useEffect, useState } from 'react'
 import GetAllJobs from '../FechingData/GetAllJobs'
+import { useNavigate } from 'react-router-dom'
 
 const Jobs = () => {
 
   GetAllJobs()
 
    const alljobs = useSelector(store => store.job.Alljobs)
-   console.log(alljobs)
+
    const [filterData, setFilterData] = useState(alljobs);
    const searchjobdata = useSelector(store => store.job.searchjobdata)
-    console.log(searchjobdata)
+    
+  const navigate=useNavigate()
+
+
+    // protect the routes
+    const [token1, setToken1] = useState(localStorage.getItem('token-jobportal'));
+        
+          useEffect(() => {
+            if (!token1) {
+              navigate('/login')
+            }
+            
+        
+          }, []);
     
 
    useEffect(() => {

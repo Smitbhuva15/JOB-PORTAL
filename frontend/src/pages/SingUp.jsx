@@ -3,68 +3,82 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from 'react-hook-form';
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Loader2 } from 'lucide-react';
+import { AuthContext } from '@/Context-Api/AuthContext';
 
 
 const SingUp = () => {
-  const navigate=useNavigate()
-      const [loading, setLoading] = useState(false);
-  
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false);
+  const {userData}=useContext(AuthContext)
+  const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
+
+
+  useEffect(() => {
+    if (token) {
+      navigate('/')
+    }
+    
+
+  }, []);
+
   const { register, handleSubmit, formState: { errors }, } = useForm();
-  const onSubmit =async(data, e) => {
+
+
+  const onSubmit = async (data, e) => {
     setLoading(true)
     // console.log(data)
     e.preventDefault();
     const formData = new FormData();
-    formData.append('email',data.email)
-    formData.append('fullname',data.fullname)
-    formData.append('password',data.password)
-    formData.append('phoneNumber',data.phoneNumber)
-    formData.append('role',data.role)
+    formData.append('email', data.email)
+    formData.append('fullname', data.fullname)
+    formData.append('password', data.password)
+    formData.append('phoneNumber', data.phoneNumber)
+    formData.append('role', data.role)
 
-    if(data.file[0]){
-      formData.append('file',data.file[0])
+    if (data.file[0]) {
+      formData.append('file', data.file[0])
     }
-   
+
     try {
-      const response=await fetch(`http://localhost:5000/user/v2/api/signup`,{
-        method:'POST',
-        body:formData
+      const response = await fetch(`http://localhost:5000/user/v2/api/signup`, {
+        method: 'POST',
+        body: formData
       });
-       if(response.ok){
-        const res=await response.json();
-      toast.success(res.message)
-      setTimeout(() => {
-        navigate('/login');
-      }, 2000);
-       
-       }
-      else{
+      if (response.ok) {
+        const res = await response.json();
+        toast.success(res.message)
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000);
+
+      }
+      else {
         const errormessage = await response.json();
         const mess = errormessage.message
-        const isAarry= await Array.isArray(mess);
-          if(isAarry){
-            for(let i=0;i<mess.length;i++){
-              toast.error(mess[i]);
-            }
+        const isAarry = await Array.isArray(mess);
+        if (isAarry) {
+          for (let i = 0; i < mess.length; i++) {
+            toast.error(mess[i]);
           }
-          else{
-            toast.error(mess)
-          }
+        }
+        else {
+          toast.error(mess)
+        }
       }
-      
+
     } catch (error) {
       console.log(error);
       toast.error(error)
     }
-    finally{
+    finally {
       setLoading(false)
     }
- 
+
 
 
   }
@@ -161,10 +175,10 @@ const SingUp = () => {
             </div>
             {
               loading
-              ?
-              (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
-              :
-              (<Button type="submit" className="w-full my-4 ">Login</Button>)
+                ?
+                (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
+                :
+                (<Button type="submit" className="w-full my-4 ">Login</Button>)
             }
             <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
 

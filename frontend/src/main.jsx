@@ -20,6 +20,8 @@ import { Adminjob } from './pages/admin/Adminjob';
 import AdminCreatJob from './pages/admin/AdminCreatJob';
 import AdminApplicaton from './pages/admin/AdminApplicaton';
 import Updatejob from './pages/admin/Updatejob';
+import ProtectedRoutes from './pages/admin/ProtectedRoutes';
+
 
 
 
@@ -66,37 +68,37 @@ const router = createBrowserRouter([
           },
           {
             path: '/admin/compnies',
-            element: <Compnies />,
+            element:<ProtectedRoutes> <Compnies /></ProtectedRoutes>,
 
           },
           {
             path: '/admin/add/company',
-            element: <CompaniesCreate />,
+            element: <ProtectedRoutes><CompaniesCreate /></ProtectedRoutes>,
 
           },
           {
             path: '/admin/setup/company/:id',
-            element: <CompaniesManage />,
+            element: <ProtectedRoutes><CompaniesManage /></ProtectedRoutes>,
 
           },
           {
             path: '/admin/jobs',
-            element: <Adminjob />,
+            element: <ProtectedRoutes><Adminjob /></ProtectedRoutes>,
 
           },
           {
             path: '/admin/add/job',
-            element: <AdminCreatJob />,
+            element:<ProtectedRoutes> <AdminCreatJob /></ProtectedRoutes>,
 
           },
           {
             path: '/admin/get/applicant/:id',
-            element: <AdminApplicaton />,
+            element: <ProtectedRoutes><AdminApplicaton /></ProtectedRoutes>,
 
           },
           {
             path: '/admin/update/:id',
-            element: <Updatejob />,
+            element: <ProtectedRoutes><Updatejob /></ProtectedRoutes>,
 
           },
           
