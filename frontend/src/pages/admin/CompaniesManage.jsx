@@ -1,7 +1,7 @@
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -20,6 +20,8 @@ const CompaniesManage = () => {
     const navigate = useNavigate()
     GetsingleCompny(companyId)
     // const [isUpdate,setIsUpdate]=useState(false);
+    const [loading, setLoading] = useState(false);
+
     const dispath = useDispatch()
     const { token } = useContext(AuthContext)
 
@@ -45,14 +47,14 @@ const CompaniesManage = () => {
                 description: singlecompanydata?.description || '',
                 website: singlecompanydata?.website || '',
                 location: singlecompanydata?.location || '',
-         
+
             });
         }
     }, [singlecompanydata]);
 
 
     const onSubmit = async (data, e) => {
-
+        setLoading(true)
         // console.log(data)
         e.preventDefault();
         const formData = new FormData();
@@ -76,7 +78,7 @@ const CompaniesManage = () => {
             });
             if (response.ok) {
                 const res = await response.json();
-          
+
 
                 dispath(getstateinfo())
                 toast.success(res.message)
@@ -103,7 +105,9 @@ const CompaniesManage = () => {
             console.log(error);
             toast.error(error)
         }
-
+        finally {
+            setLoading(false)
+        }
 
 
     }
@@ -178,10 +182,12 @@ const CompaniesManage = () => {
                         />
                     </div>
                 </div>
-                <Button type="submit" className="w-full my-4">Update</Button>
 
+                {
+                    loading ? <Button className="w-full my-4"> < Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Update</Button>
+                }
             </form>
-        </div>
+        </div >
     )
 }
 

@@ -19,20 +19,22 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { AuthContext } from '../../Context-Api/AuthContext';
 import { useForm } from 'react-hook-form';
 import GetSingleJob from '../../FechingData/GetSingleJob';
-import store from '@/store/store';
+import { Loader2 } from 'lucide-react';
+
 
 const Updatejob = () => {
     const params = useParams();
-    const jobId = params.id;  
+    const jobId = params.id;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { token } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
 
     GetAllCompany();
     GetSingleJob(jobId);
 
-    
+
     const singlejob = useSelector(store => store.job.singlejob);
     const companies = useSelector(store => store.company.AllCompany);
 
@@ -47,7 +49,7 @@ const Updatejob = () => {
         jobType: '',
         experience: '',
         position: '',
-      
+
     });
 
 
@@ -62,184 +64,191 @@ const Updatejob = () => {
                 jobType: singlejob.jobType || '',
                 experience: singlejob.experienceLevel || '',
                 position: singlejob.position || '',
-                
+
             });
         }
     }, [singlejob]);
 
-    const onSubmit =async(olddata, e) => {
+    const onSubmit = async (olddata, e) => {
+        setLoading(true)
         //   console.log(olddata)
         e.preventDefault();
-    
-          const companydetail=companies.filter(comp=>comp.name===olddata.name)
+
+        const companydetail = companies.filter(comp => comp.name === olddata.name)
         //   console.log(companydetail,"comp")
-          const companyId=companydetail[0]?._id;
+        const companyId = companydetail[0]?._id;
         //   console.log(company ,"id")
-    
-        const data={...olddata,companyId}
+
+        const data = { ...olddata, companyId }
         // console.log(data)   
-        
-           try {
-                const response=await fetch(`http://localhost:5000/user/v2/api/admin/update/job/${jobId}`,{
-                  method:'PATCH',
-                  headers:{
-                    'Content-Type':'application/json',
-                    "Authorization":`Bearer ${token}`
-                  },
-                  body:JSON.stringify(data)
-                });
-    
-                 if(response.ok){
-                  const res=await response.json();
-               
+
+        try {
+            const response = await fetch(`http://localhost:5000/user/v2/api/admin/update/job/${jobId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                const res = await response.json();
+
                 toast.success(res.message)
                 setTimeout(() => {
-                 
+
                     navigate('/admin/jobs');
-                
+
                 }, 2000);
-                 
-                 }
-                else{
-                  const errormessage = await response.json();
-                 
-                  const mess = errormessage.message
-                  const isAarry= await Array.isArray(mess);
-                    if(isAarry){
-                      for(let i=0;i<mess.length;i++){
+
+            }
+            else {
+                const errormessage = await response.json();
+
+                const mess = errormessage.message
+                const isAarry = await Array.isArray(mess);
+                if (isAarry) {
+                    for (let i = 0; i < mess.length; i++) {
                         toast.error(mess[i]);
-                      }
-                    }
-                    else{
-                      toast.error(mess)
                     }
                 }
-                
-              } catch (error) {
-                console.log(error);
-                toast.error(error)
-              }
-      
-      
+                else {
+                    toast.error(mess)
+                }
+            }
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error)
         }
+        finally {
+            setLoading(false)
+        }
+
+    }
 
 
     return (
-         <div className='flex items-center justify-center  my-5'>
-             <form onSubmit={handleSubmit(onSubmit)} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
-                 <div className='grid grid-cols-2 gap-2'>
-                     <div>
-                         <Label>Title</Label>
-                         <Input
-                             type="text"
-                             name="title"
-                             {...register("title")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.title}
-                         />
-                     </div>
-                     <div>
-                         <Label>Description</Label>
-                         <Input
-                             type="text"
-                             name="description"
-                             {...register("description")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.description}
+        <div className='flex items-center justify-center  my-5'>
+            <form onSubmit={handleSubmit(onSubmit)} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
+                <div className='grid grid-cols-2 gap-2'>
+                    <div>
+                        <Label>Title</Label>
+                        <Input
+                            type="text"
+                            name="title"
+                            {...register("title")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.title}
+                        />
+                    </div>
+                    <div>
+                        <Label>Description</Label>
+                        <Input
+                            type="text"
+                            name="description"
+                            {...register("description")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.description}
 
-                         />
-                     </div>
-                     <div>
-                         <Label>Requirements</Label>
-                         <Input
-                             type="text"
-                             name="requirements"
-                             {...register("requirements")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.requirements}
+                        />
+                    </div>
+                    <div>
+                        <Label>Requirements</Label>
+                        <Input
+                            type="text"
+                            name="requirements"
+                            {...register("requirements")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.requirements}
 
-                         />
-                     </div>
-                     <div>
-                         <Label>Salary</Label>
-                         <Input
-                             type="text"
-                             name="salary"
-                             {...register("salary")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.salary}
+                        />
+                    </div>
+                    <div>
+                        <Label>Salary</Label>
+                        <Input
+                            type="text"
+                            name="salary"
+                            {...register("salary")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.salary}
 
-                         />
-                     </div>
-                     <div>
-                         <Label>Location</Label>
-                         <Input
-                             type="text"
-                             name="location"
-                             {...register("location")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.location}
+                        />
+                    </div>
+                    <div>
+                        <Label>Location</Label>
+                        <Input
+                            type="text"
+                            name="location"
+                            {...register("location")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.location}
 
-                         />
-                     </div>
-                     <div>
-                         <Label>Job Type</Label>
-                         <Input
-                             type="text"
-                             name="jobType"
-                             {...register("jobType")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.jobType}
+                        />
+                    </div>
+                    <div>
+                        <Label>Job Type</Label>
+                        <Input
+                            type="text"
+                            name="jobType"
+                            {...register("jobType")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.jobType}
 
-                         />
-                     </div>
-                     <div>
-                         <Label>Experience Level</Label>
-                         <Input
-                             type="text"
-                             name="experience"
-                             {...register("experience")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.experience }
+                        />
+                    </div>
+                    <div>
+                        <Label>Experience Level</Label>
+                        <Input
+                            type="text"
+                            name="experience"
+                            {...register("experience")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.experience}
 
-                         />
-                     </div>
-                     <div>
-                         <Label>No of Postion</Label>
-                         <Input
-                             type="number"
-                             name="position"
-                             {...register("position")}
-                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                             defaultValue={formData.position}
+                        />
+                    </div>
+                    <div>
+                        <Label>No of Postion</Label>
+                        <Input
+                            type="number"
+                            name="position"
+                            {...register("position")}
+                            className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
+                            defaultValue={formData.position}
 
-                         />
-                     </div>
-                     {
-                         companies.length > 0 && (
-                            <select name="company" id="company" className='border my-1 py-1 '  {...register("name")}> 
-                               <option id='select'>Select a company</option>
-                               {
-                                 companies.map((company)=>(
-                                     <option id={company._id}>{company?.name}</option>
-                                 ))
-                               }
- 
+                        />
+                    </div>
+                    {
+                        companies.length > 0 && (
+                            <select name="company" id="company" className='border my-1 py-1 '  {...register("name")}>
+                                <option id='select'>Select a company</option>
+                                {
+                                    companies.map((company) => (
+                                        <option id={company._id}>{company?.name}</option>
+                                    ))
+                                }
+
                             </select>
-                         )
-                     }
-                 </div>
-                 {
-                     <Button type="submit" className="w-full my-4">Post New Job</Button>
-                 }
- 
-                 {
-                     companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>
-                 }
-             </form>
-         </div>
- 
-     )
+                        )
+                    }
+                </div>
+                {
+                    loading
+                        ?
+                        (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
+                        :
+                        (<Button type="submit" className="w-full my-4 ">Post New Job</Button>)
+                }
+
+                {
+                    companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>
+                }
+            </form>
+        </div>
+
+    )
 }
 
 export default Updatejob

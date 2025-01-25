@@ -3,25 +3,30 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from 'react-hook-form';
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import { setuser } from '../store/userSlice';
 import { AuthContext } from '@/Context-Api/AuthContext';
+import { Loader2 } from 'lucide-react';
 
 const Login = () => {
 
   const navigate=useNavigate()
   const dispatch = useDispatch()
   const {setToken} = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
+  
 
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit =async(data, e) => {
       // console.log(data)
+      setLoading(true)
       e.preventDefault();
        try {
+
             const response=await fetch(`http://localhost:5000/user/v2/api/login`,{
               method:'POST',
               headers:{
@@ -67,6 +72,9 @@ const Login = () => {
           } catch (error) {
             console.log(error);
             toast.error(error)
+          }
+          finally{
+            setLoading(false)
           }
   
   
@@ -132,8 +140,15 @@ const Login = () => {
 
 
             </div>
+            {
+              loading
+              ?
+              (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
+              :
+              (<Button type="submit" className="w-full my-4 ">Login</Button>)
+            }
            
-            <Button type="submit" className="w-full my-4 ">Login</Button>
+            
             <span className='text-sm'>Don't have an account? <Link to="/signup" className='text-blue-600'>Signup</Link></span>
 
           </form>

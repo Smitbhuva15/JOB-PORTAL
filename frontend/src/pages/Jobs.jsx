@@ -20,7 +20,7 @@ const Jobs = () => {
           </div>
 
           {
-            alljobs.length <= 0 ? <span className='mb-96 text-[#ef303d] text-4xl font-mono '>No Jobs Available, please Login in First!!</span> : (
+            alljobs.length <= 0 ? <span span className="flex  text-[#ef303d] text-2xl font-bold h-[88vh] mb-24">No Jobs Available, please Login in First!!</span> : (
               <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
                 <div className='grid grid-cols-3 gap-4'>
                   {

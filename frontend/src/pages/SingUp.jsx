@@ -3,17 +3,21 @@ import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Button } from '../components/ui/button'
 import { useForm } from 'react-hook-form';
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Loader2 } from 'lucide-react';
 
 
 const SingUp = () => {
   const navigate=useNavigate()
+      const [loading, setLoading] = useState(false);
+  
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const onSubmit =async(data, e) => {
-    console.log(data)
+    setLoading(true)
+    // console.log(data)
     e.preventDefault();
     const formData = new FormData();
     formData.append('email',data.email)
@@ -56,6 +60,9 @@ const SingUp = () => {
     } catch (error) {
       console.log(error);
       toast.error(error)
+    }
+    finally{
+      setLoading(false)
     }
  
 
@@ -152,7 +159,13 @@ const SingUp = () => {
                 {...register('file', { required: 'File is required' })}
               />
             </div>
-            <Button type="submit" className="w-full my-4">Signup</Button>
+            {
+              loading
+              ?
+              (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
+              :
+              (<Button type="submit" className="w-full my-4 ">Login</Button>)
+            }
             <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
 
           </form>

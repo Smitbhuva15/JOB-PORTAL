@@ -1,10 +1,17 @@
 import React from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Badge } from '../../components/ui/badge'
+import GetApplyJobs from '../../FechingData/GetApplyJobs'
+import { useSelector } from 'react-redux'
 
 const AppliedJobTable = () => {
 
-    const allAppliedJobs=[1,2]
+    GetApplyJobs()
+   const applyjobs=useSelector(store=>store.job.applyjob)
+//    console.log(applyjobs)
+    
+
+    
     return (
         <div>
             <Table>
@@ -20,12 +27,12 @@ const AppliedJobTable = () => {
 
                 <TableBody>
                     {
-                        allAppliedJobs.length <= 0 ? <span className='text-[#020ef8] font-extrabold'>You haven't applied any job yet.</span> : allAppliedJobs.map((appliedJob) => (
+                        applyjobs.length <= 0 ? <span className='text-[#020ef8] font-extrabold'>You haven't applied any job yet.</span> : applyjobs.map((appliedJob) => (
                             <TableRow >
-                                <TableCell>appliedJob?.createdAt</TableCell>
-                                <TableCell>appliedJob.job?.title</TableCell>
-                                <TableCell>appliedJob.job?.company?.name</TableCell>
-                                <TableCell className="text-right"><Badge className={`${appliedJob?.status === "rejected" ? 'bg-red-400' : appliedJob.status === 'pending' ? 'bg-gray-400' : 'bg-green-400'}`}>appliedJob.status.toUpperCase</Badge></TableCell>
+                                <TableCell>{appliedJob?.createdAt}</TableCell>
+                                <TableCell>{appliedJob.job?.title}</TableCell>
+                                <TableCell>{appliedJob.job?.company?.name}</TableCell>
+                                <TableCell className="text-right"><Badge className={`${appliedJob?.status === "rejected" ? 'bg-red-400' : appliedJob.status === 'pending' ? 'bg-gray-400' : 'bg-green-400'}`}>{appliedJob.status.toUpperCase()}</Badge></TableCell>
                             </TableRow>
                         ))
                     }

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button } from "../../components/ui/button"
 import {
     Dialog,
@@ -15,46 +15,52 @@ import { AuthContext } from '../../Context-Api/AuthContext'
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Loader2 } from 'lucide-react'
 
 const UpdateProfile = ({ open, setOpen }) => {
 
 
-     const { register, handleSubmit, formState: { errors }, } = useForm();
-    const { userData, loading } = useContext(AuthContext);
-    const user_fullName=userData?.fullname||"";
-    const user_email=userData?. email||"";
-    const user_phoneNumber=userData?.phoneNumber||"";
-    const user_bio=userData?.profile?.bio||"";
-    const user_skill=userData?.profile?.skills?.map((item)=>item)||"";
-    
-    const { token ,setToken} = useContext(AuthContext);
-    
+    const { register, handleSubmit, formState: { errors }, } = useForm();
+    const { userData } = useContext(AuthContext);
+    const [loading, setLoading] = useState(false);
+
+    const user_fullName = userData?.fullname || "";
+    const user_email = userData?.email || "";
+    const user_phoneNumber = userData?.phoneNumber || "";
+    const user_bio = userData?.profile?.bio || "";
+    const user_skill = userData?.profile?.skills?.map((item) => item) || "";
+
+    const { token, setToken } = useContext(AuthContext);
+
     const onSubmit = async (data, e) => {
+
+        // console.log(data)
         e.preventDefault();
-        
+
         const formData = new FormData();
         formData.append('email', data.email);
         formData.append('fullname', data.fullName);
         formData.append('bio', data.bio);
         formData.append('phoneNumber', data.phoneNumber);
         formData.append('skills', data.skills);
-    
+
         if (data.file && data.file[0]) {
             formData.append('file', data.file[0]);
         }
-    
+
         try {
+            setLoading(true)
             const response = await fetch('http://localhost:5000/user/v2/api/update/profile', {
                 method: "PATCH",
                 headers: {
-                    "Authorization": `Bearer ${token}`,  
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: formData,
             });
-    
+
             if (response.ok) {
                 const res = await response.json();
-                
+
                 setTimeout(() => {
                     window.location.reload(true)
                 }, 2000);
@@ -62,21 +68,27 @@ const UpdateProfile = ({ open, setOpen }) => {
                 // console.log(res);
             } else {
                 const errorMessage = await response.json();
-               
-                toast.error(errorMessage.message );
-              
+
+                toast.error(errorMessage.message);
+
             }
         } catch (error) {
-           
+
             toast.error('Network error or server unavailable!');
             console.log(error);
         }
+        finally {
+            setLoading(false)
+        }
     };
-    
 
-  const handelgimer=()=>{
 
-  }
+
+
+
+    const handelgimer = () => {
+
+    }
 
     return (
         <Dialog open={open}>
@@ -95,9 +107,9 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 name="name"
                                 type="text"
                                 defaultValue={user_fullName}
-                                
+
                                 className="col-span-3"
-                                 {...register('fullName')} 
+                                {...register('fullName')}
                             />
                         </div>
 
@@ -108,7 +120,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 name="email"
                                 type="email"
                                 defaultValue={user_email}
-                                {...register('email')} 
+                                {...register('email')}
                                 className="col-span-3"
                             />
                         </div>
@@ -118,7 +130,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 id="number"
                                 name="number"
                                 defaultValue={user_phoneNumber}
-                                {...register('phoneNumber')} 
+                                {...register('phoneNumber')}
                                 className="col-span-3"
                             />
                         </div>
@@ -129,7 +141,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 name="bio"
                                 defaultValue={user_bio}
                                 className="col-span-3"
-                                {...register('bio')} 
+                                {...register('bio')}
                             />
                         </div>
 
@@ -140,7 +152,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 name="skills"
                                 defaultValue={user_skill}
                                 className="col-span-3"
-                                {...register('skills')} 
+                                {...register('skills')}
                             />
                         </div>
 
@@ -150,7 +162,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                                 id="file"
                                 name="file"
                                 type="file"
-                                accept="application/pdf"
+                                accept="image/*"
                                 className="col-span-3"
                                 {...register('file')}
                             />
@@ -158,7 +170,11 @@ const UpdateProfile = ({ open, setOpen }) => {
 
                         <DialogFooter>
                             {
-                                <Button type="submit" className="w-full my-4" onClick={()=>setOpen(false)}>Update</Button>
+                                loading
+                                    ?
+                                    (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
+                                    :
+                                    (<Button type="submit" className="w-full my-4 ">Update</Button>)
                             }
                         </DialogFooter>
                     </div>

@@ -13,76 +13,82 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../../components/ui/select"
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Button } from '../../components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context-Api/AuthContext';
 import { useForm } from 'react-hook-form';
+import { Loader2 } from 'lucide-react';
 
 const AdminCreatJob = () => {
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const {token} = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors }, } = useForm();
     GetAllCompany();
     const companies = useSelector(store => store.company.AllCompany)
-   
+    const [loading, setLoading] = useState(false);
 
-   
-const onSubmit =async(olddata, e) => {
-    //   console.log(olddata)
-    e.preventDefault();
 
-      const companydetail=companies.filter(comp=>comp.name===olddata.name)
-    //   console.log(companydetail,"comp")
-      const companyId=companydetail[0]?._id;
-    //   console.log(company ,"id")
 
-    const data={...olddata,companyId}
-    // console.log(data)
-    
-       try {
-            const response=await fetch(`http://localhost:5000/user/v2/api/post/job`,{
-              method:'POST',
-              headers:{
-                'Content-Type':'application/json',
-                "Authorization":`Bearer ${token}`
-              },
-              body:JSON.stringify(data)
+    const onSubmit = async (olddata, e) => {
+        setLoading(true)
+        //   console.log(olddata)
+        e.preventDefault();
+
+        const companydetail = companies.filter(comp => comp.name === olddata.name)
+        //   console.log(companydetail,"comp")
+        const companyId = companydetail[0]?._id;
+        //   console.log(company ,"id")
+
+        const data = { ...olddata, companyId }
+        // console.log(data)
+
+        try {
+            const response = await fetch(`http://localhost:5000/user/v2/api/post/job`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
             });
 
-             if(response.ok){
-              const res=await response.json();
-           
-            toast.success(res.message)
-            setTimeout(() => {
-             
-                navigate('/admin/jobs');
-            
-            }, 2000);
-             
-             }
-            else{
-              const errormessage = await response.json();
-             
-              const mess = errormessage.message
-              const isAarry= await Array.isArray(mess);
-                if(isAarry){
-                  for(let i=0;i<mess.length;i++){
-                    toast.error(mess[i]);
-                  }
+            if (response.ok) {
+                const res = await response.json();
+
+                toast.success(res.message)
+                setTimeout(() => {
+
+                    navigate('/admin/jobs');
+
+                }, 2000);
+
+            }
+            else {
+                const errormessage = await response.json();
+
+                const mess = errormessage.message
+                const isAarry = await Array.isArray(mess);
+                if (isAarry) {
+                    for (let i = 0; i < mess.length; i++) {
+                        toast.error(mess[i]);
+                    }
                 }
-                else{
-                  toast.error(mess)
+                else {
+                    toast.error(mess)
                 }
             }
-            
-          } catch (error) {
+
+        } catch (error) {
             console.log(error);
             toast.error(error)
-          }
-  
-  
+        }
+        finally {
+            setLoading(false)
+        }
+
+
     }
 
 
@@ -164,21 +170,27 @@ const onSubmit =async(olddata, e) => {
                     </div>
                     {
                         companies.length > 0 && (
-                           <select name="company" id="company" className='border my-1 py-1 '  {...register("name")}>
-                              <option id='select'>Select a company</option>
-                              {
-                                companies.map((company)=>(
-                                    <option id={company._id}>{company?.name}</option>
-                                ))
-                              }
+                            <select name="company" id="company" className='border my-1 py-1 '  {...register("name")}>
+                                <option id='select'>Select a company</option>
+                                {
+                                    companies.map((company) => (
+                                        <option id={company._id}>{company?.name}</option>
+                                    ))
+                                }
 
-                           </select>
+                            </select>
                         )
                     }
                 </div>
+
                 {
-                    <Button type="submit" className="w-full my-4">Post New Job</Button>
+                    loading
+                        ?
+                        (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
+                        :
+                        (<Button type="submit" className="w-full my-4 ">Post New Job</Button>)
                 }
+
 
                 {
                     companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>

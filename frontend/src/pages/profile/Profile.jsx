@@ -56,7 +56,7 @@ const Profile = () => {
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
                     <Label className="text-md font-bold">Resume</Label>
                     {
-                        isResume ? <a target='blank' href='https://ui.shadcn.com/docs/components/radio-group' className='text-[#020ef8] w-full hover:underline cursor-pointer'>resumeOriginalName</a> : <span className='text-[#020ef8] font-extrabold'>NAN</span>
+                        isResume ? <a target='blank' href={userData?.profile?.resume} className='text-[#020ef8] w-full hover:underline cursor-pointer'>{userData?.profile?.resumeOriginalName}</a> : <span className='text-[#020ef8] font-extrabold'>NAN</span>
                     }
                 </div>
             </div>
