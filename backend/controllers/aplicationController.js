@@ -53,15 +53,16 @@ exports.getAppliedJobs = async (req, res) => {
     try {
         const userData = req.user;
         const userId = userData._id;
+        console.log(userId)
 
-        const applicationapplybyOneUser = await applicationModel.findById({ applicant: userId }).populate({
+        const applicationapplybyOneUser = await applicationModel.find( {applicant:userId} ).sort({ createdAt: -1 }).populate({
             path: 'job',
             options: { sort: { createdAt: -1 } },
             populate: {
                 path: 'company',
                 options: { sort: { createdAt: -1 } },
             }
-        })
+        });
 
         if (!applicationapplybyOneUser) {
             return res.status(404).json({
@@ -71,7 +72,7 @@ exports.getAppliedJobs = async (req, res) => {
         };
 
         return res.status(200).json({
-            application
+            applicationapplybyOneUser
         })
 
 

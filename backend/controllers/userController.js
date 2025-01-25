@@ -141,11 +141,10 @@ exports.updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
 
-      
         const user = req.user;
         const userId = user._id;
         const userExist = await userModel.findById(userId);
-
+  
         if (!userExist) {
             return res.status(400).json({ message: "User does not exist!" });
         }
@@ -160,23 +159,29 @@ exports.updateProfile = async (req, res) => {
         if (bio) updateData["profile.bio"] = bio;  
         if (skills) updateData["profile.skills"] = skills.split(","); 
        
-        // const file = req.file;
-        // if (file) {
-        //     const fileuri = getDataUri(file);
-        //     const cloudResponse = await cloudinary.uploader.upload(fileuri.content);
-        //     updateData.profile.resume = cloudResponse.secure_url;
-        //     updateData.profile.resumeOriginalName = file.originalname;
-        // }
-
+        const file = req.file;
         
+       
+        if (!file) {
+          return res.status(400).send('No file uploaded.');
+        }
+       const fileurl=getDataUri(file)
+        const response=await cloudinary.uploader.upload(fileurl.content)
+        // console.log(response)
+
+        if(response){
+            updateData["profile.resume"]=response.secure_url
+            updateData["profile.resumeOriginalName"]=file.originalname
+        }
+
         const updatedUser = await userModel.updateOne(
             { _id: userId },
-            { $set: updateData }  // Only update the provided fields
+            { $set: updateData }  
         );
-
+    
         
 
-        // Fetch the updated user to return the latest profile
+     
         const updatedUserData = await userModel.findById(userId);
 
         return res.status(200).json({

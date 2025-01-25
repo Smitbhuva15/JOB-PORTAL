@@ -5,6 +5,7 @@ const { authMiddleware } = require('../middlewares/authmiddleware');
 const { singleUpload } = require('../middlewares/multer');
 const { userdata } = require('../controllers/userData');
 
+
 const userroutes=express.Router();
 
 
