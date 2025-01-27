@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from "../ui/button"
 import { LogOut, User2 } from 'lucide-react'
@@ -15,30 +15,24 @@ import {
 } from "../ui/avatar"
 import { useSelector } from 'react-redux'
 import { AuthContext } from '@/Context-Api/AuthContext'
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "../ui/navigation-menu"
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
 
 
 const Navbar = () => {
 
-  // const userData=useSelector(store=>store.user.userinfo)
-
-
   const { userData, setToken, handelLogout, isVerify } = useContext(AuthContext);
-  // console.log(userData)
-
 
   const hasValidUserData = userData && Object.keys(userData).length > 0;
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handelCloseMenu = () => {
+    setIsOpen(false)
+  }
+  const handelToggle = () => {
+    setIsOpen(!isOpen)
+  }
 
 
 
@@ -98,43 +92,60 @@ const Navbar = () => {
             </ul>
 
 
-            <div className='md:hidden block mr-9'>
-              <Popover >
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className='-mr-9 sm:mt-0 mt-4'><FaBars /></Button>
-                </PopoverTrigger>
-                <PopoverContent className="md:w-80 w-64">
-                  <div>
 
-                    <div className='flex flex-col my-2 text-gray-600'>
-                      <div className='flex w-fit items-center gap-2 cursor-pointer'>
+            <div className=" md:hidden block  sm:mt-0 mt-4 ">
+              <button
+                onClick={handelToggle}
+                className={`text-black focus:outline-none ${isOpen ? "border border-white rounded" : " "} `}>
 
-                        <Button variant="link" > <Link to='/home' className='ml-16'>Home</Link></Button>
-                      </div>
-                      <div className='flex w-fit items-center gap-2 cursor-pointer'>
-
-                        <Button variant="link"> <Link to='/jobs' className='ml-16'>Jobs</Link></Button>
-                      </div>
-                      <div className='flex w-fit items-center gap-2 cursor-pointer'>
-
-                        <Button variant="link"> <Link to='/browse' className='ml-16'>Browse</Link></Button>
-                      </div>
-
-                      {
-
-                        <div className='flex w-fit items-center gap-2 cursor-pointer'>
-                          <Link to='/login'> <Button className=' mt-3 ml-[68px]'>Login</Button></Link>
-                        </div>
-                      }
-                      <div className='flex w-fit items-center gap-2 cursor-pointer' >
-
-                        <Link to='/signup'> <Button className="bg-[#020ef8] hover:bg-[#202477] mt-3 ml-16">Signup</Button></Link>
-                      </div>
-                    </div>
-                  </div>
-                </PopoverContent>
-              </Popover>
+                <HiOutlineMenuAlt3 className="size-6" />
+              </button>
             </div>
+            {
+              isOpen && (
+                
+                <nav className="absolute top-16  right-12 w-52 h-60 z-20 md:hidden  bg-blue-600 rounded-xl ">
+                  <ul className="flex flex-col p-4 space-y-8 ">
+                  
+                    <li className="navitem  ">
+                      <Link to="home" 
+                        onClick={handelCloseMenu}
+                        className="text-white font-bold absolute ml-16" >Home</Link>
+                    </li>
+                  
+
+                 
+                    <li className="navitem  border border-black">
+                      <Link to="jobs" 
+                        onClick={handelCloseMenu}
+                        className="text-white font-bold absolute ml-16" >Jobs</Link>
+                    </li>
+                    
+                  
+
+                    <li className="navitem  border border-black">
+                      <Link to="browse" 
+                        onClick={handelCloseMenu}
+                        className="text-white font-bold absolute ml-14" >Browse</Link>
+                    </li>
+                     <li className=' border border-black'></li>
+
+
+
+                  </ul>
+                  {
+                    <div className='flex flex-col mt-2'>
+                       <Link to='/login' className='ml-16' onClick={handelCloseMenu}> <Button >Login</Button></Link>
+                       <Link to='/signup' className='mt-2 ml-[61px]'  onClick={handelCloseMenu}> <Button className="bg-[#020ef8] hover:bg-[#202477]">Signup</Button></Link>
+                    </div>
+                    
+                  }
+
+                </nav>
+                
+              )
+            }
+
             {
               isVerify ?
                 (<Popover >
@@ -195,3 +206,5 @@ const Navbar = () => {
 }
 
 export default Navbar
+
+// className='-mr-9 sm:mt-0 mt-4'
