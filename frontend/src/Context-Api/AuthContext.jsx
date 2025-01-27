@@ -49,8 +49,8 @@ export const AuthProvider = ({ children }) => {
     setToken("");
     localStorage.removeItem('token-jobportal');
     toast.success("user Logout succesfully!!")
-    navigate('/home');
-
+    window.location.reload(true)
+   
   }
 
   useEffect(() => {

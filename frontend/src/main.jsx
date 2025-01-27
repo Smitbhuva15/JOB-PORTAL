@@ -27,6 +27,8 @@ import ProtectedRoutes from './pages/admin/ProtectedRoutes';
 
 
 
+
+
 const router = createBrowserRouter([
   {
       path: '/',
@@ -101,6 +103,7 @@ const router = createBrowserRouter([
             element: <ProtectedRoutes><Updatejob /></ProtectedRoutes>,
 
           },
+         
           
           
       ],

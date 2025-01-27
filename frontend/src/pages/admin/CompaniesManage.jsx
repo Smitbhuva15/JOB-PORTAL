@@ -116,17 +116,17 @@ const CompaniesManage = () => {
 
 
     return (
-        <div className='max-w-xl mx-auto my-10'>
+        <div className='md:max-w-xl w-[90%] mx-auto my-10'>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='flex items-center gap-5 p-8'>
+                <div className='flex items-center gap-5 p-8 '>
                     <Button onClick={() => navigate("/admin/compnies")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
                         <ArrowLeft />
                         <span>Back</span>
                     </Button>
-                    <h1 className='font-bold text-xl'>Company Setup</h1>
+                    <h1 className='font-bold sm:text-xl text-md'>Company Setup</h1>
                 </div>
 
-                <div className='grid grid-cols-2 gap-4'>
+                <div className='grid md:grid-cols-2 gap-4 grid-cols-1'>
                     <div>
                         <Label>Company Name</Label>
                         <Input

@@ -89,10 +89,10 @@ const JobDetail = () => {
 
 
     return (
-        <div className='max-w-7xl mx-auto my-10'>
-            <div className='flex items-center justify-between'>
+        <div className='sm:max-w-screen-sm md:max-w-2xl xl:max-w-7xl lg:max-w-5xl w-[90%] mx-auto my-10'>
+            <div className='flex flex-col sm:flex-row items-center justify-between'>
                 <div>
-                    <h1 className='font-bold text-xl'>{singleJobData?.title}</h1>
+                    <h1 className='font-bold text-xl '>{singleJobData?.title}</h1>
                     <div className='flex items-center gap-2 mt-4'>
                         <Badge className={'text-[#020ef8] font-bold'} variant="ghost">{singleJobData?.postion} Positions</Badge>
                         <Badge className={'text-[#2bd53f] font-bold'} variant="ghost">{singleJobData?.jobType}</Badge>
@@ -102,7 +102,7 @@ const JobDetail = () => {
                 {
                     loading ?
                         (
-                            <Button className="rounded-lg"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>
+                            <Button className="rounded-lg sm:mt-0 mt-5"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>
                         )
 
                         :
@@ -112,7 +112,7 @@ const JobDetail = () => {
                                     applyJob()
                                 }}
                                 disabled={isApplied}
-                                className={`rounded-lg ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#181b5c]'}`}>
+                                className={`rounded-lg sm:mt-0 mt-5 ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#181b5c]'}`}>
                                 {isApplied ? 'Already Applied' : 'Apply Now'}
                             </Button>
                         )

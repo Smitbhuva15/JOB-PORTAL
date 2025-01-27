@@ -49,16 +49,16 @@ const Jobs = () => {
 
   return (
     <>
-      <div className='max-w-7xl mx-auto mt-5'>
+      <div className=' sm:max-w-screen-sm md:max-w-2xl mx-auto my-14 xl:max-w-7xl lg:max-w-5xl w-[90%]'>
         <div className='flex gap-5'>
-          <div className='w-20%'>
+          <div className='w-20% md:block hidden'>
             <FilterItem />
           </div>
 
           {
             filterData.length <= 0 ? <span span className="flex  text-[#ef303d] text-2xl font-bold h-[88vh] mb-24">No Jobs Available, for Your Requirement!!</span> : (
               <div className='flex-1 h-[88vh] overflow-y-auto pb-5'>
-                <div className='grid grid-cols-3 gap-4'>
+                <div className='grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3'>
                   {
                   (filterData.map((job)=>(<Job key={job._id} job={job}/>)))
                   }

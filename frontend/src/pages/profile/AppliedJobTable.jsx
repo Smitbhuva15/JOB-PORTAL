@@ -15,7 +15,7 @@ const AppliedJobTable = () => {
     return (
         <div>
             <Table>
-                <TableCaption>A list of your applied jobs</TableCaption>
+                <TableCaption className='mb-4'>A list of your applied jobs</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>Date</TableHead>
@@ -29,7 +29,7 @@ const AppliedJobTable = () => {
                     {
                         applyjobs.length <= 0 ? <span className='text-[#020ef8] font-extrabold'>You haven't applied any job yet.</span> : applyjobs.map((appliedJob) => (
                             <TableRow >
-                                <TableCell>{appliedJob?.createdAt}</TableCell>
+                                <TableCell>{appliedJob?.createdAt.split('T')[0]}</TableCell>
                                 <TableCell>{appliedJob.job?.title}</TableCell>
                                 <TableCell>{appliedJob.job?.company?.name}</TableCell>
                                 <TableCell className="text-right"><Badge className={`${appliedJob?.status === "rejected" ? 'bg-red-400' : appliedJob.status === 'pending' ? 'bg-gray-400' : 'bg-green-400'}`}>{appliedJob.status.toUpperCase()}</Badge></TableCell>

@@ -36,7 +36,7 @@ const JobTabel = () => {
 
   return (
     <Table className='mt-10'>
-      <TableCaption>A list of your recent  posted jobs</TableCaption>
+      <TableCaption className="mb-4">A list of your recent posted jobs</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Company Name</TableHead>

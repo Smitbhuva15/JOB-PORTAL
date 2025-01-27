@@ -17,12 +17,13 @@ const HeroSection = () => {
 
   return (
     <>
+    <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto  xl:max-w-7xl lg:max-w-5xl w-[90%]'>
       <div className='text-center'>
         <div className='flex flex-col gap-5 my-10'>
-          <span className=' mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#020ef8] font-medium'>No. 1 Job Linker Website</span>
-          <h1 className='text-5xl font-bold'>Search, Apply & <br /> Get Your <span className='text-[#020ef8]'>Dream Jobs</span></h1>
-          <p>Find your dream job today with top companies. Explore opportunities, apply, and build your career!</p>
-          <div className='flex w-[40%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto'>
+          <span className=' md:text-md text-sm mt-5  mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#020ef8] font-medium'>No. 1 Job Linker Website</span>
+          <h1 className='md:text-5xl font-bold text-3xl '>Search, Apply & <br /> Get Your <span className='text-[#020ef8]'>Dream Jobs</span></h1>
+          <p className=''>Find your dream job today with top companies. Explore opportunities, apply, and build your career!</p>
+          <div className='flex md:w-[40%] w-[80%] shadow-lg border border-gray-200 pl-3 rounded-full items-center gap-4 mx-auto'>
             <input
               type="text"
               placeholder='Find your dream jobs'
@@ -36,6 +37,7 @@ const HeroSection = () => {
             </Button>
           </div>
         </div>
+      </div>
       </div>
     </>
   )

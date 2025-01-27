@@ -50,7 +50,7 @@ const ApplicantsTable = () => {
     return (
         <div>
             <Table>
-                <TableCaption className="mb-40">A list of your recent applied user</TableCaption>
+                <TableCaption className="mb-3">A list of your recent applied user</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>FullName</TableHead>

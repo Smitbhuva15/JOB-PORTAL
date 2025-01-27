@@ -31,10 +31,10 @@ useEffect(() => {
 
 
   return (
-    <div className='max-w-6xl mx-auto my-10 '>
-      <div className='flex items-center justify-between my-5'>
+    <div className=' sm:max-w-screen-sm md:max-w-2xl my-16 xl:max-w-6xl lg:max-w-5xl w-[90%] mx-auto  '>
+      <div className='flex items-center justify-between my-5 sm:flex-row flex-col '>
         <Input
-          className="w-fit"
+          className="w-fit sm:mb-0 mb-5"
           placeholder="Company Name For Filter"
           value={searchInput} 
           onChange={handelSearch} 

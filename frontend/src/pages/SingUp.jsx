@@ -86,9 +86,9 @@ const SingUp = () => {
 
   return (
     <>
-      <div>
-        <div className='flex items-center justify-center max-w-7xl mx-auto'>
-          <form onSubmit={handleSubmit(onSubmit)} className='w-1/2 border border-gray-200 rounded-md p-4 my-10'>
+      <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-10 xl:max-w-7xl lg:max-w-5xl '>
+        <div className='flex items-center justify-center '>
+          <form onSubmit={handleSubmit(onSubmit)} className='md:w-1/2 w-[90%] border border-gray-200 rounded-md p-4 my-10'>
             <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
             <div className='my-2'>
               <Label>Full Name</Label>
@@ -178,7 +178,7 @@ const SingUp = () => {
                 ?
                 (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
                 :
-                (<Button type="submit" className="w-full my-4 ">Login</Button>)
+                (<Button type="submit" className="w-full my-4 ">Sign Up</Button>)
             }
             <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
 

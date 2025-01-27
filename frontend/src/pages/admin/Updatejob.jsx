@@ -130,9 +130,9 @@ const Updatejob = () => {
 
 
     return (
-        <div className='flex items-center justify-center  my-5'>
-            <form onSubmit={handleSubmit(onSubmit)} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
-                <div className='grid grid-cols-2 gap-2'>
+        <div className='flex items-center justify-center  my-16'>
+            <form onSubmit={handleSubmit(onSubmit)} className='p-8 md:max-w-3xl w-[90%] border border-gray-200 shadow-lg rounded-md'>
+                <div className='grid md:grid-cols-2 gap-4 grid-cols-1'>
                     <div>
                         <Label>Title</Label>
                         <Input

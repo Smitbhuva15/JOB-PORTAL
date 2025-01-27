@@ -24,7 +24,8 @@ const Job = ({ job }) => {
     visible: { opacity: 1, scale: 1 },
   };
   return (
-    <motion.div className="p-5 rounded-md shadow-xl bg-white border border-gray-100"
+   
+    <motion.div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 "
       initial="hidden"
       animate="visible"
       variants={boxVariants}
@@ -75,6 +76,7 @@ const Job = ({ job }) => {
         <Button className="bg-[#020ef8]">Save For Later</Button>
       </div>
     </motion.div>
+    
   );
 };
 

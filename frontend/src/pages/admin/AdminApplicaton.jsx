@@ -14,7 +14,7 @@ const AdminApplicaton = () => {
   // console.log(applicants)
 
   return (
-    <div className='max-w-7xl mx-auto pt-11'>
+    <div className='mx-auto sm:max-w-screen-sm md:max-w-2xl  my-14 xl:max-w-7xl lg:max-w-5xl w-[90%]'>
       <h1 className='font-bold text-xl my-5'>Applicants {applicants?.applications?.length}</h1>
       <ApplicantsTable />
     </div>

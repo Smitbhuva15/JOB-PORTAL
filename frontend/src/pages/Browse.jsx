@@ -34,7 +34,7 @@ const Browse = () => {
 
   return (
     <div>
-      <div className='max-w-7xl mx-auto my-10'>
+      <div className='sm:max-w-screen-sm md:max-w-2xl xl:max-w-7xl lg:max-w-5xl mx-auto my-10 w-[90%]'>
         <h1 className={`font-bold text-xl  mt-8`}  >Search Results {Alljobs.length}</h1>
 
         {
@@ -44,7 +44,7 @@ const Browse = () => {
             </span></div>)
             :
             (
-              <div className={`grid grid-cols-3 gap-4 ${Alljobs.length <= 3 ? 'mb-80' : 'mb-0'} mt-10`}>
+              <div className={` grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ${Alljobs.length <= 3 ? 'mb-80' : 'mb-0'} mt-10`}>
                 {Alljobs.map((job) =>
                 (
                   <Job job={job} />
