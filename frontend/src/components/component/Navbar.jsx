@@ -102,48 +102,86 @@ const Navbar = () => {
               </button>
             </div>
             {
-              isOpen && (
+               userData && userData.role === 'recruiter'
+               ?(
                 
-                <nav className="absolute top-16  right-12 w-52 h-60 z-20 md:hidden  bg-blue-600 rounded-xl ">
-                  <ul className="flex flex-col p-4 space-y-8 ">
-                  
-                    <li className="navitem  ">
-                      <Link to="home" 
-                        onClick={handelCloseMenu}
-                        className="text-white font-bold absolute ml-16" >Home</Link>
-                    </li>
-                  
-
-                 
-                    <li className="navitem  border border-black">
-                      <Link to="jobs" 
-                        onClick={handelCloseMenu}
-                        className="text-white font-bold absolute ml-16" >Jobs</Link>
-                    </li>
-                    
-                  
-
-                    <li className="navitem  border border-black">
-                      <Link to="browse" 
-                        onClick={handelCloseMenu}
-                        className="text-white font-bold absolute ml-14" >Browse</Link>
-                    </li>
-                     <li className=' border border-black'></li>
-
-
-
-                  </ul>
-                  {
-                    <div className='flex flex-col mt-2'>
-                       <Link to='/login' className='ml-16' onClick={handelCloseMenu}> <Button >Login</Button></Link>
-                       <Link to='/signup' className='mt-2 ml-[61px]'  onClick={handelCloseMenu}> <Button className="bg-[#020ef8] hover:bg-[#202477]">Signup</Button></Link>
-                    </div>
-                    
-                  }
-
-                </nav>
+                  isOpen && (
                 
-              )
+                    <nav className="absolute top-16  right-12 w-52 h-32 z-20 md:hidden  bg-blue-600 rounded-xl ">
+                      <ul className="flex flex-col p-4 space-y-8 ">
+                      
+                        <li className="navitem  ">
+                          <Link to='/admin/compnies' 
+                            onClick={handelCloseMenu}
+                            className="text-white font-bold absolute ml-[51px]" >Companies</Link>
+                        </li>
+                      
+    
+                     
+                        <li className="navitem  border border-black">
+                          <Link to='/admin/jobs' 
+                            onClick={handelCloseMenu}
+                            className="text-white font-bold absolute ml-16" >Jobs</Link>
+                        </li>
+                        <li className=' border border-black'></li>
+                      </ul>
+                      
+    
+                    </nav>
+                    
+                  )
+
+                
+               )
+               :
+               (
+                
+                 isOpen && (
+                
+                  <nav className="absolute top-16  right-12 w-52 h-60 z-20 md:hidden  bg-blue-600 rounded-xl ">
+                    <ul className="flex flex-col p-4 space-y-8 ">
+                    
+                      <li className="navitem  ">
+                        <Link to="home" 
+                          onClick={handelCloseMenu}
+                          className="text-white font-bold absolute ml-16" >Home</Link>
+                      </li>
+                    
+  
+                   
+                      <li className="navitem  border border-black">
+                        <Link to="jobs" 
+                          onClick={handelCloseMenu}
+                          className="text-white font-bold absolute ml-16" >Jobs</Link>
+                      </li>
+                      
+                    
+  
+                      <li className="navitem  border border-black">
+                        <Link to="browse" 
+                          onClick={handelCloseMenu}
+                          className="text-white font-bold absolute ml-14" >Browse</Link>
+                      </li>
+                       <li className=' border border-black'></li>
+  
+  
+  
+                    </ul>
+                    {
+                      <div className='flex flex-col mt-2'>
+                         <Link to='/login' className='ml-16' onClick={handelCloseMenu}> <Button >Login</Button></Link>
+                         <Link to='/signup' className='mt-2 ml-[61px]'  onClick={handelCloseMenu}> <Button className="bg-[#020ef8] hover:bg-[#202477]">Signup</Button></Link>
+                      </div>
+                      
+                    }
+  
+                  </nav>
+                  
+                )
+               )
+
+
+           
             }
 
             {
