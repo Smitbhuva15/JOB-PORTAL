@@ -18,14 +18,19 @@ exports.signup = async (req, res) => {
         }
 
         const file=req.file;
+
         if(!file){
             return res.status(400).json({message:"please upload your profile photo !!"})
         }
+        if (password.length < 8) {
+            return res.status(400).json({ message: "Password must contain at least 8 characters" });
+        }
+        
 
         const fileuri=getDataUri(file)
 
         const cloudResponse=await cloudinary.uploader.upload(fileuri.content);
-    //    console.log(cloudResponse)
+       console.log(cloudResponse)
       
         const isExist = await userModel.findOne({ email });
         if (isExist) {
