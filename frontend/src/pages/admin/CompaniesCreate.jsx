@@ -13,6 +13,7 @@ const CompaniesCreate = () => {
 
   const navigate = useNavigate()
   const { token } = useContext(AuthContext);
+  const API_URL = import.meta.env.VITE_API_URL;
   
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
@@ -20,7 +21,7 @@ const onSubmit =async(data, e) => {
       // console.log(data)
       e.preventDefault();
        try {
-            const response=await fetch(`http://localhost:5000/user/v2/api/register/company`,{
+            const response=await fetch(`${API_URL}/user/v2/api/register/company`,{
               method:'POST',
               headers:{
                 'Content-Type':'application/json',

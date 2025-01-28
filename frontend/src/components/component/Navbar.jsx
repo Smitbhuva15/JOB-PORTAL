@@ -207,4 +207,3 @@ const Navbar = () => {
 
 export default Navbar
 
-// className='-mr-9 sm:mt-0 mt-4'

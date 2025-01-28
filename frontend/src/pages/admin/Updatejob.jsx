@@ -30,6 +30,7 @@ const Updatejob = () => {
     const dispatch = useDispatch();
     const { token } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL;
 
     GetAllCompany();
     GetSingleJob(jobId);
@@ -83,7 +84,7 @@ const Updatejob = () => {
         // console.log(data)   
 
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/admin/update/job/${jobId}`, {
+            const response = await fetch(`${API_URL}/user/v2/api/admin/update/job/${jobId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

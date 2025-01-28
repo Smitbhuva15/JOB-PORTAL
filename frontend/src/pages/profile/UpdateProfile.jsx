@@ -23,6 +23,7 @@ const UpdateProfile = ({ open, setOpen }) => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const { userData } = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const user_fullName = userData?.fullname || "";
     const user_email = userData?.email || "";
@@ -50,7 +51,7 @@ const UpdateProfile = ({ open, setOpen }) => {
 
         try {
             setLoading(true)
-            const response = await fetch('http://localhost:5000/user/v2/api/update/profile', {
+            const response = await fetch(`${API_URL}/user/v2/api/update/profile`, {
                 method: "PATCH",
                 headers: {
                     "Authorization": `Bearer ${token}`,

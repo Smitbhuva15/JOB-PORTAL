@@ -28,6 +28,7 @@ const AdminCreatJob = () => {
     GetAllCompany();
     const companies = useSelector(store => store.company.AllCompany)
     const [loading, setLoading] = useState(false);
+    const API_URL = import.meta.env.VITE_API_URL;
 
 
 
@@ -45,7 +46,7 @@ const AdminCreatJob = () => {
         // console.log(data)
 
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/post/job`, {
+            const response = await fetch(`${API_URL}/user/v2/api/post/job`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

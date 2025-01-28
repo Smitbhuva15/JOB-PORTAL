@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 const ApplicantsTable = () => {
     const selectedstatus=["Accepted", "Rejected"];
     const {token}=useContext(AuthContext)
+    const API_URL = import.meta.env.VITE_API_URL;
   
     const applicants = useSelector(store => store.application.applicantJobs)
 
@@ -24,7 +25,7 @@ const ApplicantsTable = () => {
             const sendstatus={
                 "status":lowerstatus
             }
-         const response=await fetch(`http://localhost:5000/user/v2/api//update/status/${applicantid}`,{
+         const response=await fetch(`${API_URL}/user/v2/api//update/status/${applicantid}`,{
             method:"PATCH",
             headers:{
                 "Authorization":`Bearer ${token}`,

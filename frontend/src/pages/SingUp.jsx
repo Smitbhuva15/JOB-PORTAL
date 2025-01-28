@@ -16,6 +16,7 @@ const SingUp = () => {
   const [loading, setLoading] = useState(false);
   const {userData}=useContext(AuthContext)
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
+  const API_URL = import.meta.env.VITE_API_URL;
 
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const SingUp = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/user/v2/api/signup`, {
+      const response = await fetch(`${API_URL}/user/v2/api/signup`, {
         method: 'POST',
         body: formData
       });

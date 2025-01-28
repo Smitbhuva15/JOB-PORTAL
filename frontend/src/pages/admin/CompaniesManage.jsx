@@ -28,6 +28,7 @@ const CompaniesManage = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const singlecompanydata = useSelector(store => store.company.Singlecompany)
 
+    const API_URL = import.meta.env.VITE_API_URL;
 
 
     const [formData, setFormData] = useState({
@@ -69,7 +70,7 @@ const CompaniesManage = () => {
         }
 
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/update/company/${companyId}`, {
+            const response = await fetch(`${API_URL}/user/v2/api/update/company/${companyId}`, {
                 method: 'PATCH',
                 headers: {
                     "Authorization": `Bearer ${token}`

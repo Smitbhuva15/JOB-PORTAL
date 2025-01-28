@@ -11,14 +11,14 @@ export const AuthProvider = ({ children }) => {
   // console.log(token)
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
-
+  const API_URL = import.meta.env.VITE_API_URL;
   
   const isVerify = !!token;
 
   const getuserData = async () => {
     try {
       setLoading(true)
-      const response = await fetch('http://localhost:5000/user/v2/api/get/userdata', {
+      const response = await fetch(`${API_URL}/user/v2/api/get/userdata`, {
         method: "GET",
         headers: {
           "Authorization": `Bearer ${token}`

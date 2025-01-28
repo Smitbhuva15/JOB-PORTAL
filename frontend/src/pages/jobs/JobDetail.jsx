@@ -9,6 +9,7 @@ import { Loader2 } from 'lucide-react'
 const JobDetail = () => {
     const params = useParams();
     const jobId = params.id;
+    const API_URL = import.meta.env.VITE_API_URL;
 
     const { token } = useContext(AuthContext);
     const [singleJobData, setSingleJobData] = useState({});
@@ -22,7 +23,7 @@ const JobDetail = () => {
     const applyJob = async () => {
         setLoading(true)
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/apply/job/${jobId}`, {
+            const response = await fetch(`${API_URL}/user/v2/api/apply/job/${jobId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -59,7 +60,7 @@ const JobDetail = () => {
 
     const fechingsingleJobData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/get/jobbyid/${jobId}`, {
+            const response = await fetch(`${API_URL}/user/v2/api/get/jobbyid/${jobId}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`

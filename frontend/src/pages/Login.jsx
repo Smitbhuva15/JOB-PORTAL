@@ -37,11 +37,13 @@ const Login = () => {
     const { register, handleSubmit, formState: { errors }, } = useForm();
     const onSubmit =async(data, e) => {
       // console.log(data)
+  const API_URL = import.meta.env.VITE_API_URL;
+
       setLoading(true)
       e.preventDefault();
        try {
 
-            const response=await fetch(`http://localhost:5000/user/v2/api/login`,{
+            const response=await fetch(`${API_URL}/user/v2/api/login`,{
               method:'POST',
               headers:{
                 'Content-Type':'application/json'

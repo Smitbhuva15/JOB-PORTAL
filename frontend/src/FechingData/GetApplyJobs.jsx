@@ -6,11 +6,12 @@ const GetApplyJobs = () => {
     const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
     const dispatch=useDispatch();
    
+    const API_URL = import.meta.env.VITE_API_URL;
   
     const fetchingApplyJob = async () => {
       
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/get/application/me`, {
+            const response = await fetch(`${API_URL}/user/v2/api/get/application/me`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,

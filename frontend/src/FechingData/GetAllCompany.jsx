@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 const  GetAllCompany= () => {
     const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
     const dispatch=useDispatch();
+  const API_URL = import.meta.env.VITE_API_URL;
    
   
     const fetchingAllCompany = async () => {
       
         try {
-            const response = await fetch(`http://localhost:5000/user/v2/api/get/company`, {
+            const response = await fetch(`${API_URL}/user/v2/api/get/company`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,
