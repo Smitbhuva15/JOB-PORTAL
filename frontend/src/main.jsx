@@ -11,7 +11,7 @@ import Browse from './pages/Browse';
 import { AuthProvider } from './Context-Api/AuthContext';
 import store from './store/store';
 import { Provider } from 'react-redux';
-import Profile from './pages/profile/profile';
+import Profile from './pages/profile/Profile';
 import JobDetail from './pages/jobs/JobDetail';
 import Compnies from './pages/admin/Compnies';
 import CompaniesCreate from './pages/admin/CompaniesCreate';
