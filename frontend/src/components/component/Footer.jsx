@@ -12,7 +12,7 @@ const Footer = () => {
 
     return (
         <>
-            <div className="py-12 bg-gary-100 px-8 min-h-52">
+            <div className="py-12 bg-gary-100 px-8 min-h-52 bg-slate-50 ">
                 <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 sm:grid-cols-2 gap-8">
                     <div className="space-y-6 mr-14">
                         <div className="flex items-center space-x-2">
@@ -129,6 +129,10 @@ const Footer = () => {
                     </div>
 
                 </div>
+                <div className="text-center container w-full mt-10 font-semibold">
+         <p>Copyright © 2025 - All right reserved by <span className="text-[#020ef8] font-bold">JobLinker</span></p>
+         <p className="mb-5">Developed by <span className="text-[#020ef8] font-bold">Smit.Tech</span> </p>
+         </div>
             </div>
         </>
     );
