@@ -14,25 +14,26 @@ import { AuthContext } from '@/Context-Api/AuthContext';
 const SingUp = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false);
-  const {userData}=useContext(AuthContext)
+  const { userData } = useContext(AuthContext)
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
-  const API_URL = import.meta.env.VITE_API_URL;
 
 
   useEffect(() => {
     if (token) {
       navigate('/')
     }
-    
+
 
   }, []);
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
+  const API_URL = import.meta.env.VITE_API_URL;
 
 
   const onSubmit = async (data, e) => {
+  
     setLoading(true)
-    // console.log(data)
+    
     e.preventDefault();
     const formData = new FormData();
     formData.append('email', data.email)
@@ -91,6 +92,7 @@ const SingUp = () => {
         <div className='flex items-center justify-center '>
           <form onSubmit={handleSubmit(onSubmit)} className='md:w-1/2 w-[90%] border border-gray-200 rounded-md p-4 my-10'>
             <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
+
             <div className='my-2'>
               <Label>Full Name</Label>
               <Input
@@ -99,8 +101,8 @@ const SingUp = () => {
                 placeholder="Enter Full Name"
                 {...register("fullname")}
               />
-            </div>
 
+            </div>
 
             <div className='my-2'>
               <Label>Email</Label>
@@ -109,19 +111,19 @@ const SingUp = () => {
                 name="email"
                 placeholder="Enter Email"
                 {...register("email")}
-
               />
+
             </div>
 
             <div className='my-2'>
               <Label>Password</Label>
               <Input
-                type="text"
+                type="text"  
                 name="password"
                 placeholder="Enter Password"
                 {...register("password")}
-
               />
+
             </div>
 
             <div className='my-2'>
@@ -131,8 +133,8 @@ const SingUp = () => {
                 name="phoneNumber"
                 placeholder="Enter phone Number"
                 {...register("phoneNumber")}
-
               />
+
             </div>
 
             <div className='flex items-center justify-between'>
@@ -158,32 +160,34 @@ const SingUp = () => {
                   />
                   <Label htmlFor="r1">Recruiter</Label>
                 </div>
-
               </RadioGroup>
 
-
             </div>
-            <div className=''>
+
+            <div>
               <Label>Profile</Label>
               <Input
                 accept="image/*"
                 type="file"
                 id="fileUpload"
                 name="file"
-                className="cursor-pointer "
-                {...register('file', { required: 'File is required' })}
+                className="cursor-pointer"
+                {...register('file')}
               />
+
             </div>
             {
               loading
                 ?
                 (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
                 :
-                (<Button type="submit" className="w-full my-4 ">Sign Up</Button>)
+                (<Button type="submit" className="w-full my-4 ">Sign up</Button>)
             }
-            <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
 
+
+            <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
           </form>
+
         </div>
       </div>
 
