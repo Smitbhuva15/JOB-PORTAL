@@ -29,6 +29,7 @@ const AdminCreatJob = () => {
     const companies = useSelector(store => store.company.AllCompany)
     const [loading, setLoading] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
+ 
 
 
 
@@ -40,10 +41,10 @@ const AdminCreatJob = () => {
         const companydetail = companies.filter(comp => comp.name === olddata.name)
         //   console.log(companydetail,"comp")
         const companyId = companydetail[0]?._id;
-        //   console.log(company ,"id")
+        //   console.log(comnpayId ,"id")
 
-        const data = { ...olddata, companyId }
-        // console.log(data)
+        const data = { ...olddata,companyId }
+        // console.log(data ,"data")
 
         try {
             const response = await fetch(`${API_URL}/user/v2/api/post/job`, {
@@ -169,6 +170,7 @@ const AdminCreatJob = () => {
                             className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                         />
                     </div>
+
                     {
                         companies.length > 0 && (
                             <select name="company" id="company" className='border my-1 py-1 '  {...register("name")}>
