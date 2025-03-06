@@ -17,7 +17,9 @@ const CompaniesTable = () => {
     const searchcompanytext = useSelector(store => store.company.searchtext);
     const [loading, setLoading] = useState(true);
 
+    
     GetAllCompany();
+    
 
     useEffect(() => {
         if (AllCompany && AllCompany.length > 0) {
@@ -39,11 +41,10 @@ const CompaniesTable = () => {
     }, [AllCompany, searchcompanytext]);
 
 
-
     return (
 
 
-        loading ? (
+        loading   ? (
 
             <div className="flex justify-center items-center w-full min-h-[50vh]">
                 <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />

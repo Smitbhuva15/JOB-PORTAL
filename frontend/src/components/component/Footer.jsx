@@ -8,7 +8,9 @@ import { Link } from "react-router-dom";
 const Footer = () => {
 
     const { userData } = useContext(AuthContext);
-
+    const currentYear = new Date().getFullYear()
+   
+    
 
     return (
         <>
@@ -138,7 +140,7 @@ const Footer = () => {
 
                 </div>
                 <div className="text-center container w-full mt-10 font-semibold">
-                    <p>Copyright © 2025 - All right reserved by <span className="text-[#020ef8] font-bold">JobLinker</span></p>
+                    <p>Copyright © {currentYear} - All right reserved by <span className="text-[#020ef8] font-bold">JobLinker</span></p>
                     <p className="mb-5">Developed by <span className="text-[#020ef8] font-bold">Smit.Tech</span> </p>
                 </div>
             </div>
