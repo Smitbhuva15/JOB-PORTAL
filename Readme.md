@@ -78,4 +78,29 @@
 
 <h2>Website Preview</h2>
 
+<br>
 
+
+<p align="center">
+        <img src='frontend/public/website-demo/web3.png' width="750" alt="Website Demo">
+</p>
+
+<p align="center">
+        <img src='frontend/public/website-demo/web4.png' width="750" alt="Website Demo">
+</p>
+
+<p align="center">
+        <img src='frontend/public/website-demo/web5.png' width="750" alt="Website Demo">
+</p>
+
+<p align="center">
+        <img src='frontend/public/website-demo/web6.png' width="750" alt="Website Demo">
+</p>
+
+<p align="center">
+        <img src='frontend/public/website-demo/web1.png' width="750" alt="Website Demo">
+</p>
+
+<p align="center">
+        <img src='frontend/public/website-demo/web2.png' width="750" alt="Website Demo">
+</p>
