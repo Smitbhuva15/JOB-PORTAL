@@ -73,3 +73,9 @@
 - **Authentication**: Secure login with JWT (JSON Web Tokens) for user sessions.
 
 - **File Storage**: Integrated Cloudinary for storing resumes and media files.
+
+<br>
+
+<h2>Website Preview</h2>
+
+
