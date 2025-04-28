@@ -1,5 +1,6 @@
 <h1 align="center">JobLinker — Find Your Dream Job</h1>
 
+<br>
 
 <h2> Authentication (Sign-in / Sign-up)</h2>
 
@@ -37,6 +38,14 @@
   -  Track the status of their applications (Selected, Rejected, or Pending).
 
   - See all jobs they have applied to.
+
+ - **Search and Filter Jobs**:
+
+    - **Search by Keywords**: Students can search jobs using job title, or specific Skills.
+
+    -  **Filter by Skill**: Students can filter jobs based on required skills.
+
+    -  **Filter by Location**: Students can also filter jobs based on location (e.g., Delhi, Mumbai, Bangalore).
 
   <br>
 
