@@ -2,14 +2,14 @@
 
 <br>
 
-<h2> Authentication (Sign-in / Sign-up)</h2>
+<h2>🔐 Authentication (Sign-in / Sign-up)</h2>
 
--  login and signup functionality.
+-  SignIn and signup functionality.
 - Two types of users: Students and Recruiters.
 
 <br>
 
-<h2> Recruiter Panel </h2>
+<h2>👨‍💼 Recruiter Panel </h2>
 
 - **Register Company**: Recruiter first registers their company details.
 
@@ -27,7 +27,7 @@
 
 <br>
 
-<h2>Student Panel </h2>
+<h2>🎓 Student Panel </h2>
 
 - **Browse Jobs**: Students can view all jobs posted by recruiters.
 
@@ -49,9 +49,27 @@
 
   <br>
 
-<h2> Extra Details</h2>
+<h2>🌟 Extra Details</h2>
 
 
 - Clean UI flow between registration, job creation, job application, and status updates.
 
 - Authentication ensures that Recruiters and Students stay in their respective dashboards.
+
+<br>
+
+<h2>🛠️ Tech Stack</h2>
+
+- **Frontend**: Built with React.js for a responsive and dynamic UI.
+
+- **Styling**: Utilizes TailwindCSS for a modern, mobile-friendly design.
+
+- **State Management**: Managed with Redux Toolkit for efficient data handling.
+
+- **Backend**: Powered by Node.js and Express.js for API handling and server-side logic.
+
+- **Database**: MongoDB for flexible, schema-less data storage.
+
+- **Authentication**: Secure login with JWT (JSON Web Tokens) for user sessions.
+
+- **File Storage**: Integrated Cloudinary for storing resumes and media files.
