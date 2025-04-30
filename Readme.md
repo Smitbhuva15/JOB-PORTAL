@@ -88,6 +88,11 @@
 
 </p>
 
+<p align="center">
+<a href='https://joblinker-pro.vercel.app/'>
+        <img src='frontend/public/website-demo/web5.png' width="750" alt="Website Demo">
+        </a>
+</p>
 
 
 <p align="center">
@@ -96,11 +101,7 @@
         </a>
 </p>
 
-<p align="center">
-<a href='https://joblinker-pro.vercel.app/'>
-        <img src='frontend/public/website-demo/web5.png' width="750" alt="Website Demo">
-        </a>
-</p>
+
 
 <p align="center">
 <a href='https://joblinker-pro.vercel.app/'>
