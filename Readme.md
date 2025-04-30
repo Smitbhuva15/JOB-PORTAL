@@ -88,6 +88,8 @@
 
 </p>
 
+
+
 <p align="center">
 <a href='https://joblinker-pro.vercel.app/'>
         <img src='frontend/public/website-demo/web4.png' width="750" alt="Website Demo">
@@ -108,6 +110,19 @@
 
 <p align="center">
 <a href='https://joblinker-pro.vercel.app/'>
+        <img src='frontend/public/website-demo/web7.png' width="750" alt="Website Demo">
+        </a>
+</p>
+
+<p align="center">
+<a href='https://joblinker-pro.vercel.app/'>
+        <img src='frontend/public/website-demo/web8.png' width="750" alt="Website Demo">
+        </a>
+</p>
+
+
+<p align="center">
+<a href='https://joblinker-pro.vercel.app/'>
         <img src='frontend/public/website-demo/web1.png' width="750" alt="Website Demo">
         </a>
 </p>
@@ -118,14 +133,5 @@
         </a>
 </p>
 
-<p align="center">
-<a href='https://joblinker-pro.vercel.app/'>
-        <img src='frontend/public/website-demo/web7.png' width="750" alt="Website Demo">
-        </a>
-</p>
 
-<p align="center">
-<a href='https://joblinker-pro.vercel.app/'>
-        <img src='frontend/public/website-demo/web8.png' width="750" alt="Website Demo">
-        </a>
-</p>
+
