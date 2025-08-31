@@ -6,20 +6,27 @@ import { AuthContext } from '@/Context-Api/AuthContext'
 
 import { Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
+import GetApplicant from '@/FechingData/GetApplicant'
 
 const JobDetail = () => {
     const params = useParams();
     const jobId = params.id;
     const API_URL = import.meta.env.VITE_API_URL;
+    const [applied,setApplied]=useState(false);
+
+    GetApplicant(jobId);
 
     const { token } = useContext(AuthContext);
     const [singleJobData, setSingleJobData] = useState({});
     const { userData } = useContext(AuthContext)
 
-    const isApplied = singleJobData?.applications?.some(application => application.applicant === userData?._id) || false;
+
+    const applicants = useSelector(store => store?.application?.applicantJobs)
+  
+    const isApplied =applied || applicants?.applications?.some(application => application?.applicant?._id === userData?._id) || false;
     const value = 1
     const [loading, setLoading] = useState(false);
-
 
     const applyJob = async () => {
         setLoading(true)
@@ -34,18 +41,12 @@ const JobDetail = () => {
 
             if (response.ok) {
                 const data = await response.json();
-
-                setSingleJobData(prevState => ({
-                    ...prevState,
-                    applications: [...prevState.applications, userData._id]
-                }));
+                setApplied(true)
                 toast.success(data.message)
 
             } else {
                 const errorMessage = await response.json();
-
-
-                toast.info(errorMessage.message)
+                toast(errorMessage.message);
 
             }
 
@@ -71,12 +72,10 @@ const JobDetail = () => {
 
             if (response.ok) {
                 const data = await response.json();
-                // console.log(data.job)
                 setSingleJobData(data.job)
 
             } else {
                 const errorMessage = await response.json();
-                console.log(errorMessage)
             }
 
         } catch (error) {
@@ -87,11 +86,9 @@ const JobDetail = () => {
     useEffect(() => {
         fechingsingleJobData();
     }, [jobId]);
-  
-  
 
     return (
-        singleJobData===null || Object.keys(singleJobData).length === 0  ? (
+        singleJobData === null || Object.keys(singleJobData).length === 0 ? (
             <div className="flex justify-center items-center w-full min-h-[50vh]">
                 <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
             </div>
@@ -116,14 +113,16 @@ const JobDetail = () => {
 
                                 :
                                 (
+                                    applicants && Object.keys(applicants).length>0 &&   
                                     <Button
                                         onClick={() => {
                                             applyJob()
                                         }}
                                         disabled={isApplied}
-                                        className={`rounded-lg sm:mt-0 mt-5 ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#181b5c]'}`}>
-                                        {isApplied ? 'Already Applied' : 'Apply Now'}
+                                        className={`rounded-lg sm:mt-0 mt-5 ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#262c9a]'}`}>
+                                        {isApplied ? 'Submitted' : 'Apply Now'}
                                     </Button>
+                                  
                                 )
                         }
 

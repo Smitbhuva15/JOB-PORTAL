@@ -26,7 +26,7 @@ const Navbar = () => {
   const hasValidUserData = userData && Object.keys(userData).length > 0;
 
   const [isOpen, setIsOpen] = useState(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   const handleCloseMenu = () => {
     setIsOpen(false)
@@ -34,7 +34,12 @@ const Navbar = () => {
   const handelToggle = () => {
     setIsOpen(!isOpen)
   }
-
+  const handellogout = () => {
+  
+    navigate('/home');
+    handelLogout();
+    
+  }
 
 
   return (
@@ -103,125 +108,125 @@ const Navbar = () => {
               </button>
             </div>
             {
-               userData && userData.role === 'recruiter'
-               ?(
-                
-                  isOpen && (
-                
-                    <div
-                    className={`fixed top-0 left-0 w-full h-full bg-blue-600 bg-opacity-90 z-50 md:hidden flex flex-col items-center justify-center 
-                      transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}
-                  >
-                   
-                    <button
-                      onClick={handleCloseMenu}
-                      className="absolute top-5 right-5 text-white text-3xl"
-                    >
-                      <X size={30} />
-                    </button>
-              
-                 
-                    <ul className="flex flex-col space-y-8 text-center">
-                      <li className="navitem">
-                        <Link
-                          to="/admin/compnies"
-                          onClick={handleCloseMenu}
-                          className="text-white font-bold text-2xl"
-                        >
-                          Companies
-                        </Link>
-                      </li>
-              
-                      <li className="navitem">
-                        <Link
-                          to="/admin/jobs"
-                          onClick={handleCloseMenu}
-                          className="text-white font-bold text-2xl"
-                        >
-                          Jobs
-                        </Link>
-                      </li>
-              
-              
-                    </ul>
-              
-                    
-                  
-                  </div>
+              userData && userData.role === 'recruiter'
+                ? (
 
-                    
-                    
+                  isOpen && (
+
+                    <div
+                      className={`fixed top-0 left-0 w-full h-full bg-blue-600 bg-opacity-90 z-50 md:hidden flex flex-col items-center justify-center 
+                      transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}
+                    >
+
+                      <button
+                        onClick={handleCloseMenu}
+                        className="absolute top-5 right-5 text-white text-3xl"
+                      >
+                        <X size={30} />
+                      </button>
+
+
+                      <ul className="flex flex-col space-y-8 text-center">
+                        <li className="navitem">
+                          <Link
+                            to="/admin/compnies"
+                            onClick={handleCloseMenu}
+                            className="text-white font-bold text-2xl"
+                          >
+                            Companies
+                          </Link>
+                        </li>
+
+                        <li className="navitem">
+                          <Link
+                            to="/admin/jobs"
+                            onClick={handleCloseMenu}
+                            className="text-white font-bold text-2xl"
+                          >
+                            Jobs
+                          </Link>
+                        </li>
+
+
+                      </ul>
+
+
+
+                    </div>
+
+
+
                   )
 
-                
-               )
-               :
-               (
-                isOpen && (
-                  <div
-                  className={`fixed top-0 left-0 w-full h-full bg-blue-600 bg-opacity-90 z-50 md:hidden flex flex-col items-center justify-center 
-                    transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}
-                >
-                 
-                  <button
-                    onClick={handleCloseMenu}
-                    className="absolute top-5 right-5 text-white text-3xl"
-                  >
-                    <X size={30} />
-                  </button>
-            
-               
-                  <ul className="flex flex-col space-y-8 text-center">
-                    <li className="navitem">
-                      <Link
-                        to="home"
-                        onClick={handleCloseMenu}
-                        className="text-white font-bold text-2xl"
-                      >
-                        Home
-                      </Link>
-                    </li>
-            
-                    <li className="navitem">
-                      <Link
-                        to="jobs"
-                        onClick={handleCloseMenu}
-                        className="text-white font-bold text-2xl"
-                      >
-                        Jobs
-                      </Link>
-                    </li>
-            
-                    <li className="navitem">
-                      <Link
-                        to="browse"
-                        onClick={handleCloseMenu}
-                        className="text-white font-bold text-2xl"
-                      >
-                        Browse
-                      </Link>
-                    </li>
-                  </ul>
-            
-                  
-                  <div className="flex flex-col items-center mt-10">
-                    <Link to="/login" onClick={handleCloseMenu}>
-                      <Button className="w-40">Login</Button>
-                    </Link>
-                    <Link to="/signup" onClick={handleCloseMenu} className="mt-4">
-                      <Button className="w-40 bg-[#020ef8] hover:bg-[#202477]">
-                        Signup
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
+
                 )
-            
-                
-               )
+                :
+                (
+                  isOpen && (
+                    <div
+                      className={`fixed top-0 left-0 w-full h-full bg-blue-600 bg-opacity-90 z-50 md:hidden flex flex-col items-center justify-center 
+                    transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}
+                    >
+
+                      <button
+                        onClick={handleCloseMenu}
+                        className="absolute top-5 right-5 text-white text-3xl"
+                      >
+                        <X size={30} />
+                      </button>
 
 
-           
+                      <ul className="flex flex-col space-y-8 text-center">
+                        <li className="navitem">
+                          <Link
+                            to="home"
+                            onClick={handleCloseMenu}
+                            className="text-white font-bold text-2xl"
+                          >
+                            Home
+                          </Link>
+                        </li>
+
+                        <li className="navitem">
+                          <Link
+                            to="jobs"
+                            onClick={handleCloseMenu}
+                            className="text-white font-bold text-2xl"
+                          >
+                            Jobs
+                          </Link>
+                        </li>
+
+                        <li className="navitem">
+                          <Link
+                            to="browse"
+                            onClick={handleCloseMenu}
+                            className="text-white font-bold text-2xl"
+                          >
+                            Browse
+                          </Link>
+                        </li>
+                      </ul>
+
+
+                      <div className="flex flex-col items-center mt-10">
+                        <Link to="/login" onClick={handleCloseMenu}>
+                          <Button className="w-40">Login</Button>
+                        </Link>
+                        <Link to="/signup" onClick={handleCloseMenu} className="mt-4">
+                          <Button className="w-40 bg-[#020ef8] hover:bg-[#202477]">
+                            Signup
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  )
+
+
+                )
+
+
+
             }
 
             {
@@ -254,11 +259,8 @@ const Navbar = () => {
                         }
                         <div className='flex w-fit items-center gap-2 cursor-pointer' >
                           <LogOut />
-                          <Link to='/'><Button variant="link" 
-                          onClick={() => {
-                             handelLogout() 
-                             navigate('/')
-                          }}>Logout</Button></Link>
+                          <Link to='/'><Button variant="link"
+                            onClick={()=>handellogout()}>Logout</Button></Link>
                         </div>
                       </div>
                     </div>

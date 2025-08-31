@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -8,11 +9,9 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
-  // console.log(token)
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(true);
   const API_URL = import.meta.env.VITE_API_URL;
- 
   
   const isVerify = !!token;
 
@@ -34,7 +33,6 @@ export const AuthProvider = ({ children }) => {
       }
       else {
         const errormessage = await response.json();
-        console.log(errormessage);
         setLoading(false);
       }
 
