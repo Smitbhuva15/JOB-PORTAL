@@ -1,22 +1,24 @@
 
 
 import { AuthContext } from "@/Context-Api/AuthContext";
+import { adminheader, userheader } from "@/lib/config";
+import { Github, Globe, Linkedin } from "lucide-react";
 import { useContext } from "react";
-import { FaEnvelope, FaFacebook, FaInstagram, FaLinkedin, FaMapMarked, FaMapMarkedAlt, FaPhoneAlt, FaTwitter } from "react-icons/fa";
+import { FaEnvelope, FaMapMarkedAlt, FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
 
     const { userData } = useContext(AuthContext);
     const currentYear = new Date().getFullYear()
-   
-    
+
+
 
     return (
         <>
-            <div className="py-12 bg-gary-100 px-8 min-h-52 bg-slate-50 ">
-                <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 sm:grid-cols-2 gap-8">
-                    <div className="space-y-6 mr-14">
+            <div className="py-10 bg-gary-100 px-8 min-h-52 bg-slate-50 ">
+                <div className="container mx-auto grid grid-cols-1  lg:grid-cols-4 sm:grid-cols-2 gap-8">
+                    <div className="space-y- mr-14 col-span-2 sm:w-[80%]">
                         <div className="flex items-center space-x-2">
                             {
                                 userData && userData.role === "recruiter"
@@ -44,56 +46,34 @@ const Footer = () => {
                                     )
                             }
                         </div>
-                        <p className="text-para mt-2">Connect with us for updates, support, and services. Your journey starts here. Stay informed and engaged with our team!</p>
-                        <div className="flex space-x-4 mt-4">
-                            <a href="#" className="bg-gray-200 text-[#020ef8] rounded-full size-10 flex items-center justify-center hover:bg-primary/90 hover:text-white ">
-                                <FaFacebook /></a>
-                            <a href="#" className="bg-gray-200 text-[#020ef8] rounded-full size-10 flex items-center justify-center hover:bg-primary/90 hover:text-white ">
-                                <FaInstagram /></a>
-                            <a href="#" className="bg-gray-200 text-[#020ef8] rounded-full size-10 flex items-center justify-center hover:bg-primary/90 hover:text-white ">
-                                <FaTwitter /></a>
-                            <a href="#" className="bg-gray-200 text-[#020ef8] rounded-full size-10 flex items-center justify-center hover:bg-primary/90 hover:text-white ">
-                                <FaLinkedin /></a>
-                        </div>
+                        <p className="text-para mt-2 font-semibold">Join our community to receive updates, personalized assistance, and expert guidance start your journey today!</p>
+
                     </div>
 
                     <div className="space-y-2">
-                        <h3 className="text-xl font-semibold mb-4">Quick Links </h3>
+                        <h3 className="sm:text-xl text-lg text-zinc-800 font-bold mb-4">Quick Links </h3>
                         <ul className="space-y-3">
 
                             {
                                 userData && userData.role === "recruiter"
                                     ?
-                                    (
-                                        <>
-                                            <li><Link to="/admin/compnies" onClick={() => window.scrollTo(0, 0)} spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700">Companies</Link></li>
+                                    (adminheader.map((header) => (
+                                        <li className=" ">
+                                            <Link to={header.link} onClick={() => window.scrollTo(0, 0)} spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700 font-semibold">{header.title}</Link>
+                                        </li>
+                                    ))
 
-
-                                            <li><Link to="/admin/jobs" onClick={() => window.scrollTo(0, 0)} spy={true} smooth={true} offset={-10} duration={500} className="hover:underline text-gray-700">Jobs</Link></li>
-
-
-
-                                        </>
                                     )
                                     :
                                     (
-                                        <>
+
+                                        userheader.map((header) => (
                                             <li>
-                                                <Link to="/home" onClick={() => window.scrollTo(0, 0)} className="hover:underline text-gray-700">
-                                                    Home
+                                                <Link to={header.link} onClick={() => window.scrollTo(0, 0)} className="hover:underline text-gray-700 font-semibold">
+                                                    {header.title}
                                                 </Link>
                                             </li>
-                                            <li>
-                                                <Link to="/jobs" onClick={() => window.scrollTo(0, 0)} className="hover:underline text-gray-700">
-                                                    Jobs
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link to="/browse" onClick={() => window.scrollTo(0, 0)} className="hover:underline text-gray-700">
-                                                    Browse
-                                                </Link>
-                                            </li>
-                                        </>
+                                        ))
                                     )
                             }
 
@@ -101,29 +81,12 @@ const Footer = () => {
 
                     </div>
 
-                    <div className="space-y-2 ">
-                        <h3 className="text-xl font-semibold mb-4">Support </h3>
-                        <ul className="space-y-3">
-                            <li><a href="#" className="hover:underline text-gray-700">FAQ</a></li>
-
-
-                            <li><a href="#" className="hover:underline text-gray-700">Terms of services</a></li>
-
-
-                            <li><a href="#" className="hover:underline text-gray-700">Privacy policy</a></li>
-
-
-                            <li><a href="#" className="hover:underline text-gray-700">Support center</a></li>
-                        </ul>
-
-                    </div>
-
                     <div className="space-y-2">
-                        <h3 className="text-xl font-semibold mb-4">Contact infp </h3>
-                        <ul className="space-y-3">
-                            <li className="flex items-center gap-2">
+                        <h3 className="sm:text-xl text-lg font-bold text-zinc-800 mb-4">Contact info </h3>
+                        <ul className="space-y-3 font-semibold">
+                            <li className="flex  items-center gap-2">
                                 <FaMapMarkedAlt className="text-[#020ef8]" />
-                                <p className="text-gray-700">64, Vadapalani, Chennai, India</p>
+                                <p className="text-gray-700"> Ahmedabad, India</p>
                             </li>
                             <li className="flex items-center gap-2">
                                 <FaPhoneAlt className="text-[#020ef8]" />
@@ -139,11 +102,37 @@ const Footer = () => {
                     </div>
 
                 </div>
-                <div className="text-center container w-full mt-10 font-semibold">
-                    <p>Copyright © {currentYear} - All right reserved by <span className="text-[#020ef8] font-bold">JobLinker</span></p>
-                    <p className="mb-5">Developed by <span className="text-[#020ef8] font-bold">Smit.Tech</span> </p>
+                <div className="flex justify-center space-x-4 lg:mt-4  mt-10 w-full text-[#020ef8] size-10">
+
+                    <a
+                        href="https://github.com/Smitbhuva15"
+                        target="_blank"
+                        rel="noopener noreferrer "
+                        className=" rounded-full px-2 py-2 transition-colors bg-gray-200 hover:bg-gray-300"
+                    >
+                        <Github />
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/smit-bhuva-1007ba314/"
+                        target="_blank"
+                        rel="noopener noreferrer "
+                        className=" rounded-full px-2 py-2 transition-colors bg-gray-200 hover:bg-gray-300"
+                    >
+                        <Linkedin />
+                    </a>
+                    <a
+                        href="#"
+                        rel="noopener noreferrer "
+                        className=" rounded-full px-2 py-2 transition-colors bg-gray-200 hover:bg-gray-300"
+                    >
+                        <Globe />
+                    </a>
                 </div>
-            </div>
+                <div className="text-center  w-full mt-10 font-semibold text-wrap">
+                    <p>Copyright © {currentYear} - All right reserved by <span className="text-[#020ef8] font-bold">JobLinker</span></p>
+                    <p className=" text-center">Designed & Developed <span className="text-[#020ef8] font-bold">Smit Bhuva</span> </p>
+                </div>
+            </div >
         </>
     );
 };

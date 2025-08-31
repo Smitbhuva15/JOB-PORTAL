@@ -41,7 +41,7 @@ const LatestJobs = () => {
     <>
       <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-20 xl:max-w-7xl lg:max-w-5xl w-[90%] '>
         <h1 className='md:text-4xl text-2xl font-bold sm:ml-0 w-[90%]'>
-          <span className='text-[#020ef8]'>Latest & Top </span> Job Openings
+          <span className='text-[#020ef8]'>Fresh & In-Demand  </span> Job Opportunities
         </h1>
         {
           loading ? (
