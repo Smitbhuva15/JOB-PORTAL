@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
   // console.log(token)
   const [userData, setUserData] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const API_URL = import.meta.env.VITE_API_URL;
  
   
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ token, isVerify, userData, setToken, handelLogout }}>
+    <AuthContext.Provider value={{ token, isVerify, userData, setToken, handelLogout,loading }}>
       {children}
     </AuthContext.Provider>
   );

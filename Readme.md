@@ -1,4 +1,4 @@
-<h1 align="center">JobLinker — Find Your Dream Job</h1>
+ <h1 align="center">JobLinker — Find Your Dream Job</h1>
 
 <br>
 
@@ -133,6 +133,5 @@
         <img src='frontend/public/website-demo/web2.png' width="750" alt="Website Demo">
         </a>
 </p>
-
 
 
