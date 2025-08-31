@@ -4,7 +4,6 @@ import {
   AvatarImage,
 } from '../../components/ui/avatar';
 import { Button } from '../../components/ui/button';
-import { Bookmark } from 'lucide-react';
 import { Badge } from '../../components/ui/badge'
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -35,18 +34,11 @@ const Job = ({ job }) => {
 
       <div className="flex items-center justify-between">
         <p className='text-sm text-gray-500'>{daysAgoFunction(job?.createdAt) === 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago`}</p>
-        <Button
-          variant="outline"
-          className="rounded-full"
-          size="icon"
-          aria-label="Bookmark this job"
-        >
-          <Bookmark />
-        </Button>
+       
       </div>
 
       {/* Job and Company Details */}
-      <div className="flex items-center gap-2 my-2">
+      <div className="flex items-center gap-2 my-3">
         <Button className="p-6" variant="outline" size="icon">
           <Avatar>
             <AvatarImage
@@ -57,24 +49,24 @@ const Job = ({ job }) => {
           </Avatar>
         </Button>
         <div>
-          <h1 className="font-medium text-lg " >{job?.company?.name}</h1>
-          <p className="text-sm text-gray-500">{job?.location}</p>
+          <h1 className="font-medium text-lg  truncate" >{job?.company?.name}</h1>
+          <p className="text-sm text-gray-500  truncate">{job?.location}</p>
         </div>
       </div>
 
       <div>
-        <h1 className='font-bold text-lg my-2'>{job?.title}</h1>
-        <p className='text-sm text-gray-600'>{job?.description}</p>
+        <h1 className='font-bold text-lg my-2  truncate'>{job?.title}</h1>
+        <p className='text-sm text-gray-600 line-clamp-2'>{job?.description}</p>
       </div>
       <div className='flex items-center gap-2 mt-4'>
         <Badge className={'text-[#020ef8] font-bold'} variant="ghost">{job?.position} Positions</Badge>
         <Badge className={'text-[#2bd53f] font-bold'} variant="ghost">{job?.jobType}</Badge>
         <Badge className={'text-[#a909b7] font-bold'} variant="ghost">{job?.salary}</Badge>
       </div>
-      <div className='flex items-center gap-4 mt-4'>
-        <div onClick={() => navigate(`/jobs/Detail/${job._id}`)}> <Button variant="outline "  >Details</Button></div>
+      <div className=' mt-4 w-full bg-[#252ff2]   rounded-full text-center text-white'>
+        <div onClick={() => navigate(`/jobs/Detail/${job._id}`)}> <Button variant="outline " className="py-4"  >Details</Button></div>
 
-        <Button className="bg-[#020ef8]">Save For Later</Button>
+      
       </div>
     </motion.div>
     
