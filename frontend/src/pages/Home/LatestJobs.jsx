@@ -59,7 +59,7 @@ const LatestJobs = () => {
               ) : alljobs && alljobs.length > 0 ? (
                 <div className='grid grid-cols-1 gap-4 my-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
                   {alljobs.map((job) => (
-                    <div key={job._id} onClick={() => navigate(`/jobs/Detail/${job._id}`)}>
+                    <div key={job._id} onClick={() => {window.scrollTo(0, 0); navigate(`/jobs/Detail/${job._id}`)}  }>
                       <LatestJobCrad job={job} />
                     </div>
                   ))}
@@ -91,23 +91,3 @@ const LatestJobs = () => {
 }
 
 export default LatestJobs
-
-
-//  !userData || Object.keys(userData).length === 0 ?
-//               (
-//                 <span className="text-red-500 font-light text-lg font-serif">Currently, there are no job postings. Please log in or check back later.</span>
-
-//               )
-//               : (
-//                 alljobs.length <= 0 ? (
-
-//                   <Loader2 className="h-8 w-8 text-blue-500 animate-spin" />
-
-//                 ) : (
-//                   alljobs.map((job) => (
-//                     <div key={job._id} onClick={() => navigate(`/jobs/Detail/${job._id}`)}>
-//                       <LatestJobCrad job={job} />
-//                     </div>
-//                   ))
-//                 )
-//               )

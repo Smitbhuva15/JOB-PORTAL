@@ -1,15 +1,9 @@
 import { getApplicantdata } from '../store/applicationSlice';
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
-
-const GetApplicant = (jobId) => {
-
-    const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
-    const dispatch = useDispatch();
-  const API_URL = import.meta.env.VITE_API_URL;
+import React from 'react'
 
 
-    const feachingApplicatantData = async () => {
+const GetApplicant =async (jobId,token,dispatch,API_URL) => {
+
         try {
             const response = await fetch(`${API_URL}/user/v2/api/get/appication/admin/${jobId}`, {
                 method: "GET",
@@ -20,7 +14,6 @@ const GetApplicant = (jobId) => {
 
             if (response.ok) {
                 const data = await response.json();
-                // console.log(data)
                 dispatch( getApplicantdata(data.job))
                
 
@@ -32,13 +25,6 @@ const GetApplicant = (jobId) => {
         } catch (error) {
             console.log(error);
         }
-    }
-
-    useEffect(() => {
-
-        feachingApplicatantData()
-    }, [jobId, token]);
-
 }
 
 export default GetApplicant

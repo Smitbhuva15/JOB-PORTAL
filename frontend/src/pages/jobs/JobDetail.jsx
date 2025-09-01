@@ -6,27 +6,42 @@ import { AuthContext } from '@/Context-Api/AuthContext'
 
 import { Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import GetApplicant from '@/FechingData/GetApplicant'
 
 const JobDetail = () => {
+    const dispatch = useDispatch();
     const params = useParams();
     const jobId = params.id;
     const API_URL = import.meta.env.VITE_API_URL;
-    const [applied,setApplied]=useState(false);
-
-    GetApplicant(jobId);
+    const [applied, setApplied] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     const { token } = useContext(AuthContext);
     const [singleJobData, setSingleJobData] = useState({});
     const { userData } = useContext(AuthContext)
 
-
     const applicants = useSelector(store => store?.application?.applicantJobs)
-  
-    const isApplied =applied || applicants?.applications?.some(application => application?.applicant?._id === userData?._id) || false;
+
+    const isApplied = applied || applicants?.applications?.some(application => application?.applicant?._id === userData?._id) || false;
     const value = 1
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const getApplicant = async () => {
+            try {
+                setIsLoading(true);
+                await GetApplicant(jobId, token, dispatch, API_URL);
+            } catch (error) {
+                console.log("error: ", error)
+            }
+            finally {
+                setIsLoading(false);
+            }
+        }
+        getApplicant();
+    }, [])
+
 
     const applyJob = async () => {
         setLoading(true)
@@ -113,8 +128,8 @@ const JobDetail = () => {
 
                                 :
                                 (
-                                    applicants && Object.keys(applicants).length>0 &&   
-                                    <Button
+                                    isLoading ?(<></>):
+                                   ( <Button
                                         onClick={() => {
                                             applyJob()
                                         }}
@@ -122,7 +137,7 @@ const JobDetail = () => {
                                         className={`rounded-lg sm:mt-0 mt-5 ${isApplied ? 'bg-gray-600 cursor-not-allowed' : 'bg-[#020ef8] hover:bg-[#262c9a]'}`}>
                                         {isApplied ? 'Submitted' : 'Apply Now'}
                                     </Button>
-                                  
+)
                                 )
                         }
 

@@ -3,16 +3,6 @@ import GetAllCompany from '../../FechingData/GetAllCompany';
 import { Input } from '../../components/ui/input'
 import { Label } from '../../components/ui/label'
 
-
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-} from "../../components/ui/select"
 import React, { useContext, useState } from 'react'
 import { Button } from '../../components/ui/button';
 import { useNavigate } from 'react-router-dom';
@@ -26,12 +16,11 @@ const AdminCreatJob = () => {
     const dispatch = useDispatch()
     const { token } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors }, } = useForm();
-    GetAllCompany();
     const companies = useSelector(store => store.company.AllCompany)
     const [loading, setLoading] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
- 
 
+     GetAllCompany(token, dispatch, API_URL);
 
 
     const onSubmit = async (olddata, e) => {
@@ -44,7 +33,7 @@ const AdminCreatJob = () => {
         const companyId = companydetail[0]?._id;
         //   console.log(comnpayId ,"id")
 
-        const data = { ...olddata,companyId }
+        const data = { ...olddata, companyId }
         // console.log(data ,"data")
 
         try {

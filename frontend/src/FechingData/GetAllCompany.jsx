@@ -1,6 +1,6 @@
 import { getallcompany } from '@/store/companyslice';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react'
+
 
 const  GetAllCompany=async (token,dispatch,API_URL) => {
         try {

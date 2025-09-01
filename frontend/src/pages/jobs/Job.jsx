@@ -64,7 +64,7 @@ const Job = ({ job }) => {
         <Badge className={'text-[#a909b7] font-bold'} variant="ghost">{job?.salary}</Badge>
       </div>
       <div className=' mt-4 w-full bg-[#252ff2]   rounded-full text-center text-white'>
-        <div onClick={() => navigate(`/jobs/Detail/${job._id}`)}> <Button variant="outline " className="py-4"  >Details</Button></div>
+        <div onClick={() =>{window.scrollTo(0, 0); navigate(`/jobs/Detail/${job._id}`)}}> <Button variant="outline " className="py-4"  >Details</Button></div>
 
       
       </div>

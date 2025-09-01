@@ -32,7 +32,7 @@ const Updatejob = () => {
     const [loading, setLoading] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
 
-    GetAllCompany();
+    GetAllCompany(token, dispatch, API_URL);
     GetSingleJob(jobId);
 
 

@@ -1,6 +1,5 @@
-import GetApplicant from '../../FechingData/GetApplicant';
-import React, { useContext } from 'react'
 
+import React, { useContext } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover';
 import { MoreHorizontal } from 'lucide-react';
@@ -20,9 +19,7 @@ const ApplicantsTable = () => {
     const setstatus=async(status,applicantid)=>{
         try {
 
-            console.log(applicantid)
             const lowerstatus=status.toLowerCase()
-            console.log(lowerstatus)
             const sendstatus={
                 "status":lowerstatus
             }
@@ -36,7 +33,6 @@ const ApplicantsTable = () => {
          })
             if(response.ok){
                 const res=await response.json()
-                // console.log( res);
                 toast.success(res.message)
             }
             else{
@@ -50,9 +46,16 @@ const ApplicantsTable = () => {
     }
 
     return (
-        <div>
-            <Table>
-                <TableCaption className="mb-3">A list of your recent applied user</TableCaption>
+         applicants?.applications.length<=0?
+         (
+            <div className='flex justify-center items-center h-[50vh]'>
+                <span className='md:px-4 md:py-2 text-center md:bg-gray-200 font-bold rounded-full text-[#020ef8]  '>No one has submitted an application for this job.</span>
+            </div>
+         ):
+         (
+            <div className='mb-44'>
+            <Table >
+                <TableCaption className="mt-9 mb-6">A list of recent applied user</TableCaption>
                 <TableHeader>
                     <TableRow>
                         <TableHead>FullName</TableHead>
@@ -105,6 +108,8 @@ const ApplicantsTable = () => {
 
             </Table>
         </div>
+         )
+        
     )
 }
 

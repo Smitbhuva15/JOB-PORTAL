@@ -65,9 +65,9 @@ const CompaniesTable = () => {
 
                 (<div className='h-[50vh] flex justify-center items-center'><span className='text-red-500   md:bg-gray-200 px-4 py-2 rounded-full  text-center font-semibold text-wrap font-serif'>It looks like you haven’t added a company, or the search didn’t match.</span></div>)
                 :
-                (<div className={`${filterCompany.length<=5 ?"h-[50vh]":""}`}>
+                (<div className='mb-44'>
                     <Table className={`mt-10 `}>
-                        <TableCaption className="mb-4">A list of your recent registered companies</TableCaption>
+                        <TableCaption className="mt-9 mb-6">A list of your recent registered companies</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Logo</TableHead>
