@@ -3,7 +3,6 @@ import { Button } from '../../components/ui/button'
 import { Input } from '../../components/ui/input'
 import { Label } from '../../components/ui/label'
 import React, { useContext, useState } from 'react'
-
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '@/Context-Api/AuthContext'
 import { Loader2 } from 'lucide-react'
@@ -74,7 +73,7 @@ const CompaniesCreate = () => {
 
 
   return (
-    <div className='sm:max-w-screen-sm md:max-w-2xl  my-20 xl:max-w-4x lg:max-w-3xl w-[90%] mx-auto'>
+    <div className='sm:max-w-screen-sm md:max-w-2xl  my-20 xl:max-w-4x lg:max-w-3xl w-[90%] h-[50vh] mx-auto'>
       <div className='my-10'>
         <h1 className='font-bold text-2xl'>Your Company Name</h1>
         <p className='text-gray-500'>What would you like to give your company name? </p>

@@ -1,15 +1,12 @@
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
-
 import { ArrowLeft, Loader2 } from 'lucide-react';
-
 import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Label } from '../../components/ui/label';
 import GetsingleCompny from '../../FechingData/GetsingleCompny';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
-
 import { AuthContext } from '@/Context-Api/AuthContext';
 import { getstateinfo } from '../../store/companyslice';
 import toast from 'react-hot-toast';
@@ -117,7 +114,7 @@ const CompaniesManage = () => {
 
 
     return (
-        <div className='md:max-w-xl w-[90%] mx-auto my-10'>
+        <div className='md:max-w-xl w-[90%] mx-auto my-10 md:h-[60vh]'>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='flex items-center gap-5 p-8 '>
                     <Button onClick={() => navigate("/admin/compnies")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">

@@ -1,15 +1,8 @@
 import { getadminjob } from '../store/jobSlice';
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React from 'react'
 
-const GetAdminCreateJob = () => {
-    const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
-    const dispatch=useDispatch();
-  const API_URL = import.meta.env.VITE_API_URL;
 
-  
-    const fetchingAdminJobs = async () => {
-      
+const GetAdminCreateJob =async (token,dispatch, API_URL) => {
         try {
             const response = await fetch(`${API_URL}/user/v2/api/admin/create/job`, {
                 method: 'GET',
@@ -20,8 +13,6 @@ const GetAdminCreateJob = () => {
   
             if (response.ok) {
                 const data = await response.json();
-                // console.log(data.jobs)
-              
                 dispatch( getadminjob(data.jobs) )
                 
             } else {
@@ -31,11 +22,6 @@ const GetAdminCreateJob = () => {
         } catch (error) {
             console.log(error)
         }
-    };
-  
-    useEffect(() => {
-        fetchingAdminJobs();
-    }, [ token]); 
 }
 
 export default GetAdminCreateJob

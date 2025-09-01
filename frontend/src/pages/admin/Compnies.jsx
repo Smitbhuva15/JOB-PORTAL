@@ -6,28 +6,24 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setserachtext } from '../../store/companyslice'
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
-import { Avatar, AvatarImage } from '../../components/ui/avatar'
-import { Popover, PopoverContent, PopoverTrigger } from '../../components/ui/popover'
-import { Edit2, MoreHorizontal } from 'lucide-react'
-import GetAllCompany from '../../FechingData/GetAllCompany'
-import { useSelector } from 'react-redux'
 
 
 const Compnies = () => {
   const navigate = useNavigate();
-  GetAllCompany();
+  const dispatch = useDispatch()
+
   const [searchInput, setSearchInput] = useState("");
 
- const dispatch=useDispatch()
 
   const handelSearch = (e) => {
     const searchTerm = e.target.value;
     setSearchInput(searchTerm);
-}  
-useEffect(() => {
-  dispatch(setserachtext(searchInput))
-}, [searchInput]);
+  }
+
+
+  useEffect(() => {
+    dispatch(setserachtext(searchInput))
+  }, [searchInput]);
 
 
   return (
@@ -36,15 +32,15 @@ useEffect(() => {
         <Input
           className="w-fit sm:mb-0 mb-5"
           placeholder="Company Name For Filter"
-          value={searchInput} 
-          onChange={handelSearch} 
+          value={searchInput}
+          onChange={handelSearch}
         />
         <Button onClick={() => navigate('/admin/add/company')}>New Company</Button>
       </div>
 
       {/* companytabel */}
       <div>
-       <CompaniesTable />
+        <CompaniesTable />
       </div>
     </div>
   )
