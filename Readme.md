@@ -1,15 +1,15 @@
- <h1 align="center">JobLinker — Find Your Dream Job</h1>
+ <h1 align="center">JobLinker - Find Your Dream Job</h1>
 
 <br>
 
-<h2>🔐 Authentication (Sign-in / Sign-up)</h2>
+<h2> Authentication (Sign-in / Sign-up)</h2>
 
 -  SignIn and signup functionality.
 - Two types of users: Students and Recruiters.
 
 <br>
 
-<h2>👨‍💼 Recruiter Panel </h2>
+<h2> Recruiter Panel </h2>
 
 - **Register Company**: Recruiter first registers their company details.
 
@@ -27,7 +27,7 @@
 
 <br>
 
-<h2>🎓 Student Panel </h2>
+<h2> Student Panel </h2>
 
 - **Browse Jobs**: Students can view all jobs posted by recruiters.
 
@@ -49,7 +49,7 @@
 
   <br>
 
-<h2>🌟 Extra Details</h2>
+<h2> Extra Details</h2>
 
 
 - Clean UI flow between registration, job creation, job application, and status updates.
@@ -58,7 +58,7 @@
 
 <br>
 
-<h2>🛠️ Tech Stack</h2>
+<h2> Tech Stack</h2>
 
 - **Frontend**: Built with React.js for a responsive and dynamic UI.
 
@@ -105,7 +105,7 @@
 
 <p align="center">
 <a href='https://joblinker-pro.vercel.app/'>
-        <img src='frontend/public/website-demo/web6.png' width="750" alt="Website Demo">
+        <img src='frontend/public/website-demo/web10.png' width="750" alt="Website Demo">
         </a>
 </p>
 
