@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from "../ui/button"
 import { LogOut, User2, X } from 'lucide-react'
-import { FaBars } from "react-icons/fa";
 import {
   Popover,
   PopoverContent,
@@ -13,17 +12,15 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../ui/avatar"
-import { useSelector } from 'react-redux'
 import { AuthContext } from '@/Context-Api/AuthContext'
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { adminheader, userheader } from '@/lib/config';
 
 
 
 const Navbar = () => {
 
-  const { userData, setToken, handelLogout, isVerify } = useContext(AuthContext);
-
-  const hasValidUserData = userData && Object.keys(userData).length > 0;
+  const { userData, handelLogout, isVerify } = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate()
@@ -35,10 +32,8 @@ const Navbar = () => {
     setIsOpen(!isOpen)
   }
   const handellogout = () => {
-  
     navigate('/home');
     handelLogout();
-    
   }
 
 
@@ -77,27 +72,23 @@ const Navbar = () => {
               {
                 userData && userData.role === 'recruiter'
                   ?
-                  (<>
-                    <Link to='/admin/compnies'><li>Companies</li></Link>
-                    <Link to='/admin/jobs'><li>Jobs</li></Link>
-                  </>
+                  (
+                    adminheader.map((header) => (
+                      <Link to={header?.link}>
+                        <li className='text-lg font-bold mx-1'>{header?.title}</li>
+                      </Link>
+                    ))
                   )
                   :
                   (
-                    <>
-                      <Link to='/'><li>Home</li></Link>
-                      <Link to='jobs'><li>Jobs</li></Link>
-                      <Link to='browse'><li>Browse</li></Link>
-
-                    </>
-
+                    userheader.map((header) => (
+                      <Link to={header?.link}>
+                        <li className='text-lg font-bold mx-1'>{header?.title}</li>
+                      </Link>
+                    ))
                   )
               }
-
-
             </ul>
-
-
 
             <div className=" md:hidden block  sm:mt-0 mt-4 ">
               <button
@@ -109,65 +100,43 @@ const Navbar = () => {
             </div>
             {
               userData && userData.role === 'recruiter'
-                ? (
-
-                  isOpen && (
-
-                    <div
-                      className={`fixed top-0 left-0 w-full h-full bg-blue-600 bg-opacity-90 z-50 md:hidden flex flex-col items-center justify-center 
-                      transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}
+                ? (isOpen && (
+                  <div
+                    className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-9 z-50 md:hidden flex flex-col items-center justify-center 
+                       transform ${isOpen ? "translate-y-0" : "-translate-y-full"} transition-transform! duration-1000! ease-in-out!`}
+                  >
+                    <button
+                      onClick={handleCloseMenu}
+                      className="absolute top-5 right-5 text-white text-3xl"
                     >
+                      <X size={30} />
+                    </button>
 
-                      <button
-                        onClick={handleCloseMenu}
-                        className="absolute top-5 right-5 text-white text-3xl"
-                      >
-                        <X size={30} />
-                      </button>
-
-
-                      <ul className="flex flex-col space-y-8 text-center">
-                        <li className="navitem">
-                          <Link
-                            to="/admin/compnies"
-                            onClick={handleCloseMenu}
-                            className="text-white font-bold text-2xl"
-                          >
-                            Companies
-                          </Link>
-                        </li>
-
-                        <li className="navitem">
-                          <Link
-                            to="/admin/jobs"
-                            onClick={handleCloseMenu}
-                            className="text-white font-bold text-2xl"
-                          >
-                            Jobs
-                          </Link>
-                        </li>
-
-
-                      </ul>
-
-
-
-                    </div>
-
-
-
-                  )
-
-
+                    <ul className="flex flex-col space-y-8 text-center animate-fadeIn">
+                      {
+                        adminheader.map((header) => (
+                          <li className="navitem">
+                            <Link
+                              to={header?.link}
+                              onClick={handleCloseMenu}
+                              className="text-white font-bold text-2xl"
+                            >
+                              {header?.title}
+                            </Link>
+                          </li>
+                        ))
+                      }
+                    </ul>
+                  </div>
+                )
                 )
                 :
                 (
                   isOpen && (
                     <div
-                      className={`fixed top-0 left-0 w-full h-full bg-blue-600 bg-opacity-90 z-50 md:hidden flex flex-col items-center justify-center 
-                    transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out`}
+                      className={`fixed top-0 left-0 w-full h-full bg-black bg-opacity-9 z-50 md:hidden flex flex-col items-center justify-center 
+                       transform ${isOpen ? "translate-y-0" : "-translate-y-full"} transition-transform! duration-1000! ease-in-out!`}
                     >
-
                       <button
                         onClick={handleCloseMenu}
                         className="absolute top-5 right-5 text-white text-3xl"
@@ -175,54 +144,37 @@ const Navbar = () => {
                         <X size={30} />
                       </button>
 
-
-                      <ul className="flex flex-col space-y-8 text-center">
-                        <li className="navitem">
-                          <Link
-                            to="home"
-                            onClick={handleCloseMenu}
-                            className="text-white font-bold text-2xl"
-                          >
-                            Home
-                          </Link>
-                        </li>
-
-                        <li className="navitem">
-                          <Link
-                            to="jobs"
-                            onClick={handleCloseMenu}
-                            className="text-white font-bold text-2xl"
-                          >
-                            Jobs
-                          </Link>
-                        </li>
-
-                        <li className="navitem">
-                          <Link
-                            to="browse"
-                            onClick={handleCloseMenu}
-                            className="text-white font-bold text-2xl"
-                          >
-                            Browse
-                          </Link>
-                        </li>
+                      <ul className="flex flex-col space-y-8 text-center animate-fadeIn">
+                        {
+                          userheader.map((header) => (
+                            <li className="navitem">
+                              <Link
+                                to={header?.link}
+                                onClick={handleCloseMenu}
+                                className="text-white font-bold text-2xl"
+                              >
+                                {header?.title}
+                              </Link>
+                            </li>
+                          ))
+                        }
                       </ul>
-
-
-                      <div className="flex flex-col items-center mt-10">
-                        <Link to="/login" onClick={handleCloseMenu}>
-                          <Button className="w-40">Login</Button>
-                        </Link>
-                        <Link to="/signup" onClick={handleCloseMenu} className="mt-4">
-                          <Button className="w-40 bg-[#020ef8] hover:bg-[#202477]">
-                            Signup
-                          </Button>
-                        </Link>
-                      </div>
+                      {
+                        userData && Object.keys(userData).length > 0 ? (<></>) :
+                          (<div className="flex flex-col items-center mt-10 space-y-4 animate-slideUp">
+                            <Link to="/login" onClick={handleCloseMenu}>
+                              <Button className="w-40 bg-gray-100 text-black">Login</Button>
+                            </Link>
+                            <Link to="/signup" onClick={handleCloseMenu}>
+                              <Button className="w-40 bg-[#020ef8] hover:bg-[#202477]">
+                                Signup
+                              </Button>
+                            </Link>
+                          </div>
+                          )
+                      }
                     </div>
                   )
-
-
                 )
 
 
@@ -260,7 +212,7 @@ const Navbar = () => {
                         <div className='flex w-fit items-center gap-2 cursor-pointer' >
                           <LogOut />
                           <Link to='/'><Button variant="link"
-                            onClick={()=>handellogout()}>Logout</Button></Link>
+                            onClick={() => handellogout()}>Logout</Button></Link>
                         </div>
                       </div>
                     </div>
@@ -279,13 +231,9 @@ const Navbar = () => {
 
 
           </div>
-
-
         </div>
       </div>
     </>
-
-
   )
 }
 
