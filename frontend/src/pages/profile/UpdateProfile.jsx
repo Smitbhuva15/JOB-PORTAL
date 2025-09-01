@@ -35,7 +35,6 @@ const UpdateProfile = ({ open, setOpen }) => {
 
     const onSubmit = async (data, e) => {
 
-        // console.log(data)
         e.preventDefault();
 
         const formData = new FormData();
@@ -66,7 +65,7 @@ const UpdateProfile = ({ open, setOpen }) => {
                     window.location.reload(true)
                 }, 2000);
                 toast.success(res.message);
-                // console.log(res);
+    
             } else {
                 const errorMessage = await response.json();
 
@@ -83,18 +82,10 @@ const UpdateProfile = ({ open, setOpen }) => {
         }
     };
 
-
-
-
-
-    const handelgimer = () => {
-
-    }
-
     return (
-        <Dialog open={open}>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent className="sm:max-w-[425px]" onInteractOutside={() => setOpen(false)}>
-                <DialogHeader>
+                <DialogHeader >
                     <DialogTitle>Update Profile</DialogTitle>
                 </DialogHeader>
 

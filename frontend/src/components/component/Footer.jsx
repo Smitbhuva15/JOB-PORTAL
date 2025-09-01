@@ -57,8 +57,8 @@ const Footer = () => {
                             {
                                 userData && userData.role === "recruiter"
                                     ?
-                                    (adminheader.map((header) => (
-                                        <li className=" ">
+                                    (adminheader.map((header,index) => (
+                                        <li className=" " key={index}>
                                             <Link to={header.link} onClick={() => window.scrollTo(0, 0)} spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700 font-semibold">{header.title}</Link>
                                         </li>
                                     ))
@@ -67,8 +67,8 @@ const Footer = () => {
                                     :
                                     (
 
-                                        userheader.map((header) => (
-                                            <li>
+                                        userheader.map((header,index) => (
+                                            <li key={index}>
                                                 <Link to={header.link} onClick={() => window.scrollTo(0, 0)} className="hover:underline text-gray-700 font-semibold">
                                                     {header.title}
                                                 </Link>

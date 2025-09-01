@@ -16,10 +16,11 @@ const Profile = () => {
     const [open, setOpen] = useState(false);
 
     const { userData } = useContext(AuthContext);
-    console.log(userData);
+    console.log(userData)
+
     return (
         !userData || Object.keys(userData).length === 0 ? (
-            <div className="flex justify-center items-center w-full min-h-[50vh]">
+            <div className="flex justify-center items-center w-full h-[90vh]">
                 <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
             </div>
         )
@@ -55,7 +56,7 @@ const Profile = () => {
                             <h1>Skills</h1>
                             <div className='flex sm:items-center gap-1 flex-col sm:flex-row items-start'>
                                 {
-                                    userData?.profile?.skills.length !== 0 ? userData?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span className='text-[#020ef8] font-extrabold'>NAN</span>
+                                   userData?.profile?.skills.length > 0 ? userData?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span className='text-red-500  font-extrabold'>Skills missing! add to complete profile</span>
                                 }
                             </div>
                         </div>
@@ -63,7 +64,7 @@ const Profile = () => {
                         <div className='grid w-full max-w-sm items-center gap-1.5'>
                             <Label className="text-md font-bold">Resume</Label>
                             {
-                                isResume ? <a target='blank' href={userData?.profile?.resume} className='text-[#020ef8] w-full hover:underline cursor-pointer'>{userData?.profile?.resumeOriginalName}</a> : <span className='text-[#020ef8] font-extrabold'>NAN</span>
+                                userData?.profile?.resume ? <a target='blank' href={userData?.profile?.resume} className='text-[#020ef8] w-full hover:underline cursor-pointer'>{userData?.profile?.resumeOriginalName}</a> : <span className='text-red-500 font-extrabold  '>Resume missing! add to complete profile</span>
                             }
                         </div>
                     </div>

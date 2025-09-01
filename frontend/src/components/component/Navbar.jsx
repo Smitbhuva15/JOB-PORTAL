@@ -73,16 +73,16 @@ const Navbar = () => {
                 userData && userData.role === 'recruiter'
                   ?
                   (
-                    adminheader.map((header) => (
-                      <Link to={header?.link}>
+                    adminheader.map((header,index) => (
+                      <Link to={header?.link} key={index}>
                         <li className='text-lg font-bold mx-1'>{header?.title}</li>
                       </Link>
                     ))
                   )
                   :
                   (
-                    userheader.map((header) => (
-                      <Link to={header?.link}>
+                    userheader.map((header,index) => (
+                      <Link to={header?.link} key={index}>
                         <li className='text-lg font-bold mx-1'>{header?.title}</li>
                       </Link>
                     ))
@@ -114,8 +114,8 @@ const Navbar = () => {
 
                     <ul className="flex flex-col space-y-8 text-center animate-fadeIn">
                       {
-                        adminheader.map((header) => (
-                          <li className="navitem">
+                        adminheader.map((header,index) => (
+                          <li className="navitem" key={index}>
                             <Link
                               to={header?.link}
                               onClick={handleCloseMenu}
@@ -146,8 +146,8 @@ const Navbar = () => {
 
                       <ul className="flex flex-col space-y-8 text-center animate-fadeIn">
                         {
-                          userheader.map((header) => (
-                            <li className="navitem">
+                          userheader.map((header,index) => (
+                            <li className="navitem" key={index}>
                               <Link
                                 to={header?.link}
                                 onClick={handleCloseMenu}
