@@ -1,14 +1,8 @@
 import { getsinglejob } from '../store/jobSlice';
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import React from 'react'
 
-const GetSingleJob =async (jobId) => {
-  
-    const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
-    const dispatch = useDispatch();
-  const API_URL = import.meta.env.VITE_API_URL;
 
-    const fetchingSingleData = async () => {
+const GetSingleJob =async (jobId,token,dispatch,API_URL) => {
         try {
             const response = await fetch(`${API_URL}/user/v2/api/get/jobbyid/${jobId}`, {
                 method: 'GET',
@@ -21,22 +15,12 @@ const GetSingleJob =async (jobId) => {
                 const data = await response.json();
                 dispatch(getsinglejob(data.job)); 
             } else {
-
                 const errorMessage = await response.json();
                 console.log(errorMessage);
-              
             }
         } catch (error) {
             console.log(error);
-          
         }
-    };
-
-    useEffect(() => {
-      
-            fetchingSingleData();
-        
-    }, [jobId, token,dispatch]); 
 }
 
 export default GetSingleJob

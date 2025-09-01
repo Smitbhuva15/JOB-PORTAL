@@ -16,7 +16,6 @@ const Profile = () => {
     const [open, setOpen] = useState(false);
 
     const { userData } = useContext(AuthContext);
-    console.log(userData)
 
     return (
         !userData || Object.keys(userData).length === 0 ? (

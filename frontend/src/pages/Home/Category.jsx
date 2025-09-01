@@ -30,7 +30,7 @@ const Category = () => {
    
     navigate('/browse')
     dispatch(setsearchjob(cat))
-  console.log(cat)
+
   }
 
   return (

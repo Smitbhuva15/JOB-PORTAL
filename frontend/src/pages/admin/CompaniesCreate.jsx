@@ -19,9 +19,8 @@ const CompaniesCreate = () => {
 
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
-
+ 
   const onSubmit = async (data, e) => {
-    // console.log(data)
     setLoading(true)
     e.preventDefault();
     try {
@@ -47,7 +46,6 @@ const CompaniesCreate = () => {
       }
       else {
         const errormessage = await response.json();
-
         const mess = errormessage.message
         const isAarry = await Array.isArray(mess);
         if (isAarry) {
@@ -86,8 +84,10 @@ const CompaniesCreate = () => {
           placeholder="JobLinker,Microsoft,Google etc."
           {...register("companyName")}
         />
-        <div className='flex items-center gap-2 my-10'>
-          <Button variant="outline" onClick={() => navigate("/admin/compnies")}>Cancel</Button>
+        <div className='flex items-center gap-2 my-10 '>
+          <div 
+          className='border-2 p-1 px-5 font-semibold cursor-pointer hover:bg-gray-200 rounded-sm bg-gray-100'
+           onClick={() => navigate("/admin/compnies")}>Cancel</div>
           {
             loading
               ?

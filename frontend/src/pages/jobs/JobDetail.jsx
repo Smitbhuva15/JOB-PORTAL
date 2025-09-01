@@ -144,7 +144,7 @@ const JobDetail = () => {
                     </div>
 
                     <h1 className='border-b-2 border-b-gray-300 font-medium py-4'>Job Description</h1>
-                    <div className='my-4' >
+                    <div className='mt-4 mb-36 ' >
                         <h1 className='font-bold my-1'>Role: <span className='pl-4 font-normal text-gray-800'>{singleJobData?.title}</span> </h1>
                         <h1 className='font-bold my-1'>Location: <span className='pl-4 font-normal text-gray-800'>{singleJobData?.location}</span></h1>
                         <h1 className='font-bold my-1'>Description: <span className='pl-4 font-normal text-gray-800'>{singleJobData?.description}</span></h1>
