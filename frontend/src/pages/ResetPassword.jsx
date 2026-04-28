@@ -12,18 +12,19 @@ const ResetPassword = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [isPasswordUpdated, setIsPasswordUpdated] = useState(false);
     
     const navigate = useNavigate();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const API_URL = import.meta.env.VITE_API_URL;
     const resetToken = sessionStorage.getItem('resetToken');
 
-    useEffect(() => {
-        if (!resetToken) {
-            toast.error("Session expired or invalid. Please start again.");
-            navigate('/forgot-password');
-        }
-    }, [resetToken, navigate]);
+ useEffect(() => {
+    if (!resetToken && !isPasswordUpdated) {
+        toast.error("Session expired or invalid. Please start again.");
+        navigate('/forgot-password');
+    }
+}, [resetToken, navigate, isPasswordUpdated]);
 
     const password = watch("newPassword");
 
@@ -45,6 +46,8 @@ const ResetPassword = () => {
 
             if (response.ok) {
                 const res = await response.json();
+                setIsPasswordUpdated(true); 
+
                 toast.success(res.message);
                 sessionStorage.removeItem('resetToken');
                 setTimeout(() => {
@@ -52,6 +55,7 @@ const ResetPassword = () => {
                 }, 1500);
             } else {
                 const errormessage = await response.json();
+            
                 toast.error(errormessage.message || "Failed to update password.");
             }
         } catch (error) {
