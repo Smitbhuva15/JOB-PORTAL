@@ -68,59 +68,72 @@ const ResetPassword = () => {
 
     if (!resetToken) return null;
 
+    
     return (
-        <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-10 xl:max-w-7xl lg:max-w-5xl '>
-            <div className='flex items-center justify-center '>
-                <form onSubmit={handleSubmit(onSubmit)} className='md:w-1/2 w-[90%] border border-gray-200 rounded-md p-4 my-10'>
-                    <h1 className='font-bold text-xl mb-2'>Create New Password</h1>
-                    <p className='text-sm text-gray-500 mb-5'>Please enter your new password.</p>
+        <div className='flex items-center justify-center min-h-[calc(100vh-8rem)] py-12 px-4 sm:px-6 lg:px-8'>
+            <div className='w-full max-w-md bg-card text-card-foreground shadow-xl shadow-primary/5 border border-border rounded-2xl p-8 animate-in slide-in-from-bottom-4 duration-500'>
+                <div className="text-center mb-8">
+                    <h1 className='font-bold text-3xl font-heading tracking-tight mb-2'>Create New Password</h1>
+                    <p className='text-muted-foreground text-sm'>Please enter your new password below.</p>
+                </div>
 
-                    <div className="my-4 relative">
-                        <Label>New Password</Label>
-                        <Input
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Enter new password"
-                            {...register("newPassword", { 
-                                required: "Password is required",
-                                minLength: { value: 8, message: "Password must be at least 8 characters" }
-                            })}
-                        />
-                        <button
-                            type="button"
-                            className="absolute right-3 top-10 transform -translate-y-1/2 text-gray-500"
-                            onClick={() => setShowPassword(!showPassword)}
-                        >
-                            {showPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
-                        </button>
-                        {errors.newPassword && <span className="text-sm text-red-500 mt-1 block">{errors.newPassword.message}</span>}
+                <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+                    <div className="space-y-2 relative">
+                        <Label htmlFor="newPassword" className="font-semibold text-foreground">New Password</Label>
+                        <div className="relative">
+                            <Input
+                                id="newPassword"
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Enter new password"
+                                className="bg-background border-border focus-visible:ring-primary h-11 pr-10"
+                                {...register("newPassword", { 
+                                    required: "Password is required",
+                                    minLength: { value: 8, message: "Password must be at least 8 characters" }
+                                })}
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
+                            </button>
+                        </div>
+                        {errors.newPassword && <span className="text-sm text-destructive mt-1 block">{errors.newPassword.message}</span>}
                     </div>
 
-                    <div className="my-4 relative">
-                        <Label>Confirm Password</Label>
-                        <Input
-                            type={showConfirmPassword ? "text" : "password"}
-                            placeholder="Confirm new password"
-                            {...register("confirmPassword", { 
-                                required: "Please confirm your password",
-                                validate: value => value === password || "Passwords do not match"
-                            })}
-                        />
-                        <button
-                            type="button"
-                            className="absolute right-3 top-10 transform -translate-y-1/2 text-gray-500"
-                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        >
-                            {showConfirmPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
-                        </button>
-                        {errors.confirmPassword && <span className="text-sm text-red-500 mt-1 block">{errors.confirmPassword.message}</span>}
+                    <div className="space-y-2 relative">
+                        <Label htmlFor="confirmPassword" className="font-semibold text-foreground">Confirm Password</Label>
+                        <div className="relative">
+                            <Input
+                                id="confirmPassword"
+                                type={showConfirmPassword ? "text" : "password"}
+                                placeholder="Confirm new password"
+                                className="bg-background border-border focus-visible:ring-primary h-11 pr-10"
+                                {...register("confirmPassword", { 
+                                    required: "Please confirm your password",
+                                    validate: value => value === password || "Passwords do not match"
+                                })}
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                            >
+                                {showConfirmPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
+                            </button>
+                        </div>
+                        {errors.confirmPassword && <span className="text-sm text-destructive mt-1 block">{errors.confirmPassword.message}</span>}
                     </div>
 
                     {loading ? (
-                        <Button className="w-full my-4" disabled>
-                            <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Updating Password
+                        <Button disabled className="w-full h-11 text-base font-semibold mt-6 shadow-md">
+                            <Loader2 className='mr-2 h-5 w-5 animate-spin' /> Updating Password...
                         </Button>
                     ) : (
-                        <Button type="submit" className="w-full my-4">Update Password</Button>
+                        <Button type="submit" className="w-full h-11 text-base font-semibold mt-6 shadow-md hover:shadow-primary/25 transition-all">
+                            Update Password
+                        </Button>
                     )}
                 </form>
             </div>

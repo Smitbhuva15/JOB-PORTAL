@@ -90,117 +90,125 @@ const SingUp = () => {
 
 
   return (
-    <>
-      <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-10 xl:max-w-7xl lg:max-w-5xl '>
-        <div className='flex items-center justify-center '>
-          <form onSubmit={handleSubmit(onSubmit)} className='md:w-1/2 w-[90%] border border-gray-200 rounded-md p-4 my-10'>
-            <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
+    <div className='flex items-center justify-center min-h-[calc(100vh-8rem)] py-12 px-4 sm:px-6 lg:px-8'>
+      <div className='w-full max-w-md bg-card text-card-foreground shadow-xl shadow-primary/5 border border-border rounded-2xl p-8 animate-in slide-in-from-bottom-4 duration-500'>
+        <div className="text-center mb-8">
+          <h1 className='font-bold text-3xl font-heading tracking-tight mb-2'>Create an account</h1>
+          <p className="text-muted-foreground text-sm">Enter your details to get started</p>
+        </div>
 
-            <div className='my-2'>
-              <Label>Full Name</Label>
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
+          
+          <div className='space-y-2'>
+            <Label htmlFor="fullname" className="font-semibold text-foreground">Full Name</Label>
+            <Input
+              id="fullname"
+              type="text"
+              placeholder="John Doe"
+              className="bg-background border-border focus-visible:ring-primary h-11"
+              {...register("fullname")}
+            />
+          </div>
+
+          <div className='space-y-2'>
+            <Label htmlFor="email" className="font-semibold text-foreground">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="name@example.com"
+              className="bg-background border-border focus-visible:ring-primary h-11"
+              {...register("email")}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="password" className="font-semibold text-foreground">Password</Label>
+            <div className="relative">
               <Input
-                type="text"
-                name="fullname"
-                placeholder="Enter Full Name"
-                {...register("fullname")}
-              />
-
-            </div>
-
-            <div className='my-2'>
-              <Label>Email</Label>
-              <Input
-                type="text"
-                name="email"
-                placeholder="Enter Email"
-                {...register("email")}
-              />
-
-            </div>
-
-           <div className="my-2 relative">
-              <Label>Password</Label>
-              <Input
+                id="password"
                 type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Enter Password"
+                placeholder="Create a password"
+                className="bg-background border-border focus-visible:ring-primary h-11 pr-10"
                 {...register("password")}
               />
               <button
                 type="button"
-                className="absolute right-3 top-10 transform -translate-y-1/2 text-gray-500"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <IoEyeOutline size={20} /> : <IoEyeOffOutline size={20} />}
               </button>
             </div>
+          </div>
 
-            <div className='my-2'>
-              <Label>Phone Number</Label>
-              <Input
-                type="text"
-                name="phoneNumber"
-                placeholder="Enter phone Number"
-                {...register("phoneNumber")}
-              />
+          <div className='space-y-2'>
+            <Label htmlFor="phoneNumber" className="font-semibold text-foreground">Phone Number</Label>
+            <Input
+              id="phoneNumber"
+              type="tel"
+              placeholder="+1 (555) 000-0000"
+              className="bg-background border-border focus-visible:ring-primary h-11"
+              {...register("phoneNumber")}
+            />
+          </div>
 
-            </div>
-
-            <div className='flex items-center justify-between'>
-              <RadioGroup className="flex items-center gap-4 my-5">
-                <div className="flex items-center space-x-2">
+          <div className='pt-2'>
+            <Label className="font-semibold text-foreground mb-3 block">Account Type</Label>
+            <RadioGroup className="grid grid-cols-2 gap-4">
+              <label className="cursor-pointer">
+                <div className="relative flex items-center p-4 border border-border rounded-xl hover:bg-accent/50 transition-colors [&:has(:checked)]:border-primary [&:has(:checked)]:bg-primary/5">
                   <Input
                     type="radio"
-                    name="role"
                     value="student"
-                    className="cursor-pointer"
+                    className="sr-only"
                     {...register("role")}
                   />
-                  <Label htmlFor="r1">Student</Label>
+                  <span className="font-medium text-sm">Student</span>
                 </div>
+              </label>
 
-                <div className="flex items-center space-x-2">
+              <label className="cursor-pointer">
+                <div className="relative flex items-center p-4 border border-border rounded-xl hover:bg-accent/50 transition-colors [&:has(:checked)]:border-primary [&:has(:checked)]:bg-primary/5">
                   <Input
                     type="radio"
-                    name="role"
                     value="recruiter"
-                    className="cursor-pointer"
+                    className="sr-only"
                     {...register("role")}
                   />
-                  <Label htmlFor="r1">Recruiter</Label>
+                  <span className="font-medium text-sm">Recruiter</span>
                 </div>
-              </RadioGroup>
+              </label>
+            </RadioGroup>
+          </div>
 
-            </div>
+          <div className='space-y-2'>
+            <Label htmlFor="fileUpload" className="font-semibold text-foreground">Profile Picture (Optional)</Label>
+            <Input
+              id="fileUpload"
+              accept="image/*"
+              type="file"
+              className="bg-background border-border file:bg-muted file:text-foreground file:border-0 cursor-pointer"
+              {...register('file')}
+            />
+          </div>
 
-            <div>
-              <Label>Profile</Label>
-              <Input
-                accept="image/*"
-                type="file"
-                id="fileUpload"
-                name="file"
-                className="cursor-pointer"
-                {...register('file')}
-              />
+          {loading ? (
+            <Button disabled className="w-full h-11 text-base font-semibold mt-6 shadow-md"> 
+              <Loader2 className='mr-2 h-5 w-5 animate-spin' /> 
+              Creating account... 
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full h-11 text-base font-semibold mt-6 shadow-md hover:shadow-primary/25 transition-all">
+              Sign up
+            </Button>
+          )}
 
-            </div>
-            {
-              loading
-                ?
-                (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
-                :
-                (<Button type="submit" className="w-full my-4 ">Sign up</Button>)
-            }
-
-
-            <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
-          </form>
-
-        </div>
+          <div className='text-center mt-6 text-sm text-muted-foreground'>
+            Already have an account? <Link to="/login" className='text-primary font-semibold hover:underline ml-1'>Login</Link>
+          </div>
+        </form>
       </div>
-
-    </>
+    </div>
   )
 }
 

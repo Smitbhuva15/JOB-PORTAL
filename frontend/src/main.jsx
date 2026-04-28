@@ -21,6 +21,7 @@ import AdminCreatJob from './pages/admin/AdminCreatJob';
 import AdminApplicaton from './pages/admin/AdminApplicaton';
 import Updatejob from './pages/admin/Updatejob';
 import ProtectedRoutes from './pages/admin/ProtectedRoutes';
+import AdminLayout from './components/layout/AdminLayout';
 import ForgotPassword from './pages/ForgotPassword';
 import VerifyOTP from './pages/VerifyOTP';
 import ResetPassword from './pages/ResetPassword';
@@ -70,39 +71,38 @@ const router = createBrowserRouter([
             element: <JobDetail />,
           },
           {
-            path: '/admin/compnies',
-            element:<ProtectedRoutes> <Compnies /></ProtectedRoutes>,
-
-          },
-          {
-            path: '/admin/add/company',
-            element: <ProtectedRoutes><CompaniesCreate /></ProtectedRoutes>,
-
-          },
-          {
-            path: '/admin/setup/company/:id',
-            element: <ProtectedRoutes><CompaniesManage /></ProtectedRoutes>,
-
-          },
-          {
-            path: '/admin/jobs',
-            element: <ProtectedRoutes><Adminjob /></ProtectedRoutes>,
-
-          },
-          {
-            path: '/admin/add/job',
-            element:<ProtectedRoutes> <AdminCreatJob /></ProtectedRoutes>,
-
-          },
-          {
-            path: '/admin/get/applicant/:id',
-            element: <ProtectedRoutes><AdminApplicaton /></ProtectedRoutes>,
-
-          },
-          {
-            path: '/admin/update/:id',
-            element: <ProtectedRoutes><Updatejob /></ProtectedRoutes>,
-
+            path: '/admin',
+            element: <ProtectedRoutes><AdminLayout /></ProtectedRoutes>,
+            children: [
+              {
+                path: 'compnies',
+                element: <Compnies />,
+              },
+              {
+                path: 'add/company',
+                element: <CompaniesCreate />,
+              },
+              {
+                path: 'setup/company/:id',
+                element: <CompaniesManage />,
+              },
+              {
+                path: 'jobs',
+                element: <Adminjob />,
+              },
+              {
+                path: 'add/job',
+                element: <AdminCreatJob />,
+              },
+              {
+                path: 'get/applicant/:id',
+                element: <AdminApplicaton />,
+              },
+              {
+                path: 'update/:id',
+                element: <Updatejob />,
+              },
+            ]
           },
           {
             path: '/forgot-password',

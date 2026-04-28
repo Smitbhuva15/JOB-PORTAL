@@ -47,33 +47,38 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-10 xl:max-w-7xl lg:max-w-5xl '>
-            <div className='flex items-center justify-center '>
-                <form onSubmit={handleSubmit(onSubmit)} className='md:w-1/2 w-[90%] border border-gray-200 rounded-md p-4 my-10'>
-                    <h1 className='font-bold text-xl mb-2'>Forgot Password</h1>
-                    <p className='text-sm text-gray-500 mb-5'>Enter your email address to receive an OTP.</p>
+        <div className='flex items-center justify-center min-h-[calc(100vh-8rem)] py-12 px-4 sm:px-6 lg:px-8'>
+            <div className='w-full max-w-md bg-card text-card-foreground shadow-xl shadow-primary/5 border border-border rounded-2xl p-8 animate-in slide-in-from-bottom-4 duration-500'>
+                <div className="text-center mb-8">
+                    <h1 className='font-bold text-3xl font-heading tracking-tight mb-2'>Forgot Password</h1>
+                    <p className='text-muted-foreground text-sm'>Enter your email address to receive an OTP.</p>
+                </div>
 
-                    <div className='my-4'>
-                        <Label>Email</Label>
+                <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+                    <div className='space-y-2'>
+                        <Label htmlFor="email" className="font-semibold text-foreground">Email</Label>
                         <Input
+                            id="email"
                             type="email"
-                            name="email"
-                            placeholder="Enter your registered email"
+                            placeholder="name@example.com"
+                            className="bg-background border-border focus-visible:ring-primary h-11"
                             {...register("email", { required: true })}
                         />
-                        {errors.email && <span className="text-sm text-red-500">Email is required</span>}
+                        {errors.email && <span className="text-sm text-destructive mt-1 block">Email is required</span>}
                     </div>
 
                     {loading ? (
-                        <Button className="w-full my-4" disabled>
-                            <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait
+                        <Button disabled className="w-full h-11 text-base font-semibold mt-6 shadow-md">
+                            <Loader2 className='mr-2 h-5 w-5 animate-spin' /> Sending OTP...
                         </Button>
                     ) : (
-                        <Button type="submit" className="w-full my-4 ">Send OTP</Button>
+                        <Button type="submit" className="w-full h-11 text-base font-semibold mt-6 shadow-md hover:shadow-primary/25 transition-all">
+                            Send OTP
+                        </Button>
                     )}
 
-                    <div className='text-center mt-4'>
-                        <span className='text-sm'>Remembered your password? <Link to="/login" className='text-blue-600 hover:underline'>Login</Link></span>
+                    <div className='text-center mt-6 text-sm text-muted-foreground'>
+                        Remembered your password? <Link to="/login" className='text-primary font-semibold hover:underline ml-1'>Login</Link>
                     </div>
                 </form>
             </div>

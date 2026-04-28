@@ -1,139 +1,95 @@
-
-
 import { AuthContext } from "@/Context-Api/AuthContext";
 import { adminheader, userheader } from "@/lib/config";
-import { Github, Globe, Linkedin } from "lucide-react";
+import { Github, Globe, Linkedin, Briefcase } from "lucide-react";
 import { useContext } from "react";
 import { FaEnvelope, FaMapMarkedAlt, FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
-
     const { userData } = useContext(AuthContext);
     const currentYear = new Date().getFullYear()
 
-
+    const isRecruiter = userData && userData.role === "recruiter";
+    const navLinks = isRecruiter ? adminheader : userheader;
+    const homeRoute = isRecruiter ? '/admin/compnies' : '/home';
 
     return (
-        <>
-            <div className="py-10 bg-gary-100 px-8 min-h-52 bg-slate-50 ">
-                <div className="container mx-auto grid grid-cols-1  lg:grid-cols-4 sm:grid-cols-2 gap-8">
-                    <div className="space-y- mr-14 col-span-2 sm:w-[80%]">
-                        <div className="flex items-center space-x-2">
-                            {
-                                userData && userData.role === "recruiter"
-                                    ?
-                                    (
-                                        <>
-                                            <Link to='/admin/compnies' onClick={() => window.scrollTo(0, 0)} >
-                                                <div className='flex ' >
-                                                    <img src='/logo.png' alt='logo' className='w-20    ' />
-                                                    <h1 className='text-2xl font-bold pt-8'>Job<span className='text-[#020ef8]'>Linker</span></h1>
-                                                </div>
-                                            </Link>
-                                        </>
-                                    )
-                                    :
-                                    (
-                                        <>
-                                            <Link to='/home' onClick={() => window.scrollTo(0, 0)}>
-                                                <div className='flex '>
-                                                    <img src='/logo.png' alt='logo' className='w-20    ' />
-                                                    <h1 className='text-2xl font-bold pt-8'>Job<span className='text-[#020ef8]'>Linker</span></h1>
-                                                </div>
-                                            </Link>
-                                        </>
-                                    )
-                            }
+        <footer className="bg-muted/40 border-t border-border mt-auto">
+            <div className="container mx-auto px-4 md:px-8 py-12 md:py-16 max-w-7xl">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-8">
+                    
+                    {/* Brand Section */}
+                    <div className="col-span-1 md:col-span-2 space-y-6">
+                        <Link to={homeRoute} onClick={() => window.scrollTo(0, 0)} className="flex items-center gap-2 w-fit">
+                            <Briefcase className="w-8 h-8 text-primary" />
+                            <h1 className='text-2xl font-bold font-heading tracking-tight'>
+                                Job<span className='text-primary'>Linker</span>
+                            </h1>
+                        </Link>
+                        <p className="text-muted-foreground max-w-md leading-relaxed">
+                            Join our community to receive updates, personalized assistance, and expert guidance. Start your journey with the ultimate platform for modern hiring.
+                        </p>
+                        
+                        <div className="flex items-center gap-4 pt-2">
+                            <a href="https://github.com/Smitbhuva15" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-background border border-border text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+                                <Github className="w-5 h-5" />
+                            </a>
+                            <a href="https://www.linkedin.com/in/smit-bhuva-1007ba314/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-background border border-border text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+                                <Linkedin className="w-5 h-5" />
+                            </a>
+                            <a href="#" rel="noopener noreferrer" className="p-2 rounded-full bg-background border border-border text-muted-foreground hover:text-primary hover:border-primary transition-colors">
+                                <Globe className="w-5 h-5" />
+                            </a>
                         </div>
-                        <p className="text-para mt-2 font-semibold">Join our community to receive updates, personalized assistance, and expert guidance start your journey today!</p>
-
                     </div>
 
-                    <div className="space-y-2">
-                        <h3 className="sm:text-xl text-lg text-zinc-800 font-bold mb-4">Quick Links </h3>
+                    {/* Quick Links */}
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-foreground tracking-tight">Quick Links</h3>
                         <ul className="space-y-3">
-
-                            {
-                                userData && userData.role === "recruiter"
-                                    ?
-                                    (adminheader.map((header,index) => (
-                                        <li className=" " key={index}>
-                                            <Link to={header.link} onClick={() => window.scrollTo(0, 0)} spy={true} smooth={true} offset={-100} duration={500} className="hover:underline text-gray-700 font-semibold">{header.title}</Link>
-                                        </li>
-                                    ))
-
-                                    )
-                                    :
-                                    (
-
-                                        userheader.map((header,index) => (
-                                            <li key={index}>
-                                                <Link to={header.link} onClick={() => window.scrollTo(0, 0)} className="hover:underline text-gray-700 font-semibold">
-                                                    {header.title}
-                                                </Link>
-                                            </li>
-                                        ))
-                                    )
-                            }
-
+                            {navLinks.map((header, index) => (
+                                <li key={index}>
+                                    <Link 
+                                        to={header.link} 
+                                        onClick={() => window.scrollTo(0, 0)} 
+                                        className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium"
+                                    >
+                                        {header.title}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
-
                     </div>
 
-                    <div className="space-y-2">
-                        <h3 className="sm:text-xl text-lg font-bold text-zinc-800 mb-4">Contact info </h3>
-                        <ul className="space-y-3 font-semibold">
-                            <li className="flex  items-center gap-2">
-                                <FaMapMarkedAlt className="text-[#020ef8]" />
-                                <p className="text-gray-700"> Ahmedabad, India</p>
+                    {/* Contact Info */}
+                    <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-foreground tracking-tight">Contact</h3>
+                        <ul className="space-y-4">
+                            <li className="flex items-start gap-3 text-muted-foreground">
+                                <FaMapMarkedAlt className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                                <span className="text-sm leading-tight">Ahmedabad, Gujarat<br/>India</span>
                             </li>
-                            <li className="flex items-center gap-2">
-                                <FaPhoneAlt className="text-[#020ef8]" />
-                                <p className="text-gray-700">+973 536 8732</p>
+                            <li className="flex items-center gap-3 text-muted-foreground">
+                                <FaPhoneAlt className="w-4 h-4 text-primary shrink-0" />
+                                <span className="text-sm">+91 97353 68732</span>
                             </li>
-                            <li className="flex items-center gap-2">
-                                <FaEnvelope className="text-[#020ef8]" />
-                                <p className="text-gray-700">info@joblinker.com</p>
+                            <li className="flex items-center gap-3 text-muted-foreground">
+                                <FaEnvelope className="w-4 h-4 text-primary shrink-0" />
+                                <span className="text-sm">info@joblinker.com</span>
                             </li>
                         </ul>
-
-
                     </div>
 
                 </div>
-                <div className="flex justify-center space-x-4 lg:mt-4  mt-10 w-full text-[#020ef8] size-10">
 
-                    <a
-                        href="https://github.com/Smitbhuva15"
-                        target="_blank"
-                        rel="noopener noreferrer "
-                        className=" rounded-full px-2 py-2 transition-colors bg-gray-200 hover:bg-gray-300"
-                    >
-                        <Github />
-                    </a>
-                    <a
-                        href="https://www.linkedin.com/in/smit-bhuva-1007ba314/"
-                        target="_blank"
-                        rel="noopener noreferrer "
-                        className=" rounded-full px-2 py-2 transition-colors bg-gray-200 hover:bg-gray-300"
-                    >
-                        <Linkedin />
-                    </a>
-                    <a
-                        href="#"
-                        rel="noopener noreferrer "
-                        className=" rounded-full px-2 py-2 transition-colors bg-gray-200 hover:bg-gray-300"
-                    >
-                        <Globe />
-                    </a>
+                <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+                    <p>© {currentYear} JobLinker. All rights reserved.</p>
+                    <p>
+                        Designed & Developed by <span className="font-semibold text-foreground">Smit Bhuva</span>
+                    </p>
                 </div>
-                <div className="text-center  w-full mt-10 font-semibold text-wrap">
-                    <p>Copyright © {currentYear} - All right reserved by <span className="text-[#020ef8] font-bold">JobLinker</span></p>
-                    <p className=" text-center">Designed & Developed <span className="text-[#020ef8] font-bold">Smit Bhuva</span> </p>
-                </div>
-            </div >
-        </>
+            </div>
+        </footer>
     );
 };
 export default Footer;

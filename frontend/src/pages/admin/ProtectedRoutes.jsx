@@ -8,19 +8,13 @@ const ProtectedRoutes = ({children}) => {
  const navigate=useNavigate()
 
  useEffect(() => {
+  const storedRole = localStorage.getItem("user-role");
 
-  const storedRole =localStorage.getItem("user-role");
-
-    if (storedRole === "recruiter" || userData?.role === "recruiter") {
-      navigate("/admin/compnies");
-     
-    }
-   else {
+    if (storedRole !== "recruiter" && userData?.role !== "recruiter") {
       navigate("/");
-    
     }
    
- }, []);
+ }, [userData, navigate]);
 
 
   return (

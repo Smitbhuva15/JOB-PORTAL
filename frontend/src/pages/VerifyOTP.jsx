@@ -96,57 +96,61 @@ const VerifyOTP = () => {
 
     if (!resetToken) return null; // Wait for redirect
 
+   
     return (
-        <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-10 xl:max-w-7xl lg:max-w-5xl '>
-            <div className='flex items-center justify-center '>
-                <div className='md:w-1/2 w-[90%] border border-gray-200 rounded-md p-4 my-10'>
-                    <h1 className='font-bold text-xl mb-2'>Verify OTP</h1>
-                    <p className='text-sm text-gray-500 mb-5'>Please enter the 6-digit OTP sent to your email.</p>
+        <div className='flex items-center justify-center min-h-[calc(100vh-8rem)] py-12 px-4 sm:px-6 lg:px-8'>
+            <div className='w-full max-w-md bg-card text-card-foreground shadow-xl shadow-primary/5 border border-border rounded-2xl p-8 animate-in slide-in-from-bottom-4 duration-500'>
+                <div className="text-center mb-8">
+                    <h1 className='font-bold text-3xl font-heading tracking-tight mb-2'>Verify OTP</h1>
+                    <p className='text-muted-foreground text-sm'>Please enter the 6-digit OTP sent to your email.</p>
+                </div>
 
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className='my-4'>
-                            <Label>OTP</Label>
-                            <Input
-                                type="text"
-                                maxLength="6"
-                                placeholder="Enter 6-digit OTP"
-                                className="text-center tracking-[1em] font-mono text-lg"
-                                {...register("otp", { 
-                                    required: true, 
-                                    minLength: 6, 
-                                    maxLength: 6,
-                                    pattern: /^[0-9]+$/
-                                })}
-                            />
-                            {errors.otp && <span className="text-sm text-red-500">Please enter a valid 6-digit OTP</span>}
-                        </div>
-
-                        {loading ? (
-                            <Button className="w-full my-4" disabled>
-                                <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Verifying
-                            </Button>
-                        ) : (
-                            <Button type="submit" className="w-full my-4">Verify OTP</Button>
-                        )}
-                    </form>
-
-                    <div className='text-center mt-6 border-t pt-4'>
-                        <p className='text-sm text-gray-500 mb-2'>Didn't receive the OTP?</p>
-                        {resendLoading ? (
-                            <Button variant="outline" className="w-full" disabled>
-                                <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Sending...
-                            </Button>
-                        ) : (
-                            <Button 
-                                variant="outline" 
-                                className="w-full" 
-                                onClick={handleResend}
-                                disabled={cooldown > 0}
-                            >
-                                {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
-                            </Button>
-                        )}
+                <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+                    <div className='space-y-2'>
+                        <Label htmlFor="otp" className="font-semibold text-foreground">One Time Password</Label>
+                        <Input
+                            id="otp"
+                            type="text"
+                            maxLength="6"
+                            placeholder="------"
+                            className="text-center tracking-[1em] font-mono text-2xl h-14 bg-background border-border focus-visible:ring-primary uppercase"
+                            {...register("otp", { 
+                                required: true, 
+                                minLength: 6, 
+                                maxLength: 6,
+                                pattern: /^[0-9]+$/
+                            })}
+                        />
+                        {errors.otp && <span className="text-sm text-destructive mt-1 block">Please enter a valid 6-digit OTP</span>}
                     </div>
+
+                    {loading ? (
+                        <Button disabled className="w-full h-11 text-base font-semibold mt-6 shadow-md">
+                            <Loader2 className='mr-2 h-5 w-5 animate-spin' /> Verifying...
+                        </Button>
+                    ) : (
+                        <Button type="submit" className="w-full h-11 text-base font-semibold mt-6 shadow-md hover:shadow-primary/25 transition-all">
+                            Verify OTP
+                        </Button>
+                    )}
+                </form>
+
+                <div className='text-center mt-8 pt-6 border-t border-border'>
+                    <p className='text-sm text-muted-foreground mb-3'>Didn't receive the OTP?</p>
+                    {resendLoading ? (
+                        <Button variant="outline" className="w-full h-10 border-border" disabled>
+                            <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Sending...
+                        </Button>
+                    ) : (
+                        <Button 
+                            variant="outline" 
+                            className="w-full h-10 border-border hover:bg-accent/50 transition-colors" 
+                            onClick={handleResend}
+                            disabled={cooldown > 0}
+                        >
+                            {cooldown > 0 ? `Resend OTP in ${cooldown}s` : "Resend OTP"}
+                        </Button>
+                    )}
                 </div>
             </div>
         </div>
