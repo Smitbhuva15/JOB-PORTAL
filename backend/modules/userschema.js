@@ -48,6 +48,22 @@ const userSchema=new mongoose.Schema({
                 default:""
             }
         },
+        resetPasswordOtp: {
+            type: String,
+            default: null
+        },
+        resetPasswordOtpExpiry: {
+            type: Date,
+            default: null
+        },
+        resetPasswordOtpVerified: {
+            type: Boolean,
+            default: false
+        },
+        resetPasswordResendCooldown: {
+            type: Date,
+            default: null
+        }
 },{timestamps:true})
 
 exports.userModel=mongoose.model("User",userSchema)

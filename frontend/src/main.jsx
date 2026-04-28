@@ -21,8 +21,9 @@ import AdminCreatJob from './pages/admin/AdminCreatJob';
 import AdminApplicaton from './pages/admin/AdminApplicaton';
 import Updatejob from './pages/admin/Updatejob';
 import ProtectedRoutes from './pages/admin/ProtectedRoutes';
-
-
+import ForgotPassword from './pages/ForgotPassword';
+import VerifyOTP from './pages/VerifyOTP';
+import ResetPassword from './pages/ResetPassword';
 
 
 
@@ -102,6 +103,18 @@ const router = createBrowserRouter([
             path: '/admin/update/:id',
             element: <ProtectedRoutes><Updatejob /></ProtectedRoutes>,
 
+          },
+          {
+            path: '/forgot-password',
+            element: <ForgotPassword />,
+          },
+          {
+            path: '/forgot-password/otp',
+            element: <VerifyOTP />,
+          },
+          {
+            path: '/forgot-password/new-password',
+            element: <ResetPassword />,
           },
          
           
