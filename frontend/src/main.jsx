@@ -25,7 +25,7 @@ import AdminLayout from './components/layout/AdminLayout';
 import ForgotPassword from './pages/ForgotPassword';
 import VerifyOTP from './pages/VerifyOTP';
 import ResetPassword from './pages/ResetPassword';
-
+import SavedJobs from './pages/SavedJobs';
 
 
 
@@ -65,6 +65,10 @@ const router = createBrowserRouter([
           {
             path: '/profile',
             element: <Profile />,
+          },
+          {
+            path: '/saved-jobs',
+            element: <SavedJobs />,
           },
           {
             path: '/jobs/Detail/:id',

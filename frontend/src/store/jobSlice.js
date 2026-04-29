@@ -1,5 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 
+const getInitialSavedJobs = () => {
+  try {
+    const item = localStorage.getItem('job-portal-saved-jobs');
+    return item ? JSON.parse(item) : [];
+  } catch (error) {
+    return [];
+  }
+};
+
 export const jobSlice = createSlice({
   name: 'job',
   initialState: {
@@ -9,7 +18,8 @@ export const jobSlice = createSlice({
     singlejob:[],
     applyjob:[],
     searchdata:"",
-    searchjobdata:""
+    searchjobdata:"",
+    savedJobs: getInitialSavedJobs()
   },
   reducers: {
    getalljob:(state, action)=>{
@@ -33,12 +43,19 @@ export const jobSlice = createSlice({
    getsearchjobtext:(state, action)=>{
     state.searchjobdata=action.payload
    },
-
-   
+   toggleSavedJob: (state, action) => {
+    const job = action.payload;
+    const exists = state.savedJobs.find(j => j._id === job._id);
+    if (exists) {
+      state.savedJobs = state.savedJobs.filter(j => j._id !== job._id);
+    } else {
+      state.savedJobs.push(job);
+    }
+    localStorage.setItem('job-portal-saved-jobs', JSON.stringify(state.savedJobs));
+   }
   }
 })
 
-
-export const { getalljob,getadminjob,getjobtext,getsinglejob,getapplyjob,setsearchjob,getsearchjobtext } = jobSlice.actions
+export const { getalljob, getadminjob, getjobtext, getsinglejob, getapplyjob, setsearchjob, getsearchjobtext, toggleSavedJob } = jobSlice.actions
 
 export default jobSlice.reducer

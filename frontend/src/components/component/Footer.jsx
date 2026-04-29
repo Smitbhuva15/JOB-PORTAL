@@ -9,7 +9,7 @@ const Footer = () => {
     const { userData } = useContext(AuthContext);
     const currentYear = new Date().getFullYear()
 
-    const isRecruiter = userData && userData.role === "recruiter";
+    const isRecruiter = (userData?.role === "recruiter") || (!userData && localStorage.getItem('user-role') === "recruiter");
     const navLinks = isRecruiter ? adminheader : userheader;
     const homeRoute = isRecruiter ? '/admin/compnies' : '/home';
 

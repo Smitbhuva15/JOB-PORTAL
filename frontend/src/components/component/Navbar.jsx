@@ -33,12 +33,21 @@ const Navbar = () => {
   const handleCloseMenu = () => setIsOpen(false);
   const handelToggle = () => setIsOpen(!isOpen);
   
+  // Persist role to prevent flicker on reload
+  useEffect(() => {
+    if (userData?.role) {
+      localStorage.setItem('user-role', userData.role);
+    }
+  }, [userData]);
+
   const handellogout = () => {
+    localStorage.removeItem('user-role');
     handelLogout();
     navigate('/');
   }
 
-  const isRecruiter = userData && userData.role === "recruiter";
+  const storedRole = localStorage.getItem('user-role');
+  const isRecruiter = (userData?.role === "recruiter") || (!userData && storedRole === "recruiter");
   const navLinks = isRecruiter ? adminheader : userheader;
   const homeRoute = isRecruiter ? '/admin/compnies' : '/home';
 
@@ -127,42 +136,68 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation Drawer */}
       {isOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-background border-b shadow-lg animate-in slide-in-from-top-2">
-          <div className="flex flex-col px-4 py-6 space-y-4">
-            {navLinks.map((header, index) => (
-              <Link
-                key={index}
-                to={header?.link}
-                onClick={handleCloseMenu}
-                className="text-lg font-medium text-foreground py-2 border-b border-border/50"
-              >
-                {header?.title}
-              </Link>
-            ))}
+        <div className="md:hidden fixed inset-0 z-50 flex justify-end">
+          {/* Overlay */}
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" 
+            onClick={handleCloseMenu}
+          />
+          
+          {/* Drawer Menu */}
+          <div className="relative w-3/4 max-w-sm bg-background h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <span className="font-heading font-bold text-lg">Menu</span>
+              <Button variant="ghost" size="icon" onClick={handleCloseMenu}>
+                <X className="w-6 h-6" />
+              </Button>
+            </div>
             
-            {!isVerify ? (
-              <div className="flex flex-col gap-3 pt-4">
-                <Button variant="outline" className="w-full" asChild onClick={handleCloseMenu}>
-                  <Link to="/login">Login</Link>
-                </Button>
-                <Button className="w-full" asChild onClick={handleCloseMenu}>
-                  <Link to="/signup">Sign Up</Link>
-                </Button>
-              </div>
-            ) : (
-              <div className="flex flex-col gap-2 pt-4">
-                {!isRecruiter && (
-                  <Button variant="ghost" className="w-full justify-start text-lg" asChild onClick={handleCloseMenu}>
-                    <Link to="/profile">Profile</Link>
+            <div className="flex flex-col px-4 py-6 space-y-2 flex-1 overflow-y-auto">
+              {navLinks.map((header, index) => (
+                <Link
+                  key={index}
+                  to={header?.link}
+                  onClick={handleCloseMenu}
+                  className="text-lg font-medium text-foreground py-3 border-b border-border/50 hover:text-primary transition-colors"
+                >
+                  {header?.title}
+                </Link>
+              ))}
+              
+              {!isVerify ? (
+                <div className="flex flex-col gap-3 pt-6 mt-auto">
+                  <Button variant="outline" className="w-full" asChild onClick={handleCloseMenu}>
+                    <Link to="/login">Login</Link>
                   </Button>
-                )}
-                <Button variant="ghost" className="w-full justify-start text-lg text-destructive" onClick={() => { handleCloseMenu(); handellogout(); }}>
-                  Logout
-                </Button>
-              </div>
-            )}
+                  <Button className="w-full" asChild onClick={handleCloseMenu}>
+                    <Link to="/signup">Sign Up</Link>
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 pt-6 mt-auto border-t border-border mt-4">
+                  <div className="flex items-center gap-3 mb-4 p-2 bg-primary/5 rounded-xl">
+                    <Avatar className="w-10 h-10">
+                      <AvatarImage src={userData?.profile?.profilePhoto} />
+                      <AvatarFallback className="bg-primary/10 text-primary">{userData?.fullname?.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-sm">{userData?.fullname}</span>
+                      <span className="text-xs text-muted-foreground">{isRecruiter ? 'Recruiter' : 'Student'}</span>
+                    </div>
+                  </div>
+                  {!isRecruiter && (
+                    <Button variant="ghost" className="w-full justify-start text-base gap-3" asChild onClick={handleCloseMenu}>
+                      <Link to="/profile"><User2 className="w-4 h-4" /> Profile</Link>
+                    </Button>
+                  )}
+                  <Button variant="ghost" className="w-full justify-start text-base text-destructive hover:bg-destructive/10 gap-3" onClick={() => { handleCloseMenu(); handellogout(); }}>
+                    <LogOut className="w-4 h-4" /> Logout
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

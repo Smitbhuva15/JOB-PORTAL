@@ -5,14 +5,18 @@ import {
 } from '../../components/ui/avatar';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge'
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Bookmark, BookmarkCheck } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleSavedJob } from '@/store/jobSlice';
 
 const Job = ({ job }) => {
-  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const savedJobs = useSelector(store => store.job.savedJobs) || [];
+  const isSaved = savedJobs.some(j => j._id === job._id);
 
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
@@ -51,7 +55,7 @@ const Job = ({ job }) => {
           className={`rounded-full hover:bg-primary/10 hover:text-primary transition-colors ${isSaved ? 'text-primary' : 'text-muted-foreground'}`}
           onClick={(e) => {
             e.stopPropagation();
-            setIsSaved(!isSaved);
+            dispatch(toggleSavedJob(job));
           }}
         >
           {isSaved ? <BookmarkCheck className="h-5 w-5 fill-primary/20" /> : <Bookmark className="h-5 w-5" />}

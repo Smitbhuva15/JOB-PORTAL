@@ -11,6 +11,10 @@ export const userheader = [
         title: "Browse",
         link: "/browse"
     },
+    {
+        title: "Saved Jobs",
+        link: "/saved-jobs"
+    },
 ];
 
 export const adminheader = [
