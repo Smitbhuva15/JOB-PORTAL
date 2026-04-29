@@ -71,33 +71,48 @@ const CompaniesCreate = () => {
 
 
   return (
-    <div className='sm:max-w-screen-sm md:max-w-2xl  my-20 xl:max-w-4x lg:max-w-3xl w-[90%] h-[50vh] mx-auto'>
-      <div className='my-10'>
-        <h1 className='font-bold text-2xl'>Your Company Name</h1>
-        <p className='text-gray-500'>What would you like to give your company name? </p>
-      </div>
-      <form onSubmit={handleSubmit(onSubmit)} >
-        <Label>Company Name</Label>
-        <Input
-          type="text"
-          className="my-2"
-          placeholder="JobLinker,Microsoft,Google etc."
-          {...register("companyName")}
-        />
-        <div className='flex items-center gap-2 my-10 '>
-          <div 
-          className='border-2 p-1 px-5 font-semibold cursor-pointer hover:bg-gray-200 rounded-sm bg-gray-100'
-           onClick={() => navigate("/admin/compnies")}>Cancel</div>
-          {
-            loading
-              ?
-              (<Button className=""> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
-              :
-              (<Button >Continue</Button>)
-          }
-
+    <div className='bg-background min-h-[calc(100vh-8rem)] py-12'>
+      <div className='sm:max-w-md mx-auto px-4 w-full'>
+        <div className="bg-card border border-border rounded-2xl p-8 shadow-xl shadow-primary/5">
+          <div className='mb-8 text-center'>
+            <h1 className='font-bold text-2xl font-heading tracking-tight text-foreground'>Register New Company</h1>
+            <p className='text-muted-foreground text-sm mt-2'>What would you like to call your new company?</p>
+          </div>
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="space-y-2">
+              <Label className="font-semibold text-foreground">Company Name</Label>
+              <Input
+                type="text"
+                className="h-11 bg-background border-border focus-visible:ring-primary"
+                placeholder="e.g. JobLinker, Microsoft, Google..."
+                {...register("companyName")}
+              />
+            </div>
+            
+            <div className='flex items-center gap-3 pt-4'>
+              <Button 
+                type="button"
+                variant="outline" 
+                className='w-full h-11 rounded-xl'
+                onClick={() => navigate("/admin/compnies")}
+              >
+                Cancel
+              </Button>
+              {loading ? (
+                <Button disabled className="w-full h-11 rounded-xl"> 
+                  <Loader2 className='mr-2 h-4 w-4 animate-spin' /> 
+                  Please wait 
+                </Button>
+              ) : (
+                <Button type="submit" className="w-full h-11 rounded-xl shadow-sm hover:shadow-primary/25 transition-all">
+                  Continue
+                </Button>
+              )}
+            </div>
+          </form>
         </div>
-      </form>
+      </div>
     </div>
   )
 }

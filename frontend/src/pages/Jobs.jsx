@@ -12,6 +12,7 @@ const Jobs = () => {
   const searchdata = useSelector(store => store.job.searchdata)
   const alljobs = useSelector(store => store.job.Alljobs)
   const searchjobdata = useSelector(store => store.job.searchjobdata)
+  const currentFilters = useSelector(store => store.job.filters)
 
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
   const [isLoading, setIsLoading] = useState(true);
@@ -63,20 +64,54 @@ const Jobs = () => {
 
 
   useEffect(() => {
+    let filtered = alljobs || [];
 
+    // Search query filter
     if (searchjobdata) {
-      const filtered = alljobs.filter((job) => {
-        return job?.title.toLowerCase().includes(searchjobdata.toLowerCase()) ||
-          job?.description.toLowerCase().includes(searchjobdata.toLowerCase()) ||
-          job?.location.toLowerCase().includes(searchjobdata.toLowerCase())
-      })
-      setFilterData(filtered)
-    }
-    else {
-      setFilterData(alljobs)
+      filtered = filtered.filter((job) => {
+        return job?.title?.toLowerCase().includes(searchjobdata.toLowerCase()) ||
+          job?.description?.toLowerCase().includes(searchjobdata.toLowerCase()) ||
+          job?.company?.name?.toLowerCase().includes(searchjobdata.toLowerCase()) ||
+          job?.location?.toLowerCase().includes(searchjobdata.toLowerCase())
+      });
     }
 
-  }, [alljobs, searchjobdata]);
+    // Location filter
+    if (currentFilters?.location) {
+      filtered = filtered.filter(job => job?.location?.toLowerCase().includes(currentFilters.location.toLowerCase()));
+    }
+
+    // Job Type filter
+    if (currentFilters?.jobType) {
+      filtered = filtered.filter(job => job?.jobType?.toLowerCase() === currentFilters.jobType.toLowerCase());
+    }
+
+    // Experience filter
+    if (currentFilters?.experience) {
+      filtered = filtered.filter(job => {
+        const exp = parseInt(job.experienceLevel) || 0;
+        if (currentFilters.experience === "Fresher") return exp === 0;
+        if (currentFilters.experience === "1-3 Years") return exp >= 1 && exp <= 3;
+        if (currentFilters.experience === "3-5 Years") return exp > 3 && exp <= 5;
+        if (currentFilters.experience === "5+ Years") return exp > 5;
+        return true;
+      });
+    }
+
+    // Salary filter
+    if (currentFilters?.salary) {
+      filtered = filtered.filter(job => {
+        const sal = parseInt(job.salary) || 0;
+        if (currentFilters.salary === "0 - 5 LPA") return sal <= 5;
+        if (currentFilters.salary === "5 - 10 LPA") return sal > 5 && sal <= 10;
+        if (currentFilters.salary === "10 - 20 LPA") return sal > 10 && sal <= 20;
+        if (currentFilters.salary === "20+ LPA") return sal > 20;
+        return true;
+      });
+    }
+
+    setFilterData(filtered);
+  }, [alljobs, searchjobdata, currentFilters]);
 
 
   return (
@@ -153,11 +188,24 @@ const Jobs = () => {
                 </div>
               ) : (
                 filterData.length <= 0 ? (
-                  <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm">
-                    <div className='text-muted-foreground text-center text-lg font-medium'>
-                      No jobs match your current filters.
+                  <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm p-8">
+                    <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-2">Try adjusting your search or clearing filters.</p>
+                    <div className='text-foreground text-center text-xl font-bold font-heading'>
+                      No jobs found
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-sm text-center">We couldn't find any jobs matching your current search and filter criteria. Try adjusting your parameters.</p>
+                    <button 
+                      onClick={() => {
+                        setSearchTerm('');
+                        dispatch({ type: 'job/setsearchjob', payload: '' });
+                        dispatch({ type: 'job/clearFilters' });
+                      }}
+                      className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl font-semibold shadow-sm hover:bg-primary/90 transition-all hover:shadow-primary/25"
+                    >
+                      Reset All Filters
+                    </button>
                   </div>
                 ) : (
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 pb-10">

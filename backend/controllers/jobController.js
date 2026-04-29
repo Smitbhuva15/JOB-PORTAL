@@ -184,7 +184,26 @@ exports.updateJob = async (req, res) => {
         console.log(error)
         return res.status(500).json({ message: "Internal server error!" });
     }
+}
 
+exports.deleteJob = async (req, res) => {
+    try {
+        const jobId = req.params.id;
+        const job = await jobModel.findByIdAndDelete(jobId);
 
+        if (!job) {
+            return res.status(404).json({
+                message: "Job not found."
+            });
+        }
 
+        return res.status(200).json({
+            message: "Job deleted successfully.",
+            success: true
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Internal server error!" });
+    }
 }

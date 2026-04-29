@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from "../ui/button"
-import { LogOut, User2, X, Briefcase, Menu } from 'lucide-react'
+import { LogOut, User2, X, Briefcase, Menu, Home, Search, Building2 } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
@@ -47,9 +47,20 @@ const Navbar = () => {
   }
 
   const storedRole = localStorage.getItem('user-role');
-  const isRecruiter = (userData?.role === "recruiter") || (!userData && storedRole === "recruiter");
+  const isRecruiter = userData?.Role === "recruiter" || userData?.role === "recruiter" || ((!userData || Object.keys(userData).length === 0) && storedRole === "recruiter");
   const navLinks = isRecruiter ? adminheader : userheader;
   const homeRoute = isRecruiter ? '/admin/compnies' : '/home';
+
+  const getNavIcon = (title) => {
+    switch (title.toLowerCase()) {
+      case 'home': return <Home className="w-5 h-5" />;
+      case 'jobs': return <Briefcase className="w-5 h-5" />;
+      case 'browse': return <Search className="w-5 h-5" />;
+      case 'companies': return <Building2 className="w-5 h-5" />;
+      case 'saved jobs': return <Briefcase className="w-5 h-5" />;
+      default: return null;
+    }
+  };
 
   return (
     <nav className={`sticky top-0 z-50 w-full transition-all duration-300 border-b ${scrolled ? 'bg-background/80 backdrop-blur-md shadow-sm border-border' : 'bg-background border-transparent'}`}>
@@ -160,8 +171,9 @@ const Navbar = () => {
                   key={index}
                   to={header?.link}
                   onClick={handleCloseMenu}
-                  className="text-lg font-medium text-foreground py-3 border-b border-border/50 hover:text-primary transition-colors"
+                  className="flex items-center gap-3 text-lg font-medium text-foreground py-3 border-b border-border/50 hover:text-primary transition-colors"
                 >
+                  {getNavIcon(header?.title)}
                   {header?.title}
                 </Link>
               ))}

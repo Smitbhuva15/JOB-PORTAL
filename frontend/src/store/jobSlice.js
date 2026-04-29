@@ -19,7 +19,13 @@ export const jobSlice = createSlice({
     applyjob:[],
     searchdata:"",
     searchjobdata:"",
-    savedJobs: getInitialSavedJobs()
+    savedJobs: getInitialSavedJobs(),
+    filters: {
+      location: "",
+      jobType: "",
+      salary: "",
+      experience: ""
+    }
   },
   reducers: {
    getalljob:(state, action)=>{
@@ -43,6 +49,12 @@ export const jobSlice = createSlice({
    getsearchjobtext:(state, action)=>{
     state.searchjobdata=action.payload
    },
+   setFilters: (state, action) => {
+    state.filters = { ...state.filters, ...action.payload };
+   },
+   clearFilters: (state) => {
+    state.filters = { location: "", jobType: "", salary: "", experience: "" };
+   },
    toggleSavedJob: (state, action) => {
     const job = action.payload;
     const exists = state.savedJobs.find(j => j._id === job._id);
@@ -56,6 +68,6 @@ export const jobSlice = createSlice({
   }
 })
 
-export const { getalljob, getadminjob, getjobtext, getsinglejob, getapplyjob, setsearchjob, getsearchjobtext, toggleSavedJob } = jobSlice.actions
+export const { getalljob, getadminjob, getjobtext, getsinglejob, getapplyjob, setsearchjob, getsearchjobtext, setFilters, clearFilters, toggleSavedJob } = jobSlice.actions
 
 export default jobSlice.reducer

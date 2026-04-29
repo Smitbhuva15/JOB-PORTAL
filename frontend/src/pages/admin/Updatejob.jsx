@@ -55,36 +55,23 @@ const Updatejob = () => {
         getsingaljob();
     }, [])
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-
-    const [formData, setFormData] = useState({
-        title: '',
-        description: '',
-        requirements: '',
-        salary: '',
-        location: '',
-        jobType: '',
-        experience: '',
-        position: '',
-
-    });
-
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
     useEffect(() => {
         if (singlejob) {
-            setFormData({
+            reset({
                 title: singlejob.title || '',
                 description: singlejob.description || '',
-                requirements: singlejob.requirements || '',
+                requirements: Array.isArray(singlejob.requirements) ? singlejob.requirements.join(',') : (singlejob.requirements || ''),
                 salary: singlejob.salary || '',
                 location: singlejob.location || '',
                 jobType: singlejob.jobType || '',
                 experience: singlejob.experienceLevel || '',
                 position: singlejob.position || '',
-
+                name: singlejob.company?.name || ''
             });
         }
-    }, [singlejob]);
+    }, [singlejob, reset]);
 
     const onSubmit = async (olddata, e) => {
         setLoading(true)
@@ -94,7 +81,6 @@ const Updatejob = () => {
         const companyId = companydetail[0]?._id;
 
         const data = { ...olddata, companyId }
-
 
         try {
             const response = await fetch(`${API_URL}/user/v2/api/admin/update/job/${jobId}`, {
@@ -108,160 +94,179 @@ const Updatejob = () => {
 
             if (response.ok) {
                 const res = await response.json();
-
                 toast.success(res.message)
                 setTimeout(() => {
                     navigate('/admin/jobs');
                 }, 2000);
-
-            }
-            else {
+            } else {
                 const errormessage = await response.json();
-
                 const mess = errormessage.message
-                const isAarry = await Array.isArray(mess);
-                if (isAarry) {
-                    for (let i = 0; i < mess.length; i++) {
-                        toast.error(mess[i]);
-                    }
-                }
-                else {
+                if (Array.isArray(mess)) {
+                    mess.forEach(msg => toast.error(msg));
+                } else {
                     toast.error(mess)
                 }
             }
-
         } catch (error) {
             console.log(error);
-            toast.error(error)
-        }
-        finally {
+            toast.error("An error occurred")
+        } finally {
             setLoading(false)
         }
-
     }
 
     return (
         isLoading ? (
-            <div className='flex justify-center items-center h-[90vh]'>
-                <Loader2 className="h-10 w-10 text-blue-500 animate-spin " />
+            <div className='flex justify-center items-center h-[90vh] bg-background'>
+                <Loader2 className="h-10 w-10 text-primary animate-spin" />
             </div>
         ) : (
-            <div className='flex items-center justify-center  my-16'>
-                <form onSubmit={handleSubmit(onSubmit)} className='p-8 md:max-w-3xl w-[90%] border border-gray-200 shadow-lg rounded-md'>
-                    <div className='grid md:grid-cols-2 gap-4 grid-cols-1'>
-                        <div>
-                            <Label>Title</Label>
-                            <Input
-                                type="text"
-                                name="title"
-                                {...register("title")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.title}
-                            />
+            <div className='bg-background min-h-[calc(100vh-8rem)] py-12'>
+                <div className='sm:max-w-screen-md mx-auto px-4 w-full'>
+                    <div className="bg-card border border-border rounded-2xl p-8 md:p-10 shadow-xl shadow-primary/5">
+                        <div className='mb-8 text-center'>
+                            <h1 className='font-bold text-3xl font-heading tracking-tight text-foreground'>Update Job Listing</h1>
+                            <p className='text-muted-foreground text-sm mt-2'>Modify the details of this open position.</p>
                         </div>
-                        <div>
-                            <Label>Description</Label>
-                            <Input
-                                type="text"
-                                name="description"
-                                {...register("description")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.description}
 
-                            />
-                        </div>
-                        <div>
-                            <Label>Requirements</Label>
-                            <Input
-                                type="text"
-                                name="requirements"
-                                {...register("requirements")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.requirements}
+                        <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
+                            
+                            <div className='grid md:grid-cols-2 gap-6'>
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Job Title</Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="e.g. Senior Frontend Developer"
+                                        className="bg-background border-border focus-visible:ring-primary h-11"
+                                        {...register("title")}
+                                    />
+                                </div>
 
-                            />
-                        </div>
-                        <div>
-                            <Label>Salary</Label>
-                            <Input
-                                type="text"
-                                name="salary"
-                                {...register("salary")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.salary}
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Company</Label>
+                                    {companies.length > 0 ? (
+                                        <select 
+                                            className='flex h-11 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
+                                            {...register("name")}
+                                        >
+                                            <option value="">Select a company</option>
+                                            {companies.map((company) => (
+                                                <option key={company._id} value={company.name}>{company?.name}</option>
+                                            ))}
+                                        </select>
+                                    ) : (
+                                        <div className="h-11 flex items-center px-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-md">
+                                            No companies registered
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
 
-                            />
-                        </div>
-                        <div>
-                            <Label>Location</Label>
-                            <Input
-                                type="text"
-                                name="location"
-                                {...register("location")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.location}
+                            <div className="space-y-2">
+                                <Label className="font-semibold text-foreground">Description</Label>
+                                <Input
+                                    type="text"
+                                    placeholder="Describe the role and responsibilities..."
+                                    className="bg-background border-border focus-visible:ring-primary h-11"
+                                    {...register("description")}
+                                />
+                            </div>
 
-                            />
-                        </div>
-                        <div>
-                            <Label>Job Type</Label>
-                            <Input
-                                type="text"
-                                name="jobType"
-                                {...register("jobType")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.jobType}
+                            <div className="space-y-2">
+                                <Label className="font-semibold text-foreground">Requirements (comma separated)</Label>
+                                <Input
+                                    type="text"
+                                    placeholder="e.g. React, Node.js, TypeScript"
+                                    className="bg-background border-border focus-visible:ring-primary h-11"
+                                    {...register("requirements")}
+                                />
+                            </div>
 
-                            />
-                        </div>
-                        <div>
-                            <Label>Experience Level</Label>
-                            <Input
-                                type="text"
-                                name="experience"
-                                {...register("experience")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.experience}
+                            <div className='grid md:grid-cols-2 gap-6'>
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Location</Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="e.g. Remote, New York, Mumbai"
+                                        className="bg-background border-border focus-visible:ring-primary h-11"
+                                        {...register("location")}
+                                    />
+                                </div>
+                                
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Salary (LPA)</Label>
+                                    <Input
+                                        type="number"
+                                        placeholder="e.g. 12"
+                                        className="bg-background border-border focus-visible:ring-primary h-11"
+                                        {...register("salary")}
+                                    />
+                                </div>
 
-                            />
-                        </div>
-                        <div>
-                            <Label>No of Postion</Label>
-                            <Input
-                                type="number"
-                                name="position"
-                                {...register("position")}
-                                className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
-                                defaultValue={formData.position}
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Job Type</Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="e.g. Full Time, Internship"
+                                        className="bg-background border-border focus-visible:ring-primary h-11"
+                                        {...register("jobType")}
+                                    />
+                                </div>
 
-                            />
-                        </div>
-                        {
-                            companies.length > 0 && (
-                                <select name="company" id="company" className='border my-1 py-1 '  {...register("name")}>
-                                    <option id='select'>Select a company</option>
-                                    {
-                                        companies.map((company) => (
-                                            <option id={company._id}>{company?.name}</option>
-                                        ))
-                                    }
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Experience Required (Years)</Label>
+                                    <Input
+                                        type="text"
+                                        placeholder="e.g. 2"
+                                        className="bg-background border-border focus-visible:ring-primary h-11"
+                                        {...register("experience")}
+                                    />
+                                </div>
 
-                                </select>
-                            )
-                        }
+                                <div className="space-y-2">
+                                    <Label className="font-semibold text-foreground">Number of Positions</Label>
+                                    <Input
+                                        type="number"
+                                        placeholder="e.g. 3"
+                                        className="bg-background border-border focus-visible:ring-primary h-11"
+                                        {...register("position")}
+                                    />
+                                </div>
+                            </div>
+
+                            {companies.length === 0 && (
+                                <div className="p-4 bg-destructive/10 border border-destructive/20 text-destructive rounded-xl text-center text-sm font-medium">
+                                    * Please register a company first before updating a job.
+                                </div>
+                            )}
+
+                            <div className="pt-6 flex gap-4">
+                                <Button 
+                                    type="button" 
+                                    variant="outline"
+                                    onClick={() => navigate('/admin/jobs')}
+                                    className="w-full h-12 rounded-xl text-base font-semibold"
+                                >
+                                    Cancel
+                                </Button>
+                                {loading ? (
+                                    <Button disabled className="w-full h-12 rounded-xl text-base font-semibold shadow-sm"> 
+                                        <Loader2 className='mr-2 h-5 w-5 animate-spin' /> 
+                                        Updating Job... 
+                                    </Button>
+                                ) : (
+                                    <Button 
+                                        type="submit" 
+                                        disabled={companies.length === 0}
+                                        className="w-full h-12 rounded-xl text-base font-semibold shadow-md hover:shadow-primary/25 transition-all"
+                                    >
+                                        Update Job
+                                    </Button>
+                                )}
+                            </div>
+                        </form>
                     </div>
-                    {
-                        loading
-                            ?
-                            (<Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button>)
-                            :
-                            (<Button type="submit" className="w-full my-4 ">Post New Job</Button>)
-                    }
-
-                    {
-                        companies.length === 0 && <p className='text-xs text-red-600 font-bold text-center my-3'>*Please register a company first, before posting a jobs</p>
-                    }
-                </form>
+                </div>
             </div>
         )
     )
