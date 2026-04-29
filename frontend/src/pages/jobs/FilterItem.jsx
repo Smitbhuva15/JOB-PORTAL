@@ -32,25 +32,37 @@ const FilterItem = () => {
   }, [selectedValue]);
 
   return (
-    <div className='w-full bg-white p-3 rounded-md'>
-      <h1 className='font-bold text-lg'>Filter Jobs</h1>
-      <hr className='mt-3' />
-      <RadioGroup value={selectedValue} onValueChange={handelchanges} >
+    <div className='w-full bg-card border border-border p-5 rounded-2xl shadow-sm'>
+      <h1 className='font-bold text-lg text-foreground mb-1 font-heading'>Filter Jobs</h1>
+      <p className="text-sm text-muted-foreground mb-4">Refine your search results</p>
+      <hr className='mb-4 border-border' />
+      <RadioGroup value={selectedValue} onValueChange={handelchanges} className="space-y-6">
         {
             filterData.map((data, index) => (
               <div key={index}>
-                  <h1 className='font-bold text-lg' >{data.fitlerType}</h1>
+                  <h2 className='font-semibold text-base text-foreground mb-3' >{data.fitlerType}</h2>
+                  <div className="space-y-2.5">
                   {
                       data.array.map((item, idx) => 
-                          
                            (
-                              <div className='flex items-center space-x-2 my-2' key={idx}>
-                                  <RadioGroupItem value={item}   key={index * 100 + idx}/>
-                                  <Label>{item}</Label>
+                              <div className='flex items-center space-x-3 group' key={idx}>
+                                  <RadioGroupItem 
+                                    value={item}   
+                                    key={index * 100 + idx}
+                                    id={`filter-${index}-${idx}`}
+                                    className="border-primary/50 text-primary data-[state=checked]:bg-primary"
+                                  />
+                                  <Label 
+                                    htmlFor={`filter-${index}-${idx}`}
+                                    className="text-sm text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors"
+                                  >
+                                    {item}
+                                  </Label>
                               </div>
                           )
                       )
                   }
+                  </div>
               </div>
           ))
         }

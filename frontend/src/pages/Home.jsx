@@ -21,9 +21,7 @@ const Home = () => {
       <HeroSection />
       <FeaturesSection />
       <HowItWorksSection />
-      <div className="bg-background py-10">
-        <Category />
-      </div>
+   
       <div className="bg-muted/5 py-10">
         <LatestJobs />
       </div>

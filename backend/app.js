@@ -22,19 +22,22 @@ app.use(cookieParser());
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URL);
+    await mongoose.connect(process.env.MONGODB_URL, {
+      family: 4,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
     console.log('MongoDB connected successfully!!!');
   } catch (error) {
-    console.log('MongoDB connection failed:');
+    console.error('MongoDB connection failed:', error.message);
+    process.exit(1);
   }
 };
-
 
 app.use('/user/v2/api', userroutes); 
 app.use('/user/v2/api', companyroutes); 
 app.use('/user/v2/api', jobroutes); 
 app.use('/user/v2/api', applicationRoutes); 
-
 
 
 
@@ -46,3 +49,5 @@ connectDB().then(() => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });
 });
+
+

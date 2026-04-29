@@ -5,6 +5,18 @@
     <link rel="icon" type="image/svg+xml" href="https://img.freepik.com/free-photo/bottom-view-list-written-black-notepad-lupa-pen-black-table_140725-112160.jpg?t=st=1737714193~exp=1737717793~hmac=f217ea5d8df0c4358f2a80cc1a86cab38d65ba866f9a0c67171c65e3916f12fb&w=996" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JobLinker Find Your Dream Job</title>
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('job-portal-theme');
+          if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

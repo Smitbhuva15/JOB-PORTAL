@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import LatestJobCrad from './LatestJobCrad';
+import Job from '../jobs/Job';
 import GetAllJobs from '../../FechingData/GetAllJobs';
 import { useDispatch, useSelector } from 'react-redux';
-import store from '../../store/store';
-import { useNavigate } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { AuthContext } from '@/Context-Api/AuthContext';
 
@@ -12,13 +10,11 @@ const LatestJobs = () => {
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
 
   const API_URL = import.meta.env.VITE_API_URL;
   const { userData, loading } = useContext(AuthContext);
   const searchdata = useSelector(store => store.job.searchdata)
   const alljobs = useSelector(store => store.job.Alljobs)
-
 
   useEffect(() => {
     const getjob = async () => {
@@ -32,51 +28,54 @@ const LatestJobs = () => {
         setIsLoading(false);
       }
     }
-
     getjob();
   }, [])
 
-
   return (
-    <>
-      <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto my-20 xl:max-w-7xl lg:max-w-5xl w-[90%] '>
-        <h1 className='md:text-4xl text-2xl font-bold sm:ml-0 w-[90%]'>
-          <span className='text-[#020ef8]'>Fresh & In-Demand  </span> Job Opportunities
-        </h1>
+    <div className='bg-muted/10 py-24 sm:py-32'>
+      <div className='mx-auto max-w-7xl px-6 lg:px-8'>
+        <div className="mx-auto max-w-2xl text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-heading">
+            <span className='text-primary'>Fresh & In-Demand </span> Job Opportunities
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Explore the latest roles matched for your skills.
+          </p>
+        </div>
+
         {
           loading ? (
             <div className='flex justify-center items-center h-[30vh]'>
-              <Loader2 className="h-8 w-8 text-blue-500 animate-spin " />
+              <Loader2 className="h-10 w-10 text-primary animate-spin" />
             </div>
           ) : (
             userData && Object.keys(userData).length > 0 ? (
-
-
               isLoading ? (
                 <div className='flex justify-center items-center h-[30vh]'>
-                  <Loader2 className="h-8 w-8 text-blue-500 animate-spin " />
+                  <Loader2 className="h-10 w-10 text-primary animate-spin" />
                 </div>
               ) : alljobs && alljobs.length > 0 ? (
-                <div className='grid grid-cols-1 gap-4 my-5 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 '>
-                  {alljobs.map((job) => (
-                    <div key={job._id} onClick={() => {window.scrollTo(0, 0); navigate(`/jobs/Detail/${job._id}`)}  }>
-                      <LatestJobCrad job={job} />
+                <div className='grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
+                  {alljobs.slice(0, 8).map((job) => (
+                    <div key={job._id} className="h-full">
+                      <Job job={job} />
                     </div>
                   ))}
                 </div>
-
               ) : (
-                <div className='text-center my-20 text-wrap'>
-                  <span className="text-gray-400 md:text-xl text-sm italic sm:bg-gray-100 sm:rounded-full sm:px-4 sm:py-2">
-                    Currently no job openings. Check back later for fresh updates!
-                  </span>
+                <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm">
+                  <div className='text-muted-foreground text-center text-lg font-medium'>
+                    Currently no job openings.
+                  </div>
+                  <p className="text-sm text-muted-foreground mt-2">Check back later for fresh updates!</p>
                 </div>
               )
-
-
             ) : (
-              <div className=' my-20  text-center text-wrap'>
-                <span className="text-red-500 font-medium md:text-xl italic bg-gray-100 rounded-full px-4 py-2  text-sm text-center">
+              <div className="flex flex-col justify-center items-center w-full min-h-[30vh] bg-card border border-border rounded-2xl shadow-sm max-w-2xl mx-auto">
+                <div className='text-muted-foreground text-center text-lg font-medium mb-4'>
+                  Unlock your next career move
+                </div>
+                <span className="text-primary font-medium bg-primary/10 rounded-full px-6 py-2 text-sm text-center">
                   Please log in to view job opportunities.
                 </span>
               </div>
@@ -84,10 +83,8 @@ const LatestJobs = () => {
           )
         }
       </div>
-    </>
-
+    </div>
   );
-
 }
 
 export default LatestJobs

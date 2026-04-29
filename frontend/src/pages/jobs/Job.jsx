@@ -5,71 +5,90 @@ import {
 } from '../../components/ui/avatar';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge'
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Bookmark, BookmarkCheck } from 'lucide-react';
 
 const Job = ({ job }) => {
+  const [isSaved, setIsSaved] = useState(false);
+  const navigate = useNavigate();
 
   const daysAgoFunction = (mongodbTime) => {
     const createdAt = new Date(mongodbTime);
     const currentTime = new Date();
     const timeDifference = currentTime - createdAt;
-    return Math.floor(timeDifference / (1000 * 24 * 60 * 60));
+    const days = Math.floor(timeDifference / (1000 * 24 * 60 * 60));
+    return days === 0 ? "Today" : `${days}d ago`;
   }
 
-  const navigate = useNavigate();
   const boxVariants = {
-    hidden: { opacity: 0, scale: 0.5 },
-    visible: { opacity: 1, scale: 1 },
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
   };
+
   return (
-   
-    <motion.div className="p-5 rounded-md shadow-xl bg-white border border-gray-100 "
+    <motion.div 
+      className="p-6 rounded-2xl bg-card border border-border hover:border-primary/20 shadow-sm hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1 transition-all duration-300 flex flex-col group"
       initial="hidden"
       animate="visible"
       variants={boxVariants}
-      transition={{ duration: 1 }}
     >
-
-      <div className="flex items-center justify-between">
-        <p className='text-sm text-gray-500'>{daysAgoFunction(job?.createdAt) === 0 ? "Today" : `${daysAgoFunction(job?.createdAt)} days ago`}</p>
-       
-      </div>
-
-      {/* Job and Company Details */}
-      <div className="flex items-center gap-2 my-3">
-        <Button className="p-6" variant="outline" size="icon">
-          <Avatar>
-            <AvatarImage
-              src={job?.company?.logo}
-              alt="@shadcn"
-            />
-            <AvatarFallback>SC</AvatarFallback>
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <Avatar className="h-12 w-12 border border-border shadow-sm">
+            <AvatarImage src={job?.company?.logo} alt={job?.company?.name} />
+            <AvatarFallback className="bg-primary/5 text-primary font-medium">{job?.company?.name?.charAt(0) || 'C'}</AvatarFallback>
           </Avatar>
-        </Button>
-        <div>
-          <h1 className="font-medium text-lg  truncate" >{job?.company?.name}</h1>
-          <p className="text-sm text-gray-500  truncate">{job?.location}</p>
+          <div>
+            <h2 className="font-semibold text-lg text-foreground leading-tight group-hover:text-primary transition-colors line-clamp-1">{job?.company?.name}</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">{job?.location}</p>
+          </div>
         </div>
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          className={`rounded-full hover:bg-primary/10 hover:text-primary transition-colors ${isSaved ? 'text-primary' : 'text-muted-foreground'}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsSaved(!isSaved);
+          }}
+        >
+          {isSaved ? <BookmarkCheck className="h-5 w-5 fill-primary/20" /> : <Bookmark className="h-5 w-5" />}
+        </Button>
       </div>
 
-      <div>
-        <h1 className='font-bold text-lg my-2  truncate'>{job?.title}</h1>
-        <p className='text-sm text-gray-600 line-clamp-2'>{job?.description}</p>
+      <div className="mb-4 flex-1">
+        <h1 className='font-bold text-xl text-foreground mb-2 line-clamp-1 group-hover:text-primary/90 transition-colors'>{job?.title}</h1>
+        <p className='text-sm text-muted-foreground line-clamp-2 leading-relaxed'>{job?.description}</p>
       </div>
-      <div className='flex items-center gap-2 mt-4'>
-        <Badge className={'text-[#020ef8] font-bold'} variant="ghost">{job?.position} Positions</Badge>
-        <Badge className={'text-[#2bd53f] font-bold'} variant="ghost">{job?.jobType}</Badge>
-        <Badge className={'text-[#a909b7] font-bold'} variant="ghost">{job?.salary}</Badge>
-      </div>
-      <div className=' mt-4 w-full bg-[#252ff2]   rounded-full text-center text-white'>
-        <div onClick={() =>{window.scrollTo(0, 0); navigate(`/jobs/Detail/${job._id}`)}}> <Button variant="outline " className="py-4"  >Details</Button></div>
 
-      
+      <div className='flex flex-wrap items-center gap-2 mb-6'>
+        <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20 font-medium px-2.5 py-0.5">
+          {job?.position} Positions
+        </Badge>
+        <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 font-medium px-2.5 py-0.5">
+          {job?.jobType}
+        </Badge>
+        <Badge variant="secondary" className="bg-purple-500/10 text-purple-600 dark:text-purple-400 hover:bg-purple-500/20 font-medium px-2.5 py-0.5">
+          {job?.salary}
+        </Badge>
+      </div>
+
+      <div className='flex items-center gap-3 mt-auto pt-4 border-t border-border/50'>
+        <span className="text-xs font-medium text-muted-foreground mr-auto">{daysAgoFunction(job?.createdAt)}</span>
+        <Button 
+          variant="outline" 
+          className="rounded-full px-5 text-sm font-medium hover:bg-accent"
+          onClick={() => {
+            window.scrollTo(0, 0); 
+            navigate(`/jobs/Detail/${job._id}`);
+          }}
+        >
+          Details
+        </Button>
       </div>
     </motion.div>
-    
   );
 };
 

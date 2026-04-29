@@ -70,47 +70,73 @@ const Jobs = () => {
 
 
   return (
-    <>
-      <div className=' sm:max-w-screen-sm md:max-w-2xl mx-auto my-14 xl:max-w-7xl lg:max-w-5xl w-[90%]'>
-
-        <div className='mb-5 md:hidden block '>
-          <Category />
+    <div className='bg-background min-h-[calc(100vh-8rem)] py-8'>
+      <div className='sm:max-w-screen-sm md:max-w-2xl mx-auto xl:max-w-7xl lg:max-w-5xl px-4 sm:px-6 lg:px-8 w-full'>
+        
+        {/* Mobile Header & Filter Toggle */}
+        <div className="flex md:hidden items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold font-heading text-foreground">Find Jobs</h1>
+          <button 
+            onClick={() => document.getElementById('mobile-filter').classList.toggle('hidden')}
+            className="flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-lg font-medium"
+          >
+            Filters
+          </button>
         </div>
 
-        <div className='flex gap-5'>
-          <div className='w-20% md:block hidden'>
-            <FilterItem />
+        {/* Mobile Filter Drawer (Simple implementation) */}
+        <div id="mobile-filter" className="hidden md:hidden mb-6 animate-in slide-in-from-top-4">
+          <FilterItem />
+        </div>
+
+        <div className='flex gap-8'>
+          {/* Desktop Sidebar */}
+          <div className='hidden md:block w-1/4 shrink-0'>
+            <div className="sticky top-24">
+              <FilterItem />
+            </div>
           </div>
-          {
-            isLoading ? (
-              <div className="flex justify-center items-center w-full min-h-[50vh]">
-                <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
-              </div>
-            ) : (
+          
+          {/* Main Content Area */}
+          <div className="flex-1">
+            {/* Search Bar Area */}
+            <div className="mb-6 bg-card border border-border p-2 rounded-xl shadow-sm flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-search text-muted-foreground ml-2 h-5 w-5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input 
+                type="text" 
+                placeholder="Search by job title, description, or location..."
+                className="w-full bg-transparent border-none focus:outline-none text-foreground placeholder:text-muted-foreground px-2 py-2"
+                value={searchjobdata}
+                onChange={(e) => dispatch({ type: 'job/setsearchjob', payload: e.target.value })}
+              />
+            </div>
 
-              filterData.length <= 0 ? (
-                <div className="flex justify-center items-center w-full min-h-[50vh] ">
-                  <div className='text-red-500 text-center lg:text-lg text-sm font-bold  italic sm:bg-gray-100 sm:rounded-full sm:px-6 sm:py-2'>
-                    Looks like we don’t have jobs for your preferences at the moment.
-                  </div>
-
+            {
+              isLoading ? (
+                <div className="flex justify-center items-center w-full min-h-[50vh]">
+                  <Loader2 className="h-10 w-10 text-primary animate-spin" />
                 </div>
               ) : (
-                <div className="flex-1 h-[88vh] overflow-y-auto pb-5">
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+                filterData.length <= 0 ? (
+                  <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm">
+                    <div className='text-muted-foreground text-center text-lg font-medium'>
+                      No jobs match your current filters.
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-2">Try adjusting your search or clearing filters.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 pb-10">
                     {filterData.map((job) => (
                       <Job key={job._id} job={job} />
                     ))}
                   </div>
-                </div>
+                )
               )
-
-            )
-          }
-
+            }
+          </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 
