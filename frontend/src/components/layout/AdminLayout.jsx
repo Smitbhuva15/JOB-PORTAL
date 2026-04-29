@@ -22,7 +22,7 @@ const AdminLayout = () => {
     return (
         <div className="flex min-h-[calc(100vh-4rem)] bg-muted/10">
             {/* Sidebar */}
-            <aside 
+            {/* <aside 
                 className={`transition-all duration-300 ease-in-out border-r border-border bg-card hidden md:block relative
                     ${isCollapsed ? 'w-20' : 'w-64'}
                 `}
@@ -59,7 +59,7 @@ const AdminLayout = () => {
                         })}
                     </nav>
                 </div>
-            </aside>
+            </aside> */}
 
             {/* Main Content Area */}
             <main className="flex-1 p-6 md:p-8 overflow-y-auto w-full">

@@ -110,18 +110,13 @@ exports.updatecompany=async(req,res)=>{
         const file=req.file;
         // console.log( name, description, website, location,file)
 
-        if(!file){
-            return res.status(400).json({message:"please upload the company logo !!"})
+        if(file){
+           const fileuri=getDataUri(file)
+           const cloudResponse=await cloudinary.uploader.upload(fileuri.content);
+           if(cloudResponse){
+               updatedata.logo=cloudResponse.secure_url
+           }
         }
-    
-
-       const fileuri=getDataUri(file)
-
-        const cloudResponse=await cloudinary.uploader.upload(fileuri.content);
-    //   console.log(cloudResponse)
-      if(cloudResponse){
-        updatedata.logo=cloudResponse.secure_url
-      }
 
         const updateonecompany=await companyModel.updateOne(
             {_id:req.params.id},

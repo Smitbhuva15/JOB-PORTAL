@@ -6,6 +6,7 @@ import GetAllJobs from '../FechingData/GetAllJobs'
 import { useNavigate } from 'react-router-dom'
 import Category from './Home/Category'
 import { Loader2 } from 'lucide-react'
+import { getsearchjobtext } from '../store/jobSlice'
 
 const Jobs = () => {
 
@@ -29,7 +30,7 @@ const Jobs = () => {
   // Debounce search
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      dispatch({ type: 'job/setsearchjob', payload: searchTerm });
+      dispatch(getsearchjobtext(searchTerm));
     }, 400);
 
     return () => clearTimeout(delayDebounceFn);
@@ -199,7 +200,7 @@ const Jobs = () => {
                     <button 
                       onClick={() => {
                         setSearchTerm('');
-                        dispatch({ type: 'job/setsearchjob', payload: '' });
+                        dispatch(getsearchjobtext(''));
                         dispatch({ type: 'job/clearFilters' });
                       }}
                       className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl font-semibold shadow-sm hover:bg-primary/90 transition-all hover:shadow-primary/25"

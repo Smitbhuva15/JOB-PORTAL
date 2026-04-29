@@ -168,17 +168,13 @@ exports.updateProfile = async (req, res) => {
        
         const file = req.file;
         
-       
-        if (!file) {
-          return res.status(400).send('No file uploaded.');
-        }
-       const fileurl=getDataUri(file)
-        const response=await cloudinary.uploader.upload(fileurl.content)
-        // console.log(response)
-
-        if(response){
-            updateData["profile.resume"]=response.secure_url
-            updateData["profile.resumeOriginalName"]=file.originalname
+        if (file) {
+            const fileurl = getDataUri(file);
+            const response = await cloudinary.uploader.upload(fileurl.content);
+            if(response){
+                updateData["profile.resume"] = response.secure_url;
+                updateData["profile.resumeOriginalName"] = file.originalname;
+            }
         }
 
         const updatedUser = await userModel.updateOne(
@@ -186,9 +182,6 @@ exports.updateProfile = async (req, res) => {
             { $set: updateData }  
         );
     
-        
-
-     
         const updatedUserData = await userModel.findById(userId);
 
         return res.status(200).json({

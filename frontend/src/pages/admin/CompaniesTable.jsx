@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
 import toast from 'react-hot-toast'
+import DeleteConfirmModal from '../../components/component/DeleteConfirmModal'
 
 const CompaniesTable = () => {
     const navigate = useNavigate()
@@ -18,6 +19,9 @@ const CompaniesTable = () => {
     const [filterCompany, setFilterCompany] = useState([]);
     const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
     const [isLoading, setIsLoading] = useState(true);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [selectedCompanyId, setSelectedCompanyId] = useState(null);
 
     const getcompany = async () => {
         try {
@@ -49,11 +53,17 @@ const CompaniesTable = () => {
         }
     }, [AllCompany, searchcompanytext]);
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("Are you sure you want to delete this company? This action cannot be undone.")) return;
+    const openDeleteModal = (id) => {
+        setSelectedCompanyId(id);
+        setDeleteModalOpen(true);
+    };
+
+    const handleDelete = async () => {
+        if (!selectedCompanyId) return;
+        setIsDeleting(true);
 
         try {
-            const response = await fetch(`${API_URL}/user/v2/api/delete/company/${id}`, {
+            const response = await fetch(`${API_URL}/user/v2/api/delete/company/${selectedCompanyId}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -69,6 +79,10 @@ const CompaniesTable = () => {
             }
         } catch (error) {
             toast.error("Internal server error");
+        } finally {
+            setIsDeleting(false);
+            setDeleteModalOpen(false);
+            setSelectedCompanyId(null);
         }
     }
 
@@ -100,47 +114,58 @@ const CompaniesTable = () => {
     }
 
     return (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 mb-20'>
-            {filterCompany.map((company) => (
-                <div key={company._id} className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full relative">
-                    <div className="flex items-start justify-between mb-4">
-                        <Avatar className="w-16 h-16 border-2 border-border/50 shadow-sm rounded-xl object-contain">
-                            <AvatarImage src={company?.logo} className="object-contain" />
-                            <AvatarFallback className="rounded-xl bg-primary/10 text-primary font-bold text-xl">{company?.name?.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex items-center gap-2">
-                            <Button variant="outline" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors" onClick={() => navigate(`/admin/setup/company/${company._id}`)}>
-                                <Edit2 className="w-4 h-4" />
-                            </Button>
-                            <Button variant="outline" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" onClick={() => handleDelete(company._id)}>
-                                <Trash2 className="w-4 h-4" />
-                            </Button>
-                        </div>
-                    </div>
-
-                    <h3 className="font-bold text-lg text-foreground font-heading line-clamp-1 mb-1">{company?.name}</h3>
-                    
-                    <div className="flex flex-col gap-2 mt-2 mb-4">
-                        {company?.location && (
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                <MapPin className="w-4 h-4 shrink-0 text-primary" />
-                                <span className="line-clamp-1">{company.location}</span>
+        <>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 mb-20'>
+                {filterCompany.map((company) => (
+                    <div key={company._id} className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full relative">
+                        <div className="flex items-start justify-between mb-4">
+                            <Avatar className="w-16 h-16 border-2 border-border/50 shadow-sm rounded-xl object-contain">
+                                <AvatarImage src={company?.logo} className="object-contain" />
+                                <AvatarFallback className="rounded-xl bg-primary/10 text-primary font-bold text-xl">{company?.name?.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex items-center gap-2">
+                                <Button variant="outline" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors" onClick={() => navigate(`/admin/setup/company/${company._id}`)}>
+                                    <Edit2 className="w-4 h-4" />
+                                </Button>
+                                <Button variant="outline" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" onClick={() => openDeleteModal(company._id)}>
+                                    <Trash2 className="w-4 h-4" />
+                                </Button>
                             </div>
-                        )}
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <Calendar className="w-4 h-4 shrink-0 text-primary" />
-                            <span>Registered on {company?.createdAt?.split('T')[0]}</span>
+                        </div>
+
+                        <h3 className="font-bold text-lg text-foreground font-heading line-clamp-1 mb-1">{company?.name}</h3>
+                        
+                        <div className="flex flex-col gap-2 mt-2 mb-4">
+                            {company?.location && (
+                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                    <MapPin className="w-4 h-4 shrink-0 text-primary" />
+                                    <span className="line-clamp-1">{company.location}</span>
+                                </div>
+                            )}
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <Calendar className="w-4 h-4 shrink-0 text-primary" />
+                                <span>Registered on {company?.createdAt?.split('T')[0]}</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-auto pt-4 border-t border-border">
+                            <Button className="w-full rounded-xl" variant="secondary" onClick={() => navigate(`/admin/setup/company/${company._id}`)}>
+                                Manage Company
+                            </Button>
                         </div>
                     </div>
+                ))}
+            </div>
 
-                    <div className="mt-auto pt-4 border-t border-border">
-                        <Button className="w-full rounded-xl" variant="secondary" onClick={() => navigate(`/admin/setup/company/${company._id}`)}>
-                            Manage Company
-                        </Button>
-                    </div>
-                </div>
-            ))}
-        </div>
+            <DeleteConfirmModal 
+                isOpen={deleteModalOpen}
+                onClose={() => setDeleteModalOpen(false)}
+                onConfirm={handleDelete}
+                title="Delete Company?"
+                description={`Are you sure you want to delete this company? All associated data will be permanently removed.`}
+                isDeleting={isDeleting}
+            />
+        </>
     )
 }
 

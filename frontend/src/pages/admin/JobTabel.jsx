@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
 import { Badge } from '../../components/ui/badge'
 import toast from 'react-hot-toast'
+import DeleteConfirmModal from '../../components/component/DeleteConfirmModal'
 
 const JobTabel = () => {
   const navigate = useNavigate()
@@ -18,6 +19,9 @@ const JobTabel = () => {
   const [filterJob, setFilterJob] = useState([])
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
   const [isLoading, setIsLoading] = useState(true);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedJobId, setSelectedJobId] = useState(null);
 
   const getjobs = async () => {
     try {
@@ -50,11 +54,17 @@ const JobTabel = () => {
     }
   }, [serarchjobtext, AdminJobs]);
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this job? This action cannot be undone.")) return;
+  const openDeleteModal = (id) => {
+    setSelectedJobId(id);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDelete = async () => {
+    if (!selectedJobId) return;
+    setIsDeleting(true);
 
     try {
-        const response = await fetch(`${API_URL}/user/v2/api/admin/delete/job/${id}`, {
+        const response = await fetch(`${API_URL}/user/v2/api/admin/delete/job/${selectedJobId}`, {
             method: "DELETE",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -70,6 +80,10 @@ const JobTabel = () => {
         }
     } catch (error) {
         toast.error("Internal server error");
+    } finally {
+        setIsDeleting(false);
+        setDeleteModalOpen(false);
+        setSelectedJobId(null);
     }
   }
 
@@ -101,53 +115,64 @@ const JobTabel = () => {
   }
 
   return (
-    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 mb-20'>
-      {filterJob.map((job) => (
-        <div key={job?._id} className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
-          <div className="flex items-start justify-between mb-2">
-            <div>
-              <h3 className="font-bold text-lg text-foreground font-heading line-clamp-1">{job?.title}</h3>
-              <p className="text-sm text-muted-foreground font-medium">{job?.company?.name}</p>
-            </div>
-            <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors" onClick={() => navigate(`/admin/update/${job._id}`)}>
-                  <Edit2 className="w-4 h-4" />
-              </Button>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" onClick={() => handleDelete(job._id)}>
-                  <Trash2 className="w-4 h-4" />
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-2 mt-3 mb-4">
-            <Badge variant="secondary" className="font-medium bg-primary/10 text-primary border-transparent shadow-none hover:bg-primary/20">
-              {job?.jobType || "Full Time"}
-            </Badge>
-            <Badge variant="outline" className="font-medium text-muted-foreground">
-              {job?.position} Positions
-            </Badge>
-          </div>
-          
-          <div className="flex flex-col gap-2 mb-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4 shrink-0 text-primary" />
-                  <span className="line-clamp-1">{job?.location}</span>
+    <>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 mb-20'>
+        {filterJob.map((job) => (
+          <div key={job?._id} className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col h-full relative">
+            <div className="flex items-start justify-between mb-2">
+              <div>
+                <h3 className="font-bold text-lg text-foreground font-heading line-clamp-1">{job?.title}</h3>
+                <p className="text-sm text-muted-foreground font-medium">{job?.company?.name}</p>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <IndianRupee className="w-4 h-4 shrink-0 text-primary" />
-                  <span>{job?.salary} LPA</span>
+              <div className="flex items-center gap-1">
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors" onClick={() => navigate(`/admin/update/${job._id}`)}>
+                    <Edit2 className="w-4 h-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" onClick={() => openDeleteModal(job._id)}>
+                    <Trash2 className="w-4 h-4" />
+                </Button>
               </div>
-          </div>
+            </div>
 
-          <div className="mt-auto pt-4 border-t border-border flex gap-3">
-              <Button className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => navigate(`/admin/get/applicant/${job._id}`)}>
-                  <Users className="w-4 h-4 mr-2" />
-                  Applicants
-              </Button>
+            <div className="flex flex-wrap gap-2 mt-3 mb-4">
+              <Badge variant="secondary" className="font-medium bg-primary/10 text-primary border-transparent shadow-none hover:bg-primary/20">
+                {job?.jobType || "Full Time"}
+              </Badge>
+              <Badge variant="outline" className="font-medium text-muted-foreground">
+                {job?.position} Positions
+              </Badge>
+            </div>
+            
+            <div className="flex flex-col gap-2 mb-6">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <MapPin className="w-4 h-4 shrink-0 text-primary" />
+                    <span className="line-clamp-1">{job?.location}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <IndianRupee className="w-4 h-4 shrink-0 text-primary" />
+                    <span>{job?.salary} LPA</span>
+                </div>
+            </div>
+
+            <div className="mt-auto pt-4 border-t border-border flex gap-3">
+                <Button className="flex-1 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90" onClick={() => navigate(`/admin/get/applicant/${job._id}`)}>
+                    <Users className="w-4 h-4 mr-2" />
+                    Applicants
+                </Button>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+
+      <DeleteConfirmModal 
+          isOpen={deleteModalOpen}
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={handleDelete}
+          title="Delete Job Listing?"
+          description={`Are you sure you want to delete this job? All applications tied to this job will also be removed.`}
+          isDeleting={isDeleting}
+      />
+    </>
   )
 }
 

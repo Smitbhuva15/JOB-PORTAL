@@ -35,16 +35,22 @@ const AdminApplicaton = () => {
 
   return (
     isLoading ? (
-      <div className='flex justify-center items-center h-[90vh]'>
-        <Loader2 className="h-10 w-10 text-blue-500 animate-spin " />
+      <div className='flex justify-center items-center h-[90vh] bg-background'>
+        <Loader2 className="h-10 w-10 text-primary animate-spin" />
       </div>
     ) : (
-      <div className='mx-auto sm:max-w-screen-sm md:max-w-2xl  my-14 xl:max-w-7xl lg:max-w-5xl w-[90%]'>
-        <h1 className='font-bold text-xl my-5'>Applicants {applicants?.applications?.length} </h1>
+      <div className='mx-auto max-w-7xl px-4 md:px-8 py-12'>
+        <div className="flex flex-col gap-2 mb-8">
+          <h1 className='font-bold text-3xl font-heading text-foreground'>
+            Applications
+          </h1>
+          <p className="text-muted-foreground">
+            Reviewing {applicants?.applications?.length || 0} candidate{applicants?.applications?.length !== 1 && 's'} for this role.
+          </p>
+        </div>
         <ApplicantsTable />
       </div>
     )
-
   )
 }
 

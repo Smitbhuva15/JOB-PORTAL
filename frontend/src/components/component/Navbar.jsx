@@ -63,6 +63,7 @@ const Navbar = () => {
   };
 
   return (
+    <>
     <nav className={`sticky top-0 z-50 w-full transition-all duration-300 border-b ${scrolled ? 'bg-background/80 backdrop-blur-md shadow-sm border-border' : 'bg-background border-transparent'}`}>
       <div className='container mx-auto px-4 md:px-8 max-w-7xl h-16 flex items-center justify-between'>
         
@@ -147,9 +148,11 @@ const Navbar = () => {
         </div>
       </div>
 
+      </nav>
+
       {/* Mobile Navigation Drawer */}
       {isOpen && (
-        <div className="md:hidden fixed inset-0 z-50 flex justify-end">
+        <div className="md:hidden fixed inset-0 z-[100] flex justify-end">
           {/* Overlay */}
           <div 
             className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity" 
@@ -213,7 +216,7 @@ const Navbar = () => {
           </div>
         </div>
       )}
-    </nav>
+    </>
   )
 }
 
