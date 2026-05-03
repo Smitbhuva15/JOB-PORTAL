@@ -1,13 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const getInitialSavedJobs = () => {
-  try {
-    const item = localStorage.getItem('job-portal-saved-jobs');
-    return item ? JSON.parse(item) : [];
-  } catch (error) {
-    return [];
-  }
-};
+
 
 export const jobSlice = createSlice({
   name: 'job',
@@ -19,7 +12,7 @@ export const jobSlice = createSlice({
     applyjob:[],
     searchdata:"",
     searchjobdata:"",
-    savedJobs: getInitialSavedJobs(),
+    savedJobs: [],
     filters: {
       location: "",
       jobType: "",
@@ -55,19 +48,24 @@ export const jobSlice = createSlice({
    clearFilters: (state) => {
     state.filters = { location: "", jobType: "", salary: "", experience: "" };
    },
+   setSavedJobs: (state, action) => {
+    state.savedJobs = action.payload;
+   },
    toggleSavedJob: (state, action) => {
-    const job = action.payload;
+    const { job, userId } = action.payload;
+    if (!userId) return;
+
     const exists = state.savedJobs.find(j => j._id === job._id);
     if (exists) {
       state.savedJobs = state.savedJobs.filter(j => j._id !== job._id);
     } else {
       state.savedJobs.push(job);
     }
-    localStorage.setItem('job-portal-saved-jobs', JSON.stringify(state.savedJobs));
+    localStorage.setItem(`job-portal-saved-jobs_${userId}`, JSON.stringify(state.savedJobs));
    }
   }
 })
 
-export const { getalljob, getadminjob, getjobtext, getsinglejob, getapplyjob, setsearchjob, getsearchjobtext, setFilters, clearFilters, toggleSavedJob } = jobSlice.actions
+export const { getalljob, getadminjob, getjobtext, getsinglejob, getapplyjob, setsearchjob, getsearchjobtext, setFilters, clearFilters, toggleSavedJob, setSavedJobs } = jobSlice.actions
 
 export default jobSlice.reducer

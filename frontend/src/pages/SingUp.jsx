@@ -182,7 +182,7 @@ const SingUp = () => {
           </div>
 
           <div className='space-y-2'>
-            <Label htmlFor="fileUpload" className="font-semibold text-foreground">Profile Picture (Optional)</Label>
+            <Label htmlFor="fileUpload" className="font-semibold text-foreground">Profile Picture </Label>
             <Input
               id="fileUpload"
               accept="image/*"

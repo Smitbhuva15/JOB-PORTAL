@@ -11,10 +11,14 @@ import { motion } from 'framer-motion';
 import { Bookmark, BookmarkCheck } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSavedJob } from '@/store/jobSlice';
+import { useContext } from 'react';
+import { AuthContext } from '@/Context-Api/AuthContext';
+import toast from 'react-hot-toast';
 
 const Job = ({ job }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { userData } = useContext(AuthContext);
   const savedJobs = useSelector(store => store.job.savedJobs) || [];
   const isSaved = savedJobs.some(j => j._id === job._id);
 
@@ -55,7 +59,11 @@ const Job = ({ job }) => {
           className={`rounded-full hover:bg-primary/10 hover:text-primary transition-colors ${isSaved ? 'text-primary' : 'text-muted-foreground'}`}
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(toggleSavedJob(job));
+            if (!userData?._id) {
+              toast.error("Please login to save jobs");
+              return;
+            }
+            dispatch(toggleSavedJob({ job, userId: userData._id }));
           }}
         >
           {isSaved ? <BookmarkCheck className="h-5 w-5 fill-primary/20" /> : <Bookmark className="h-5 w-5" />}
