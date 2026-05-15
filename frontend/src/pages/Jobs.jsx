@@ -5,7 +5,8 @@ import React, { useEffect, useState } from 'react'
 import GetAllJobs from '../FechingData/GetAllJobs'
 import { useNavigate } from 'react-router-dom'
 import Category from './Home/Category'
-import { Loader2 } from 'lucide-react'
+import { Loader2, SearchX } from 'lucide-react'
+import EmptyState from '../components/component/EmptyState'
 import { getsearchjobtext } from '../store/jobSlice'
 
 const Jobs = () => {
@@ -189,25 +190,17 @@ const Jobs = () => {
                 </div>
               ) : (
                 filterData.length <= 0 ? (
-                  <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm p-8">
-                    <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-muted-foreground"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    </div>
-                    <div className='text-foreground text-center text-xl font-bold font-heading'>
-                      No jobs found
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-sm text-center">We couldn't find any jobs matching your current search and filter criteria. Try adjusting your parameters.</p>
-                    <button 
-                      onClick={() => {
-                        setSearchTerm('');
-                        dispatch(getsearchjobtext(''));
-                        dispatch({ type: 'job/clearFilters' });
-                      }}
-                      className="bg-primary text-primary-foreground px-6 py-2.5 rounded-xl font-semibold shadow-sm hover:bg-primary/90 transition-all hover:shadow-primary/25"
-                    >
-                      Reset All Filters
-                    </button>
-                  </div>
+                  <EmptyState 
+                    icon={SearchX}
+                    title="No matching results found"
+                    description="We couldn't find any jobs matching your current search and filter criteria. Try adjusting your parameters."
+                    buttonText="Reset All Filters"
+                    onClick={() => {
+                      setSearchTerm('');
+                      dispatch(getsearchjobtext(''));
+                      dispatch({ type: 'job/clearFilters' });
+                    }}
+                  />
                 ) : (
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 pb-10">
                     {filterData.map((job) => (

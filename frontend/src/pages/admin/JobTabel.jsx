@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Edit2, Eye, Loader2, Trash2, MapPin, Briefcase, IndianRupee, Users } from 'lucide-react'
+import EmptyState from '../../components/component/EmptyState'
 import { useDispatch, useSelector } from 'react-redux'
 import GetAdminCreateJob from '@/FechingData/GetAdminCreateJob'
 import { useNavigate } from 'react-router-dom'
@@ -97,20 +98,13 @@ const JobTabel = () => {
 
   if (filterJob.length <= 0) {
     return (
-      <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm p-8 mt-10">
-          <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mb-4">
-              <Briefcase className="text-muted-foreground w-8 h-8" />
-          </div>
-          <div className='text-foreground text-center text-xl font-bold font-heading'>
-              No Jobs Found
-          </div>
-          <p className="text-sm text-muted-foreground mt-2 max-w-sm text-center">
-              You haven't posted any jobs yet, or none match your search criteria.
-          </p>
-          <Button onClick={() => navigate('/admin/create/job')} className="mt-6 rounded-xl">
-              Post a New Job
-          </Button>
-      </div>
+      <EmptyState 
+        icon={Briefcase}
+        title="No Jobs Found"
+        description="You haven't posted any jobs yet, or none match your search criteria."
+        buttonText="Post a New Job"
+        onClick={() => navigate('/admin/add/job')}
+      />
     )
   }
 

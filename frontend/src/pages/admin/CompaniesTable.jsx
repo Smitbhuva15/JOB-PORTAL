@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, AvatarImage, AvatarFallback } from '../../components/ui/avatar'
 import { Edit2, Loader2, Trash2, MapPin, Building2, Calendar } from 'lucide-react'
+import EmptyState from '../../components/component/EmptyState'
 import GetAllCompany from '../../FechingData/GetAllCompany'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -96,20 +97,13 @@ const CompaniesTable = () => {
 
     if (filterCompany.length <= 0) {
         return (
-            <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm p-8 mt-10">
-                <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                    <Building2 className="text-muted-foreground w-8 h-8" />
-                </div>
-                <div className='text-foreground text-center text-xl font-bold font-heading'>
-                    No Companies Found
-                </div>
-                <p className="text-sm text-muted-foreground mt-2 max-w-sm text-center">
-                    You haven't registered any companies yet, or none match your search criteria.
-                </p>
-                <Button onClick={() => navigate('/admin/add/company')} className="mt-6 rounded-xl">
-                    Register a Company
-                </Button>
-            </div>
+            <EmptyState 
+                icon={Building2}
+                title="No Companies Found"
+                description="You haven't registered any companies yet, or none match your search criteria."
+                buttonText="Register a Company"
+                onClick={() => navigate('/admin/add/company')}
+            />
         )
     }
 

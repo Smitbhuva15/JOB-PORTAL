@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Job from './jobs/Job';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Bookmark } from 'lucide-react';
+import EmptyState from '../components/component/EmptyState';
 import { useNavigate } from 'react-router-dom';
 
 const SavedJobs = () => {
@@ -36,17 +37,13 @@ const SavedJobs = () => {
             </div>
           ) : (
             savedJobs.length === 0 ? (
-              <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm">
-                <div className='text-muted-foreground text-center text-lg font-medium'>
-                  You haven't saved any jobs yet.
-                </div>
-                <button 
-                  onClick={() => navigate('/jobs')}
-                  className="mt-4 bg-primary text-primary-foreground px-6 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors"
-                >
-                  Browse Jobs
-                </button>
-              </div>
+              <EmptyState 
+                icon={Bookmark}
+                title="You haven't saved any jobs yet."
+                description="Browse jobs and click the bookmark icon to save them for later."
+                buttonText="Browse Jobs"
+                onClick={() => navigate('/jobs')}
+              />
             ) : (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-10">
                 {savedJobs.map((job) => (

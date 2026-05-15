@@ -5,7 +5,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import { setsearchjob } from '@/store/jobSlice'
 import { AuthContext } from '@/Context-Api/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Briefcase } from 'lucide-react'
+import EmptyState from '../components/component/EmptyState'
 
 const Browse = () => {
   const navigate = useNavigate();
@@ -70,11 +71,11 @@ const Browse = () => {
             </div>
           ) : (
             Alljobs.length <= 0 ? (
-              <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm">
-                <div className='text-muted-foreground text-center text-lg font-medium'>
-                  No jobs available right now.
-                </div>
-              </div>
+              <EmptyState 
+                icon={Briefcase}
+                title="No jobs available right now."
+                description="Please check back later for new opportunities."
+              />
             ) : (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 pb-10">
                 {Alljobs.map((job) => (

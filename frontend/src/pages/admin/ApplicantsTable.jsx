@@ -7,6 +7,7 @@ import toast from 'react-hot-toast';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
 import { CheckCircle, XCircle, FileText, User2, Mail, Phone, Calendar } from 'lucide-react';
+import EmptyState from '../../components/component/EmptyState';
 
 const ApplicantsTable = () => {
     const {token} = useContext(AuthContext)
@@ -45,13 +46,11 @@ const ApplicantsTable = () => {
 
     if (applicants?.applications?.length <= 0) {
         return (
-            <div className='flex flex-col justify-center items-center h-[50vh] bg-card border border-border rounded-2xl shadow-sm mt-8'>
-                <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mb-4">
-                    <User2 className="text-muted-foreground w-8 h-8" />
-                </div>
-                <h3 className='text-xl font-bold font-heading text-foreground'>No Applicants Yet</h3>
-                <p className='text-muted-foreground text-sm mt-2'>No one has submitted an application for this job opening.</p>
-            </div>
+            <EmptyState 
+                icon={User2}
+                title="No Applicants Yet"
+                description="No one has submitted an application for this job opening."
+            />
         )
     }
 
