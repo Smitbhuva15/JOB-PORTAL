@@ -119,22 +119,40 @@ const CompaniesTable = () => {
                 {filterCompany.map((company) => (
                     <div key={company._id} className="bg-card border border-border rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full relative">
                         <div className="flex items-start justify-between mb-4">
-                            <Avatar className="w-16 h-16 border-2 border-border/50 shadow-sm rounded-xl object-contain">
-                                <AvatarImage src={company?.logo} className="object-contain" />
-                                <AvatarFallback className="rounded-xl bg-primary/10 text-primary font-bold text-xl">{company?.name?.charAt(0)}</AvatarFallback>
+                            <Avatar className="h-12 w-12 border border-border shadow-sm overflow-hidden">
+                                <AvatarImage
+                                    src={company?.logo}
+                                    alt={company?.name}
+                                    className="object-cover w-full h-full"
+                                />
+                                <AvatarFallback className="bg-primary/5 text-primary font-medium">
+                                    {company?.name?.charAt(0) || "C"}
+                                </AvatarFallback>
                             </Avatar>
+
                             <div className="flex items-center gap-2">
-                                <Button variant="outline" size="icon" className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors" onClick={() => navigate(`/admin/setup/company/${company._id}`)}>
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-8 w-8 text-muted-foreground hover:text-primary transition-colors"
+                                    onClick={() => navigate(`/admin/setup/company/${company._id}`)}
+                                >
                                     <Edit2 className="w-4 h-4" />
                                 </Button>
-                                <Button variant="outline" size="icon" className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors" onClick={() => openDeleteModal(company._id)}>
+
+                                <Button
+                                    variant="outline"
+                                    size="icon"
+                                    className="h-8 w-8 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+                                    onClick={() => openDeleteModal(company._id)}
+                                >
                                     <Trash2 className="w-4 h-4" />
                                 </Button>
                             </div>
                         </div>
 
                         <h3 className="font-bold text-lg text-foreground font-heading line-clamp-1 mb-1">{company?.name}</h3>
-                        
+
                         <div className="flex flex-col gap-2 mt-2 mb-4">
                             {company?.location && (
                                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -157,7 +175,7 @@ const CompaniesTable = () => {
                 ))}
             </div>
 
-            <DeleteConfirmModal 
+            <DeleteConfirmModal
                 isOpen={deleteModalOpen}
                 onClose={() => setDeleteModalOpen(false)}
                 onConfirm={handleDelete}

@@ -17,21 +17,21 @@ const features = [
     description: 'Access exclusive roles from leading tech companies, startups, and Fortune 500 enterprises.',
     icon: Building,
   },
-  {
-    name: 'Resume Builder',
-    description: 'Create professional resumes in minutes with our built-in ATS-friendly templates and suggestions.',
-    icon: FileText,
-  },
-  {
-    name: 'Career Tracking',
-    description: 'Monitor your application status, interview schedules, and offers all from one intuitive dashboard.',
-    icon: Briefcase,
-  },
-  {
-    name: 'Direct Messaging',
-    description: 'Communicate directly with recruiters and hiring managers without leaving the platform.',
-    icon: Users,
-  },
+  // {
+  //   name: 'Resume Builder',
+  //   description: 'Create professional resumes in minutes with our built-in ATS-friendly templates and suggestions.',
+  //   icon: FileText,
+  // },
+  // {
+  //   name: 'Career Tracking',
+  //   description: 'Monitor your application status, interview schedules, and offers all from one intuitive dashboard.',
+  //   icon: Briefcase,
+  // },
+  // {
+  //   name: 'Direct Messaging',
+  //   description: 'Communicate directly with recruiters and hiring managers without leaving the platform.',
+  //   icon: Users,
+  // },
 ];
 
 const FeaturesSection = () => {
