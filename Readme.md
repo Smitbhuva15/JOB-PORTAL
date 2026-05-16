@@ -1,8 +1,26 @@
 <div align="center">
-  <img src="https://img.icons8.com/color/96/000000/briefcase.png" alt="Job Linker Logo" />
-  
-  # JobLinker - Modern Job Portal Platform
-  
+
+  <div style="display:flex; justify-content:center; align-items:center; gap:10px; margin-bottom:10px;">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="42"
+      height="42"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#7C3AED"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M16 20V4a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v16" />
+      <rect width="20" height="14" x="2" y="6" rx="2" />
+    </svg>
+
+  </div>
+
+# JobLinker - Modern Job Portal Platform
+
+
   **A full-stack, enterprise-grade job portal connecting talented professionals with top companies.**
   
   [![React](https://img.shields.io/badge/React-18.x-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
@@ -72,15 +90,15 @@ The application features a stunning SaaS-style UI, utilizing modern design token
 
 | **Home Page & Latest Jobs** | **Advanced Search & Filters** |
 | :---: | :---: |
-| ![Home Page](https://via.placeholder.com/600x350.png?text=Home+Page+Screenshot) | ![Jobs Page](https://via.placeholder.com/600x350.png?text=Jobs+Search+Screenshot) |
+| ![Home Page](/frontend/public/home.png) | ![Jobs Page](/frontend/public/filter%20page.png) |
 
 | **Recruiter Dashboard** | **Applicant Tracking System** |
 | :---: | :---: |
-| ![Dashboard](https://via.placeholder.com/600x350.png?text=Admin+Dashboard+Screenshot) | ![ATS](https://via.placeholder.com/600x350.png?text=Applicants+Table+Screenshot) |
+| ![Dashboard](/frontend/public/company%20page.png) | ![ATS](/frontend/public/ats.png) |
 
-| **Dark Mode Theme** | **Modern Empty States** |
+| **profile Management** | **Job Specifications** |
 | :---: | :---: |
-| ![Dark Mode](https://via.placeholder.com/600x350.png?text=Dark+Mode+Screenshot) | ![Empty State](https://via.placeholder.com/600x350.png?text=Empty+State+UI) |
+| ![profile](/frontend/public/profile%20page.png) | ![Specifications](/frontend/public/info.png) |
 
 ---
 
@@ -139,6 +157,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <br />
 
 <div align="center">
-  <h3>Designed, Developed & Maintained By ❤️ Smit Bhuva</h3>
+  <h3>Designed &  Developed By ❤️ Smit Bhuva</h3>
   <p>Thank you for exploring JobLinker!</p>
 </div>
