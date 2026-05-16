@@ -5,7 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { AuthContext } from '@/Context-Api/AuthContext'
 import { Avatar, AvatarImage, AvatarFallback } from '../../components/ui/avatar'
 import { Loader2, MapPin, Briefcase, IndianRupee, Clock, CalendarDays, Users, Building2, ChevronLeft } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner';
 import { useDispatch, useSelector } from 'react-redux'
 import GetApplicant from '@/FechingData/GetApplicant'
 

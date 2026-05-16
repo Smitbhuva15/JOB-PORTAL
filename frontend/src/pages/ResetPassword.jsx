@@ -6,7 +6,7 @@ import { Label } from '../components/ui/label';
 import { Button } from '../components/ui/button';
 import { Loader2 } from 'lucide-react';
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const ResetPassword = () => {
     const [loading, setLoading] = useState(false);

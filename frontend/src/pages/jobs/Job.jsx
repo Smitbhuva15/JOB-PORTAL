@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleSavedJob } from '@/store/jobSlice';
 import { useContext } from 'react';
 import { AuthContext } from '@/Context-Api/AuthContext';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const Job = ({ job }) => {
   const navigate = useNavigate();

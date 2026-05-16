@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '@/Context-Api/AuthContext'
 import { Loader2 } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner';
 
 
 const CompaniesCreate = () => {

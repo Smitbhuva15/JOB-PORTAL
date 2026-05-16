@@ -6,7 +6,7 @@ import GetAllCompany from '../../FechingData/GetAllCompany'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner';
 import DeleteConfirmModal from '../../components/component/DeleteConfirmModal'
 
 const CompaniesTable = () => {

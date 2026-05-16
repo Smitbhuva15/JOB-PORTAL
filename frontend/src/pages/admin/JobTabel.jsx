@@ -6,7 +6,7 @@ import GetAdminCreateJob from '@/FechingData/GetAdminCreateJob'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '../../components/ui/button'
 import { Badge } from '../../components/ui/badge'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner';
 import DeleteConfirmModal from '../../components/component/DeleteConfirmModal'
 
 const JobTabel = () => {

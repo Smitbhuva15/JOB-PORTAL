@@ -66,7 +66,7 @@ exports.getAppliedJobs = async (req, res) => {
 
         if (!applicationapplybyOneUser) {
             return res.status(404).json({
-                message: "No Applications",
+                message: "No applications",
                 success: false
             })
         };
@@ -153,7 +153,7 @@ exports.getApplication = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        return res.status(5500).json({ message: "Internal server Error!!" })
+        return res.status(5500).json({ message: "Internal server error!!" })
     }
 
 }

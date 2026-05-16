@@ -13,7 +13,7 @@ import { Label } from "../../components/ui/label"
 import { AuthContext } from '../../Context-Api/AuthContext'
 import { useForm } from 'react-hook-form'
 import { Loader2 } from 'lucide-react'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner';
 
 const UpdateProfile = ({ open, setOpen }) => {
 

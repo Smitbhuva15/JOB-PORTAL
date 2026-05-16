@@ -9,7 +9,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Loader2 } from 'lucide-react';
 import { AuthContext } from '@/Context-Api/AuthContext';
 import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 
 const SingUp = () => {
@@ -104,7 +104,7 @@ const SingUp = () => {
             <Input
               id="fullname"
               type="text"
-              placeholder="John Doe"
+              placeholder="Ajit Patel"
               className="bg-background border-border focus-visible:ring-primary h-11"
               {...register("fullname")}
             />

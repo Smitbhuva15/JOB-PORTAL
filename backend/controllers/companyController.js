@@ -16,7 +16,7 @@ exports.registercompany = async (req, res) => {
         const isCompanyExist = await companyModel.findOne({ name: companyName })
         if (isCompanyExist) {
             return res.status(400).json({
-                message: "Company name is allready Exist, please try with another name !!."
+                message: "Company name is allready exist, please try with another name !!."
             });
         }
         const userData = req.user;
@@ -146,7 +146,7 @@ exports.updatecompany=async(req,res)=>{
         }
         if (error.code === 11000) {
           
-            return res.status(400).json({ message: 'All this Datas are already exists ' });
+            return res.status(400).json({ message: 'All this datas are already exists ' });
         }
 
         console.log(error);

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '@/Context-Api/AuthContext';
 import { getstateinfo } from '../../store/companyslice';
-import toast from 'react-hot-toast';
+import { toast } from 'sonner';
 
 const CompaniesManage = () => {
     const params = useParams()

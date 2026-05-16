@@ -10,7 +10,7 @@ import { setuser } from '../store/userSlice';
 import { AuthContext } from '@/Context-Api/AuthContext';
 import { Loader2 } from 'lucide-react';
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import toast from 'react-hot-toast'
+import { toast } from 'sonner';
 
 const Login = () => {
   const { userData } = useContext(AuthContext)

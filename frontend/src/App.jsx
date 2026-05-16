@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 import Footer from './components/component/Footer'
 import Navbar from './components/component/Navbar'
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'sonner';
 import { ThemeProvider } from './components/ThemeProvider'
 import { useEffect, useContext } from 'react'
 import { useDispatch } from 'react-redux'
@@ -38,7 +38,7 @@ function App() {
         <main className="flex flex-1 flex-col">
           <Outlet />
         </main>
-        <Toaster position="top-center" reverseOrder={true} />
+        <Toaster position="top-center" richColors theme="system" />
         <Footer />
       </div>
     </ThemeProvider>

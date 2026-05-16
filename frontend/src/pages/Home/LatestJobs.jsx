@@ -4,12 +4,16 @@ import GetAllJobs from '../../FechingData/GetAllJobs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Loader2 } from 'lucide-react';
 import { AuthContext } from '@/Context-Api/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import EmptyState from '../../components/component/EmptyState';
+import { User2, Briefcase } from 'lucide-react';
 
 const LatestJobs = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token-jobportal'));
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const API_URL = import.meta.env.VITE_API_URL;
   const { userData, loading } = useContext(AuthContext);
@@ -63,22 +67,20 @@ const LatestJobs = () => {
                   ))}
                 </div>
               ) : (
-                <div className="flex flex-col justify-center items-center w-full min-h-[40vh] bg-card border border-border rounded-2xl shadow-sm">
-                  <div className='text-muted-foreground text-center text-lg font-medium'>
-                    Currently no job openings.
-                  </div>
-                  <p className="text-sm text-muted-foreground mt-2">Check back later for fresh updates!</p>
-                </div>
+                <EmptyState 
+                  icon={Briefcase}
+                  title="Currently no job openings."
+                  description="Check back later for fresh updates!"
+                />
               )
             ) : (
-              <div className="flex flex-col justify-center items-center w-full min-h-[30vh] bg-card border border-border rounded-2xl shadow-sm max-w-2xl mx-auto">
-                <div className='text-muted-foreground text-center text-lg font-medium mb-4'>
-                  Unlock your next career move
-                </div>
-                <span className="text-primary font-medium bg-primary/10 rounded-full px-6 py-2 text-sm text-center">
-                  Please log in to view job opportunities.
-                </span>
-              </div>
+              <EmptyState 
+                icon={User2}
+                title="Unlock your next career move"
+                description="Please log in to view job opportunities tailored to you."
+                buttonText="Log In to Explore"
+                onClick={() => navigate('/login')}
+              />
             )
           )
         }

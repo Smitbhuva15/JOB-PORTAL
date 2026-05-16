@@ -81,7 +81,7 @@ exports.login = async (req, res) => {
         const { email, password, role } = req.body;
         if (!email || !password || !role) {
             return res.status(400).json({
-                message: "Please Fill Full From!!"
+                message: "Please fill full from!!"
 
             });
         };
@@ -89,17 +89,17 @@ exports.login = async (req, res) => {
         const userisExist = await userModel.findOne({ email });
 
         if (!userisExist) {
-            return res.status(400).json({ message: "user Is Not Exist !!" })
+            return res.status(400).json({ message: "user is not exist !!" })
         }
 
         const isPasswordmatching = await bcrypt.compare(password, userisExist.password);
 
         if (!isPasswordmatching) {
 
-            return res.status(400).json({ message: "Password or Email Incorrect !!" })
+            return res.status(400).json({ message: "password or email incorrect !!" })
         }
         if (role !== userisExist.role) {
-            return res.status(400).json({ message: "user is not Exist with this Role !!" })
+            return res.status(400).json({ message: "User is not exist with this role !!" })
         }
 
         const token = jwt.sign(
@@ -123,7 +123,7 @@ exports.login = async (req, res) => {
         }
 
         return res.status(200).json({
-            message: "User Log in SuccessFully !!",
+            message: "User log in successFully !!",
             Token: token,
             userDetail: user
         })
@@ -198,7 +198,7 @@ exports.updateProfile = async (req, res) => {
 
         if (error.code === 11000) {
           
-            return res.status(400).json({ message: 'All this Datas are already exists!! ' });
+            return res.status(400).json({ message: 'All this datas are already exists!! ' });
         }
         console.error(error);
         return res.status(500).json({ message: "Internal server error!" });

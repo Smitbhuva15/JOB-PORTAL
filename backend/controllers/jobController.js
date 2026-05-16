@@ -12,7 +12,7 @@ exports.postjob = async (req, res) => {
 
         if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
             return res.status(400).json({
-                message: "Please fill all the Fields",
+                message: "Please fill all the fields",
             })
         };
 
@@ -159,7 +159,7 @@ exports.updateJob = async (req, res) => {
         const isExist = await jobModel.findOne({ _id: jobId });
 
         if (!isExist) {
-            return res.status(400).json({ message: "Job Is Not Found !!" })
+            return res.status(400).json({ message: "Job is not found !!" })
         }
 
         const updatejob = await jobModel.updateOne(
@@ -168,7 +168,7 @@ exports.updateJob = async (req, res) => {
                 $set: updatedata
             }
         )
-        return res.status(200).json({message:"Job Updated successFully !!"})
+        return res.status(200).json({message:"Job updated successFully !!"})
 
     } catch (error) {
 
@@ -178,7 +178,7 @@ exports.updateJob = async (req, res) => {
         }
         if (error.code === 11000) {
           
-            return res.status(400).json({ message: 'All this Datas are already exists ' });
+            return res.status(400).json({ message: 'All this datas are already exists ' });
         }
 
         console.log(error)
