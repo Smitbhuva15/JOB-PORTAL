@@ -38,7 +38,7 @@ function App() {
         <main className="flex flex-1 flex-col">
           <Outlet />
         </main>
-        <Toaster position="top-center" richColors theme="system" />
+        <Toaster position="bottom-right" richColors theme="system" />
         <Footer />
       </div>
     </ThemeProvider>
