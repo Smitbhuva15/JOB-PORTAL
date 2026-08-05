@@ -23,18 +23,22 @@
 
   **A full-stack, enterprise-grade job portal connecting talented professionals with top companies.**
   
-  [![React](https://img.shields.io/badge/React-18.x-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
-  [![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
-  [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-  [![Node.js](https://img.shields.io/badge/Node.js-20.x-43853D?style=for-the-badge&logo=node.js)](https://nodejs.org/)
-  [![MongoDB](https://img.shields.io/badge/MongoDB-Latest-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+ [![React](https://img.shields.io/badge/React-18.x-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.x-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-20.x-43853D?style=for-the-badge&logo=node.js)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Latest-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
+[![Docker](https://img.shields.io/badge/Docker-Latest-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![Jenkins](https://img.shields.io/badge/Jenkins-Latest-D24939?style=for-the-badge&logo=jenkins&logoColor=white)](https://www.jenkins.io/)
+[![Kubernetes](https://img.shields.io/badge/Kubernetes-Latest-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
+[![Amazon EKS](https://img.shields.io/badge/Amazon%20EKS-AWS-FF9900?style=for-the-badge&logo=amazon-eks&logoColor=white)](https://aws.amazon.com/eks/)
 </div>
 
 <br />
 
 ## 📖 Project Overview
 
-**JobLinker** is a sophisticated, responsive, and scalable job portal built with the modern MERN stack. Designed to streamline the recruitment lifecycle, it provides an intuitive platform for **Job Seekers** to find roles, save favorites, and track applications, while giving **Recruiters & Admins** a powerful dashboard to manage job postings, review resumes, and process candidates.
+**JobLinker** is a sophisticated, responsive, and scalable job portal built with the modern MERN stack. The backend is containerized using **Docker**, automated with a **Jenkins CI/CD pipeline**, and deployed on **Amazon EKS (Kubernetes)**. Designed to streamline the recruitment lifecycle, it provides an intuitive platform for **Job Seekers** to find roles, save favorites, and track applications, while giving **Recruiters & Admins** a powerful dashboard to manage job postings, review resumes, and process candidates.
 
 The application features a stunning SaaS-style UI, utilizing modern design tokens, smooth animations, dynamic empty states, and built-in dark mode support.
 
@@ -79,11 +83,23 @@ The application features a stunning SaaS-style UI, utilizing modern design token
 ### Backend Infrastructure
 - **Node.js & Express.js:** Fast, non-blocking RESTful API architecture.
 - **MongoDB & Mongoose:** Flexible NoSQL database with robust schema validation.
+- **Docker:** Containerized backend for consistent deployments.
+- **Jenkins:** Automated CI/CD pipeline for build and deployment.
+- **Amazon EKS (Kubernetes):** Container orchestration and deployment.
 - **Resend API:** Next-generation transactional email sending for OTPs.
 - **Cloudinary:** Secure cloud storage for image assets and resumes.
 - **Bcrypt.js & JSONWebToken:** Secure password hashing and stateless session management.
 
+### DevOps & Deployment
+
+- **Docker** for backend containerization.
+- **Jenkins** for CI/CD automation.
+- **Docker Hub** for storing container images.
+- **Amazon EKS (Kubernetes)** for backend deployment.
+
 ---
+
+
 
 ## 📸 Screenshots
 
