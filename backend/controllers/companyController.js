@@ -108,7 +108,6 @@ exports.updatecompany=async(req,res)=>{
         if(location)updatedata.location=location
        
         const file=req.file;
-        // console.log( name, description, website, location,file)
 
         if(file){
            const fileuri=getDataUri(file)

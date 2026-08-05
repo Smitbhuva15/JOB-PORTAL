@@ -11,8 +11,6 @@ exports.applyJob = async (req, res) => {
 
 
         const isAlreadyApply = await applicationModel.findOne({ job: jobId, applicant: userId });;
-        // console.log(isAlreadyApply)
-
         if (isAlreadyApply) {
             return res.status(400).json({
                 message: "You have already applied for this job !!"
@@ -99,8 +97,6 @@ exports.updatestatus = async (req, res) => {
 
         const isexistapplication = await applicationModel.findById({ _id: applicationId })
 
-        // console.log(isexistapplication)
-
         if (!isexistapplication) {
             return res.status(404).json({
                 message: "Application not found."
@@ -132,8 +128,6 @@ exports.updatestatus = async (req, res) => {
 
 exports.getApplication = async (req, res) => {
     const jobId = req.params.id;
-
-
     try {
         const job = await jobModel.findById(jobId).populate({
             path: 'applications',
@@ -142,8 +136,6 @@ exports.getApplication = async (req, res) => {
                 path: 'applicant'
             }
         });
-
-        // console.log(job)
 
         if (!job) {
             return res.status(400).json({ message: "Job not found" })
